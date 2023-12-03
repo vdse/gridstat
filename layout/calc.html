@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Result Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/style.css" rel="stylesheet" />
+</head>
+<body>
+<div style="margin: auto; max-width: 720px;">
+    <hr>
+
+    <form method="GET">
+
+        <h3>
+            BTC/USDT spot grid bot results
+        </h3>
+        <p>
+            Required fields are followed by
+            <strong><span aria-label="required">*</span></strong>.
+        </p>
+
+        <section>
+            <h3>Date Range</h3>
+            <div>
+                <span id="date-range-from">From: </span>
+                <span>${obj.from.value}</span>
+            </div>
+            <div>
+                <span id="date-range-to">To: </span>
+                <span>${obj.to.value}</span>
+            </div>
+        </section>
+
+        <section>
+            <h3>Price Range</h3>
+            <div>
+                <span id="price-range-lower">Lower [USDT]: </span>
+                <span class="obj-value">${obj.lower.value}</span>
+            </div>
+            <div>
+                <span id="price-range-upper">Upper [USDT]: </span>
+                <span class="obj-value">${obj.upper.value}</span>
+            </div>
+        </section>
+
+        <section>
+            <h3>Grid Parameters</h3>
+            <div>
+                <span id="grid-mode">Mode: </span>
+                <span class="obj-value">${obj.mode.value}</span>
+            </div>
+            <div>
+                <span id="grid-grids">Quantity: </span>
+                <span class="obj-value">${obj.grids.value}</span>
+            </div>
+        </section>
+
+        <section>
+            <h3>Investment</h3>
+            <div>
+                <span id="investment-amount">Amount [USDT]: </span>
+                <span>${obj.investment.value}</span>
+            </div>
+        </section>
+
+        <hr>
+        <section>
+            <div>
+                <a href="${obj.recalculate.link}">Recalculate</a>
+            </div>
+        </section>
+
+    </form>
+</div>
+</body>

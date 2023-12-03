@@ -1,0 +1,273 @@
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/style.css" rel="stylesheet" />
+</head>
+<body>
+
+  <div style="margin: auto; max-width: 720px;">
+
+    <form method="GET" action="/calc">
+
+      <h3>
+        BTC/USDT spot grid bot
+      </h3>
+      <p>
+        Required fields are followed by
+        <strong><span aria-label="required">*</span></strong>.
+      </p>
+
+      <section>
+        <fieldset>
+          <legend>Date Range (TODO range)</legend>
+            <div> <!-- div required for vertical layout in w3m, lynx, links etc -->
+              <label for="from">
+                <span id="date-range-from">From </span><strong><span aria-label="required">*</span></strong>
+              </label>
+            </div>
+            <div>
+              <input type="date" id="from" name="from" required aria-describedby="date-range-from" min="${obj.from.min}" max="${obj.from.max}" ${obj.from.value ? 'value="' + obj.from.value + '"' : ''}/>
+            </div>${obj.from.status.date != undefined ? `
+            <div>
+              <span class="${obj.from.status.date.class}"><code>${obj.from.status.date.symbol}</code></span><span class="${obj.from.status.date.class}">${obj.from.status.date.message}</span>
+            </div>` : ''}${obj.from.status.out_of_range != undefined ? `
+            <div>
+              <span class="${obj.from.status.out_of_range.class}"><code>${obj.from.status.out_of_range.symbol}</code></span><span class="${obj.from.status.out_of_range.class}">${obj.from.status.out_of_range.message}</span>
+            </div>` : ''}
+            <div>
+              <label for="to">
+                <span id="date-range-to">To </span><strong><span aria-label="required">*</span></strong>
+              </label>
+            </div>
+            <div>
+              <input type="date" id="to" name="to" required aria-describedby="date-range-to" min="${obj.to.min}" max="${obj.to.max}" ${obj.to.value ? 'value="' + obj.to.value + '"' : ''}/>
+            </div>${obj.to.status.date != undefined ? `
+            <div>
+              <span class="${obj.to.status.date.class}"><code>${obj.to.status.date.symbol}</code></span><span class="${obj.to.status.date.class}">${obj.to.status.date.message}</span>
+            </div>` : ''}${obj.to.status.out_of_range != undefined ? `
+            <div>
+              <span class="${obj.to.status.out_of_range.class}"><code>${obj.to.status.out_of_range.symbol}</code></span><span class="${obj.to.status.out_of_range.class}">${obj.to.status.out_of_range.message}</span>
+            </div>` : ''}${obj.to.status.to_ge_from != undefined ? `
+            <div>
+              <span class="${obj.to.status.to_ge_from.class}"><code>${obj.to.status.to_ge_from.symbol}</code></span><span class="${obj.to.status.to_ge_from.class}">${obj.to.status.to_ge_from.message}</span>
+            </div>` : ''}
+          </fieldset>
+        </section>
+
+        <section>
+            <fieldset>
+                <legend>Price Range</legend>
+                <div>
+                    <label for="lower">
+                        <span id="price-range-lower">Lower [USDT]</span>
+                        <strong><span aria-label="required">*</span></strong>
+                    </label>
+                </div>
+                <div>
+                    <!-- TODO aria-invalid -->
+                    <!-- property size ignored by chrome, but required for firefox to more unify (with chrome) handle min-width -->
+                    <input
+                            required
+                            type="number"
+                            id="lower"
+                            name="lower"
+                            aria-describedby="price-range-lower"
+                            min="1000"
+                            step="1000"
+                            size="10"
+                            placeholder="&geq;1000"
+                            ${obj.lower.value !=undefined ? 'value="' + obj.lower.value + '"' : ''}
+                    />
+                </div>
+                    ${obj.lower.valid === false ? ` <!-- TODO aria for status messages -->
+                        <div>
+                            <span class="${obj.lower.status.number}"><code>${
+                              obj.lower.status.number   == 'pass' ? 'v&nbsp;'
+                              : obj.lower.status.number == 'na'   ? '-&nbsp;'
+                              : obj.lower.status.number == 'fail' ? 'x&nbsp;'
+                              : 'Something strange happen - '
+                            }</code></span><span class="${obj.lower.status.number}">Number Expected</span>
+                        </div>
+                    ` : ''}
+                    ${obj.lower.valid === false ? `
+                        <div>
+                            <span class="${obj.lower.status.ge1000}"><code>${
+                               obj.lower.status.ge1000   == 'pass' ? 'v&nbsp;'
+                               : obj.lower.status.ge1000 == 'na'   ? '-&nbsp;'
+                               : obj.lower.status.ge1000 == 'fail' ? 'x&nbsp;'
+                               : 'Something strange happen - '
+                            }</code></span><span class="${obj.lower.status.ge1000}">Greater than or equal to 1000</span>
+                        </div>
+                    ` : ''}
+                    ${obj.lower.valid === false ? `
+                        <div>
+                            <span class="${obj.lower.status.multiple_1e3}"><code>${
+                               obj.lower.status.multiple_1e3   == 'pass' ? 'v&nbsp;'
+                               : obj.lower.status.multiple_1e3 == 'na'   ? '-&nbsp;'
+                               : obj.lower.status.multiple_1e3 == 'fail' ? 'x&nbsp;'
+                               : 'Something strange happen (maybe need to throw error): '
+                            }</code></span><span class="${obj.lower.status.multiple_1e3}">Multiple of 1000</span>
+                        </div>
+                    ` : ''}
+                <div>
+                    <label for="upper">
+                        <span id="price-range-upper">Upper [USDT]</span>
+                        <strong><span aria-label="required">*</span></strong>
+                    </label>
+                </div>
+                <div>
+                    <input
+                            required
+                            type="number"
+                            id="upper"
+                            name="upper"
+                            aria-describedby="price-range-upper"
+                            min="2000"
+                            step="1000"
+                            size="10"
+                            placeholder="&gt;Lower"
+                            ${obj.upper.value !=undefined ? 'value="' + obj.upper.value + '"' : ''}
+                    />
+                </div>
+                ${obj.upper.valid === false ? ` <!-- TODO aria for status messages -->
+                    <div>
+                        <span class="${obj.upper.status.number}"><code>${
+                          obj.upper.status.number   == 'pass' ? 'v&nbsp;'
+                          : obj.upper.status.number == 'na'   ? '-&nbsp;'
+                          : obj.upper.status.number == 'fail' ? 'x&nbsp;'
+                          : 'Something strange happen - '
+                        }</code></span><span class="${obj.upper.status.number}">Number Expected</span>
+                    </div>
+                ` : ''}
+                ${obj.upper.valid === false ? `
+                    <div>
+                        <span class="${obj.upper.status.ge2000}"><code>${
+                           obj.upper.status.ge2000   == 'pass' ? 'v&nbsp;'
+                           : obj.upper.status.ge2000 == 'na'   ? '-&nbsp;'
+                           : obj.upper.status.ge2000 == 'fail' ? 'x&nbsp;'
+                           : 'Something strange happen - '
+                        }</code></span><span class="${obj.upper.status.ge2000}">Greater than or equal to 2000</span>
+                    </div>
+                ` : ''}
+                ${obj.upper.valid === false ? `
+                    <div>
+                        <span class="${obj.upper.status.multiple_1e3}"><code>${
+                           obj.upper.status.multiple_1e3   == 'pass' ? 'v&nbsp;'
+                           : obj.upper.status.multiple_1e3 == 'na'   ? '-&nbsp;'
+                           : obj.upper.status.multiple_1e3 == 'fail' ? 'x&nbsp;'
+                           : 'Something strange happen (maybe need to throw error): '
+                        }</code></span><span class="${obj.upper.status.multiple_1e3}">Multiple of 1000</span>
+                    </div>
+                ` : ''}
+                ${obj.upper.valid === false ? `
+                    <div>
+                        <span class="${obj.upper.status.gt_lower}"><code>${
+                           obj.upper.status.gt_lower   == 'pass' ? 'v&nbsp;'
+                           : obj.upper.status.gt_lower == 'na'   ? '-&nbsp;'
+                           : obj.upper.status.gt_lower == 'fail' ? 'x&nbsp;'
+                           : 'Something strange happen - '
+                        }</code></span><span class="${obj.upper.status.gt_lower}">Upper &gt; Lower</span>
+                    </div>
+                ` : ''}
+            </fieldset>
+        </section>
+
+        <section>
+            <fieldset>
+                <legend>Grid Parameters</legend>
+                <div>
+                    <label for="mode">
+                        <span id="grid-mode">Mode</span>
+                        <strong><span aria-label="required">*</span></strong>
+                    </label>
+                </div>
+                <div>
+                    <select id="mode" name="mode" aria-describedby="grid-mode">
+                        <option value="arithmetic" selected>Arithmetic</option>
+                        <option value="geometric" disabled>Geometric</option>
+                    </select>
+                </div>
+
+                ${obj.mode.valid === false ? `
+                    <div>
+                        <span class="${obj.mode.status.arithmetic}"><code>${
+                           obj.mode.status.arithmetic   == 'pass' ? 'v&nbsp;'
+                           : obj.mode.status.arithmetic == 'na'   ? '-&nbsp;'
+                           : obj.mode.status.arithmetic == 'fail' ? 'x&nbsp;'
+                           : 'Something strange happen - '
+                        }</code></span><span class="${obj.mode.status.arithmetic}">Supporting Arithmetic mode only (received: "${obj.mode.value == undefined ? '' : obj.mode.value }")</span>
+                    </div>
+                ` : ''}
+
+                <div>
+                    <label for="grids">
+                        <span id="grid-grids">Quantity</span>
+                        <strong><span aria-label="required">*</span></strong>
+                    </label>
+                </div>
+                <div>
+                    <input required type="number" id="grids" name="grids" aria-describedby="grid-grids" min="2"
+                           max="20" step="1" size="10" placeholder="2~20"
+                           ${obj.grids.value !=undefined || !isNaN(obj.grids.value) ? 'value="' + obj.grids.value + '"' : ''}
+                    />
+                </div>
+
+                ${obj.grids.valid === false ? ` <!-- TODO aria for status messages -->
+                <div>
+                    <span class="${obj.grids.status.number}"><code>${
+                      obj.grids.status.number   == 'pass' ? 'v&nbsp;'
+                      : obj.grids.status.number == 'na'   ? '-&nbsp;'
+                      : obj.grids.status.number == 'fail' ? 'x&nbsp;'
+                      : 'Something strange happen - '
+                    }</code></span><span class="${obj.grids.status.number}">Number Expected</span>
+                </div>
+                ` : ''}
+                ${obj.grids.valid === false ? `
+                <div>
+                    <span class="${obj.grids.status.ge2}"><code>${
+                       obj.grids.status.ge2   == 'pass' ? 'v&nbsp;'
+                       : obj.grids.status.ge2 == 'na'   ? '-&nbsp;'
+                       : obj.grids.status.ge2 == 'fail' ? 'x&nbsp;'
+                       : 'Something strange happen - '
+                    }</code></span><span class="${obj.grids.status.ge2}">Greater than or equal to 2</span>
+                </div>
+                ` : ''}
+                ${obj.grids.valid === false ? `
+                <div>
+                    <span class="${obj.grids.status.le20}"><code>${
+                       obj.grids.status.le20   == 'pass' ? 'v&nbsp;'
+                       : obj.grids.status.le20 == 'na'   ? '-&nbsp;'
+                       : obj.grids.status.le20 == 'fail' ? 'x&nbsp;'
+                       : 'Something strange happen (maybe need to throw error): '
+                    }</code></span><span class="${obj.grids.status.le20}">Lower than or equal to 20</span>
+                </div>
+                ` : ''}
+            </fieldset>
+        </section>
+
+        <section>
+            <fieldset>
+                <legend>Investment</legend>
+                <div>
+                    <label for="investment">
+                        <span id="investment-amount">Amount [USDT]</span>
+                        <strong><span aria-label="required">*</span></strong>
+                    </label>
+                </div>
+                <div>
+                    <input required type="number" id="investment" name="investment" aria-describedby="investment-amount"
+                           min="1" max="1M" size="10" value="${obj.investment.value}"/>
+                </div>
+            </fieldset>
+        </section>
+
+        <section>
+            <div> <!-- this div required for symmetry of layout -->
+                <button type="submit">Compute</button>
+            </div>
+        </section>
+
+    </form>
+</div>
+</body>
