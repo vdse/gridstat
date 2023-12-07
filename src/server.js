@@ -3,9 +3,9 @@ const fs = require('node:fs');
 const URL = require('node:url').URL;
 
 const util = require('./util.js');
-const is = require('./src/is.js');
+const is = require('./is.js');
 
-const { FROM, TO }= require('./config');
+const { FROM, TO }= require('../config');
 
 ///**
 // * TODO naming, maybe better structure
@@ -192,19 +192,19 @@ const server = http.createServer({}, (req, res) => {
             min: FROM,
             max: TO,
             status: {
-              date: {
-                class: util.isValidDate(to) ? 'pass' : 'fail',
-                symbol: util.isValidDate(to) ? 'v&nbsp;' :  'x&nbsp;',
+              format: {
+                class: is.iso(to) ? 'pass' : 'fail',
+                symbol: is.iso(to) ? 'v&nbsp;' :  'x&nbsp;',
                 message: `Expected format in URL: YYYY-MM-DD; received \'${to ? to : ''}\'`,
               },
-              out_of_range: {
-                class: Date.parse(to) >= Date.parse(FROM) && Date.parse(to) <= Date.parse(TO) ? 'pass' : 'fail',
-                symbol: Date.parse(to) >= Date.parse(FROM) && Date.parse(to) <= Date.parse(TO) ? 'v&nbsp;' : 'x&nbsp;',
+              within_range: {
+                class: is.iso(to) ? is.range(to) ? 'pass' : 'fail' : 'na',
+                symbol: is.iso(to) ? is.range(to) ?  'v&nbsp;' : 'x&nbsp;' : '-&nbsp;',
                 message: `Expected to be in range ${FROM} ... ${TO}`,
               },
               to_ge_from: {
-                class: Date.parse(from) <= Date.parse(to) ? 'pass' : 'fail',
-                symbol: Date.parse(from) <= Date.parse(to) ? 'v&nbsp;' : 'x&nbsp;',
+                class: is.iso(from) && is.iso(to) ? from <= to ? 'pass' : 'fail' : 'na',
+                symbol: is.iso(from) && is.iso(to) ? from <= to ? 'v&nbsp;' : 'x&nbsp;' : '-&nbsp;',
                 message: `To is expected to be greater than or equal to From`,
                 // is.iso(from) && is.iso(to) ? from <= to ? 'pass' : 'fail' : 'na',
               },
@@ -214,18 +214,18 @@ const server = http.createServer({}, (req, res) => {
             value: util.isNumber(lower) ? lower : undefined,
             status: {
               number: {
-                class: util.isNumber(lower) ? 'pass' : 'fail',
-                symbol: util.isNumber(lower) ? 'v&nbsp;' :  'x&nbsp;',
+                class: is.number(lower) ? 'pass' : 'fail',
+                symbol: is.number(lower) ? 'v&nbsp;' :  'x&nbsp;',
                 message: `Number Expected; received \'${lower ? lower : ''}\'`,
               },
               ge_1e3: {
-                class: lower >= 1e3 ? 'pass' : 'fail',
-                symbol: lower >= 1e3 ? 'v&nbsp;' :  'x&nbsp;',
+                class: is.number(lower) ? lower >= 1e3 ? 'pass' : 'fail' : 'na',
+                symbol: is.number(lower) ? lower >= 1e3 ? 'v&nbsp;' : 'x&nbsp;' : '-&nbsp;',
                 message: `Greater than or equal to 1000`,
               },
               multiples_of_1e3: {
-                class: !(lower % 1e3) ? 'pass' : 'fail',
-                symbol: !(lower % 1e3) ? 'v&nbsp;' :  'x&nbsp;',
+                class: is.number(lower) ? !(lower % 1e3) ? 'pass' : 'fail' : 'na',
+                symbol: is.number(lower) ? !(lower % 1e3) ? 'v&nbsp;' : 'x&nbsp;' : '-&nbsp;',
                 message: `Multiples of a 1000`,
               },
             },
@@ -233,29 +233,28 @@ const server = http.createServer({}, (req, res) => {
           upper: {
             value: util.isNumber(upper) ? upper : undefined,
             status: {
-              //number: {
-              //  class: util.isNumber(upper) ? 'pass' : 'fail',
-              //  symbol: util.isNumber(upper) ? 'v&nbsp;' :  'x&nbsp;',
-              //  message: `Number Expected; received \'${upper ? upper : ''}\'`,
-              //},
-              //ge_2e3: {
-              //  class: upper >= 2e3 ? 'pass' : 'fail',
-              //  symbol: upper >= 2e3 ? 'v&nbsp;' :  'x&nbsp;',
-              //  message: `Greater than or equal to 2000`,
-              //},
-              //multiples_of_1e3: {
-              //  class: !(lower % 1e3) ? 'pass' : 'fail',
-              //  symbol: !(lower % 1e3) ? 'v&nbsp;' :  'x&nbsp;',
-              //  message: `Multiples of a 1000`,
-              //},
-              //gt_lower: {
-              //  class: upper > lower ? 'pass' : 'fail',
-              //  symbol: !(lower % 1e3) ? 'v&nbsp;' :  'x&nbsp;',
-              //  message: `Multiples of a 1000`,
-              //},
+              number: {
+                class: is.number(upper) ? 'pass' : 'fail',
+                symbol: is.number(upper) ? 'v&nbsp;' :  'x&nbsp;',
+                message: `Number Expected; received \'${upper ? upper : ''}\'`,
+              },
+              ge_2e3: {
+                class: is.number(upper) ? upper >= 2e3 ? 'pass' : 'fail' : 'na',
+                symbol: is.number(upper) ? upper >= 2e3 ? 'v&nbsp;' : 'x&nbsp;' : '-&nbsp;',
+                message: `Greater than or equal to 2000`,
+              },
+              multiples_of_1e3: {
+                class: is.number(upper) ? !(upper % 1e3) ? 'pass' : 'fail' : 'na',
+                symbol: is.number(upper) ? !(upper % 1e3) ? 'v&nbsp;' : 'x&nbsp;' : '-&nbsp;',
+                message: `Multiples of a 1000`,
+              },
+              gt_lower: {
+                class: is.number(lower) && is.number(upper) ? Number(upper) > Number(lower) ? 'pass' : 'fail' : 'na',
+                symbol: is.number(lower) && is.number(upper) ? Number(upper) > Number(lower) ? 'v&nbsp;' :  'x&nbsp;' : '-&nbsp;',
+                message: `Greater than Lower`,
+              },
             },
           },
-                    //}</code></span><span class="${obj.upper.status.gt_lower}">Upper &gt; Lower</span>
           mode: {
             value: '',
           },
@@ -267,9 +266,39 @@ const server = http.createServer({}, (req, res) => {
           },
         };
 
-        if(obj.from.status.format.class == 'pass' && obj.from.status.within_range.class == 'pass') {
+        // Hide status messages if all pass
+        if(
+          obj.from.status.format.class == 'pass'
+          && obj.from.status.within_range.class == 'pass'
+        ) {
           obj.from.status = {};
         }
+
+        if(
+          obj.to.status.format.class == 'pass'
+          && obj.to.status.within_range.class == 'pass'
+          && obj.to.status.to_ge_from.class == 'pass'
+        ) {
+          obj.to.status = {};
+        }
+
+        if(
+          obj.lower.status.number.class == 'pass'
+          && obj.lower.status.ge_1e3.class == 'pass'
+          && obj.lower.status.multiples_of_1e3.class == 'pass'
+        ) {
+          obj.lower.status = {};
+        }
+
+        if(
+          obj.upper.status.number.class == 'pass'
+          && obj.upper.status.ge_2e3.class == 'pass'
+          && obj.upper.status.multiples_of_1e3.class == 'pass'
+          && obj.upper.status.gt_lower.class == 'pass'
+        ) {
+          obj.upper.status = {};
+        }
+
 
         //let obj2 = require('./date_range_5_5.js');
         let index = (obj) => eval("`" + fs.readFileSync('./layout/index.html') + "`");

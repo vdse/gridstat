@@ -42,9 +42,9 @@ function range(date) {
 //console.log('2016-02-29: ' + iso("2016-02-29") + '\n');  // true = leap day
 //console.log('2013-02-29: ' + iso("2013-02-29") + '\n');  // false = not leap day
 
-function isValidPriceRangeBoundary(str) {
+function number(str) {
 
-  //console.log('isValidPriceRangeBoundary(\'' + str + '\')');
+  //console.log('number(\'' + str + '\')');
 
   if(typeof str != 'string') {
     //console.log('\tnot a string');
@@ -70,38 +70,19 @@ function isValidPriceRangeBoundary(str) {
     return false;
   }
 
-  if(n < 1000) {
-    //console.log('\tless than 1000');
-    return false;
-  }
-
-  if(n % 1000) {
-    //console.log('\t% 1000');
-    return false;
-  }
-
   return true;
 
 }
 
-//console.log(isValidPriceRangeBoundary({}));
+//console.log(number({}));
 //console.log();
-//console.log(isValidPriceRangeBoundary(''));
+//console.log(number(''));
 //console.log();
-//console.log(isValidPriceRangeBoundary(' '));
+//console.log(number(' '));
 //console.log();
-//console.log(isValidPriceRangeBoundary('\t1'));
+//console.log(number('\t1'));
 //console.log();
-//console.log(isValidPriceRangeBoundary('NaN'));
-//console.log();
-//console.log(isValidPriceRangeBoundary('100.0'));
-//console.log();
-//console.log(isValidPriceRangeBoundary('1500'));
-//console.log();
-//console.log(isValidPriceRangeBoundary('1.0001e3'));
-//console.log();
-//console.log(isValidPriceRangeBoundary('1e3'));
-//console.log();
+//console.log(number('NaN'));
 
 function isValidMode(str) {
 
@@ -239,5 +220,6 @@ function isNumber(str) {
 module.exports = {
   iso,
   range,
+  number,
 };
 
