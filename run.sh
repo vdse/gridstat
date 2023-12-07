@@ -21,7 +21,7 @@ while true; do
   echo run $@
   $@ &
   PID=$!
-  inotifywait -e modify -e move -e create -e delete -e attrib --recursive --include '\.js$|\.sh$' `pwd`
+  inotifywait -e modify -e move -e create -e delete -e attrib --recursive --include '\.js$|\.html$|\.css$|\.sh$' `pwd`
   # TODO handle if PID
   kill $PID
   #sleep 4

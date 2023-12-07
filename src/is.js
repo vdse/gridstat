@@ -1,8 +1,10 @@
+const { FROM, TO }= require('../config.js');
+
 // https://stackoverflow.com/a/35413963
 
-function isValidDate(date) {
-  console.log('date: ' + date);
-  console.log('typeof date: ' + (typeof date));
+function iso(date) {
+  //console.log('date: ' + date);
+  //console.log('typeof date: ' + (typeof date));
   if(typeof date != 'string') {
     return false;
   }
@@ -25,16 +27,20 @@ function isValidDate(date) {
   return d.toISOString().slice(0,10) === date;
 }
 
+function range(date) {
+  return date >= FROM && date <= TO
+}
+
 /* Example Uses */
-//console.log('a000-00-00: ' + isValidDate("a000-00-00") + '\n');  // false
-//console.log('0000-00-00: ' + isValidDate("0000-00-00") + '\n');  // false
-//console.log('0001-01-01: ' + isValidDate("0001-01-01") + '\n');  // true
-//console.log('2015-01-32: ' + isValidDate("2015-01-32") + '\n');  // false
-//console.log('2016-11-25: ' + isValidDate("2016-11-25") + '\n');  // true
-//console.log('1970-01-01: ' + isValidDate("1970-01-01") + '\n');  // true = epoch
-//console.log('1969-12-31: ' + isValidDate("1969-12-31") + '\n');  // < epoch
-//console.log('2016-02-29: ' + isValidDate("2016-02-29") + '\n');  // true = leap day
-//console.log('2013-02-29: ' + isValidDate("2013-02-29") + '\n');  // false = not leap day
+//console.log('a000-00-00: ' + iso("a000-00-00") + '\n');  // false
+//console.log('0000-00-00: ' + iso("0000-00-00") + '\n');  // false
+//console.log('0001-01-01: ' + iso("0001-01-01") + '\n');  // true
+//console.log('2015-01-32: ' + iso("2015-01-32") + '\n');  // false
+//console.log('2016-11-25: ' + iso("2016-11-25") + '\n');  // true
+//console.log('1970-01-01: ' + iso("1970-01-01") + '\n');  // true = epoch
+//console.log('1969-12-31: ' + iso("1969-12-31") + '\n');  // < epoch
+//console.log('2016-02-29: ' + iso("2016-02-29") + '\n');  // true = leap day
+//console.log('2013-02-29: ' + iso("2013-02-29") + '\n');  // false = not leap day
 
 function isValidPriceRangeBoundary(str) {
 
@@ -231,10 +237,7 @@ function isNumber(str) {
 }
 
 module.exports = {
-  isValidDate,
-  isNumber,
-  isValidPriceRangeBoundary,
-  isValidMode,
-  isValidGrids,
+  iso,
+  range,
 };
 

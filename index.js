@@ -1,10 +1,11 @@
 const http = require('node:http');
 const fs = require('node:fs');
 const URL = require('node:url').URL;
-//const querystring = require('querystring');
-const config = require('./config');
 
 const util = require('./util.js');
+const is = require('./src/is.js');
+
+const { FROM, TO }= require('./config');
 
 ///**
 // * TODO naming, maybe better structure
@@ -70,130 +71,6 @@ const util = require('./util.js');
 // *
 // */
 
-//// TODO Validation lower price value
-//function lowerPriceRage(lower) {
-//    let lowerData = {
-//        value: isNotValidNumber(lower) ? undefined : lower,
-//        valid: undefined,
-//        status: {}
-//    };
-//
-//    if (isNotValidNumber(lower)) {
-//        lowerData.status.number = 'fail';
-//        lowerData.status.ge1000 = 'na';
-//        lowerData.status.multiple_1e3 = 'na';
-//    } else {
-//        lowerData.status.number = 'pass'
-//        lowerData.status.ge1000 = (lower >= 1000) ? 'pass' : 'fail';
-//        lowerData.status.multiple_1e3 = (lower % 1000 === 0) ? 'pass' : 'fail';
-//    }
-//
-//    lowerData.valid = (lowerData.status.number === 'pass') && (lowerData.status.ge1000 === 'pass') && (lowerData.status.multiple_1e3 === 'pass');
-//
-//    return lowerData;
-//}
-//
-//// TODO Validation upper price value
-//function upperPriceRage(lower, upper) {
-//    let upperData = {
-//        value: isNotValidNumber(upper) ? undefined : upper,
-//        valid: undefined,
-//        status: {}
-//    };
-//
-//    if (isNotValidNumber(upper)) {
-//        upperData.status.number = 'fail';
-//        upperData.status.ge2000 = 'na';
-//        upperData.status.multiple_1e3 = 'na';
-//        upperData.status.gt_lower = 'na';
-//    } else {
-//        upperData.status.number = 'pass'
-//        upperData.status.ge2000 = (upper >= 2000) ? 'pass' : 'fail';
-//        upperData.status.multiple_1e3 = (upper % 1000 === 0) ? 'pass' : 'fail';
-//    }
-//
-//    if (isNotValidNumber(lower) || isNotValidNumber(upper)) {
-//        upperData.status.gt_lower = 'na';
-//    } else {
-//        upperData.status.gt_lower = (upper > lower) ? 'pass' : 'fail';
-//    }
-//
-//    upperData.valid = (upperData.status.number === 'pass') && (upperData.status.ge2000 === 'pass') && (upperData.status.multiple_1e3 === 'pass') && (upperData.status.gt_lower === 'pass');
-//
-//    return upperData;
-//}
-//
-//// TODO Validation mode value in grid parameters
-//function modeGridParameter(mode) {
-//    let modeData = {
-//        value: mode,
-//        valid: undefined,
-//        status: {}
-//    };
-//
-//    if (mode === undefined) {
-//        modeData.status.arithmetic = 'na';
-//    } else {
-//        modeData.status.arithmetic = (mode === 'arithmetic') ? 'pass' : 'fail';
-//    }
-//
-//    modeData.valid = (modeData.status.arithmetic === 'pass');
-//
-//    return modeData;
-//}
-//
-//// TODO Validation quantity value in grid parameters
-//function quantityGridParameter(quantity) {
-//    let quantityData = {
-//        value: isNotValidNumber(quantity) ? undefined : quantity,
-//        valid: undefined,
-//        status: {}
-//    };
-//
-//    if (isNotValidNumber(quantity)) {
-//        quantityData.status.number = 'fail';
-//        quantityData.status.ge2 = 'na';
-//        quantityData.status.le20 = 'na';
-//    } else {
-//        quantityData.status.number = (quantity % 1 === 0) ? 'pass' : 'fail';
-//        quantityData.status.ge2 = (quantity >= 2) ? 'pass' : 'fail';
-//        quantityData.status.le20 = (quantity <= 20) ? 'pass' : 'fail';
-//    }
-//
-//    quantityData.valid = (quantityData.status.number === 'pass') && (quantityData.status.ge2 === 'pass') && (quantityData.status.le20 === 'pass');
-//
-//    return quantityData;
-//}
-//
-//// TODO Build recalculate link
-//function recalculateLink(obj) {
-//
-//    let params = new URLSearchParams();
-//
-//    if (obj.from.value) params.set('from', obj.from.value);
-//    if (obj.to.value) params.set('to', obj.to.value);
-//    if (obj.lower.value) params.set('lower', obj.lower.value);
-//    if (obj.upper.value) params.set('upper', obj.upper.value);
-//    if (obj.mode.value) params.set('mode', obj.mode.value);
-//    if (obj.quantity.value) params.set('quantity', obj.quantity.value);
-//    if (obj.investment.value) params.set('investment', obj.investment.value);
-//
-//    let queryString = params.toString();
-//
-//    return {
-//        recalculate: {
-//            link: queryString ? "/?" + queryString : "/"
-//        }
-//    };
-//}
-//
-//// TODO build query string from query params
-//function getQueryString(params) {
-//    return Object.keys(params)
-//        .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
-//        .join('&');
-//}
-
 const server = http.createServer({}, (req, res) => {
 //    // console.log('http request');
 ////   console.log(req.headers); // TODO try catch for internal server error
@@ -217,48 +94,190 @@ const server = http.createServer({}, (req, res) => {
   let pathname = url.pathname;
   let search = url.search;
 
-//    const queryParams = querystring.decode(query);
-//    console.log('params: ' + JSON.stringify(queryParams));
-
-//    // empty mode fill by user
-//
-//    let investment = queryParams.investment === undefined ? '' : queryParams.investment;
-//
-//    // TODO to >= from
-//    let data = {
-//        from: fromDateRange(queryParams.from),
-//        to: toDateRange(queryParams.from, queryParams.to),
-//        lower: lowerPriceRage(queryParams.lower),
-//        upper: upperPriceRage(queryParams.lower, queryParams.upper),
-//        mode: modeGridParameter(queryParams.mode),
-//        quantity: quantityGridParameter(queryParams.quantity),
-//        investment: {
-//            value: investment
-//        }
-//    };
-//
-////     /**
-////      * TODO (for next project) consider automatic validation and status message generation using JSON Schema
-////      * greater than https://github.com/json-schema-org/json-schema-spec/issues/51
-////      * review for schema generation https://github.com/fastify/fluent-json-schema
-////      * documentation https://json-schema.org/draft/2020-12/json-schema-validation
-////      */
-////
-////     const parsedUrl = url.parse(req.url, true);
-//    // console.log('parsedUrl');
-//    // console.log(parsedUrl);
-//
-//    // // get page name
-//    // const pageName = parsedUrl.pathname.replace(/^\/+|\/+$/g, '');
-//    const pageName = pathname.replace(/^\/+|\/+$/g, '');
-//    console.log('http request, page: ' + pageName);
+//     /**
+//      * TODO (for next project) consider automatic validation and status message generation using JSON Schema
+//      * greater than https://github.com/json-schema-org/json-schema-spec/issues/51
+//      * review for schema generation https://github.com/fastify/fluent-json-schema
+//      * documentation https://json-schema.org/draft/2020-12/json-schema-validation
+//      */
 
 
     if (pathname === '/') {
-        let obj = require('./date_range_5_5.js');
+
+      if(
+        url.searchParams.getAll('from').length == 0
+        && url.searchParams.getAll('to').length == 0
+        && url.searchParams.getAll('lower').length == 0
+        && url.searchParams.getAll('upper').length == 0
+        && url.searchParams.getAll('mode').length == 0
+        && url.searchParams.getAll('grids').length == 0
+      ) {
+        let obj = {
+          from: {
+            value: '',
+            min: FROM,
+            max: TO,
+            status: {},
+          },
+          to: {
+            value: '',
+            min: FROM,
+            max: TO,
+            status: {},
+          },
+          lower: {
+            value: '',
+            status: {},
+          },
+          upper: {
+            value: '',
+            status: {},
+          },
+          mode: {
+            value: '',
+          },
+          grids: {
+            value: '',
+          },
+          investment: {
+            value: '',
+          },
+        };
+
         let index = (obj) => eval("`" + fs.readFileSync('./layout/index.html') + "`");
         res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.end(index(obj.obj));
+        res.end(index(obj));
+
+      } else {
+
+        let from = url.searchParams.getAll('from').toString();
+        let to = url.searchParams.getAll('to').toString();
+        let lower = url.searchParams.getAll('lower').toString();
+        let upper = url.searchParams.getAll('upper').toString();
+        let mode = url.searchParams.getAll('mode').toString();
+        let grids = url.searchParams.getAll('grids').toString();
+
+        // TODO remade
+        function date_class(date) {
+          return util.isValidDate(date)
+            ? (Date.parse(from) >= Date.parse(FROM) && Date.parse(from) <= Date.parse(TO) ? 'pass' : 'fail')
+            : 'na'
+        }
+        function date_symbol(date) {
+          return util.isValidDate(date)
+            ? (Date.parse(from) >= Date.parse(FROM) && Date.parse(from) <= Date.parse(TO) ? 'v&nbsp;' : 'x&nbsp;') : '-&nbsp;'
+        }
+
+        let obj = {
+          // TODO na status
+          from: {
+            value: is.iso(from) ? from : undefined,
+            min: FROM,
+            max: TO,
+            status: {
+              format: {
+                class: is.iso(from) ? 'pass' : 'fail',
+                symbol: is.iso(from) ? 'v&nbsp;' :  'x&nbsp;',
+                message: `Expected format in URL: YYYY-MM-DD; received \'${from ? from : ''}\'`,
+              },
+              within_range: {
+                class: is.iso(from) ? is.range(from) ? 'pass' : 'fail' : 'na',
+                symbol: is.iso(from) ? is.range(from) ?  'v&nbsp;' : 'x&nbsp;' : '-&nbsp;',
+                message: `Expected to be in range ${FROM} ... ${TO}`,
+              },
+            },
+          },
+          to: {
+            value: util.isValidDate(to) ? to : undefined,
+            min: FROM,
+            max: TO,
+            status: {
+              date: {
+                class: util.isValidDate(to) ? 'pass' : 'fail',
+                symbol: util.isValidDate(to) ? 'v&nbsp;' :  'x&nbsp;',
+                message: `Expected format in URL: YYYY-MM-DD; received \'${to ? to : ''}\'`,
+              },
+              out_of_range: {
+                class: Date.parse(to) >= Date.parse(FROM) && Date.parse(to) <= Date.parse(TO) ? 'pass' : 'fail',
+                symbol: Date.parse(to) >= Date.parse(FROM) && Date.parse(to) <= Date.parse(TO) ? 'v&nbsp;' : 'x&nbsp;',
+                message: `Expected to be in range ${FROM} ... ${TO}`,
+              },
+              to_ge_from: {
+                class: Date.parse(from) <= Date.parse(to) ? 'pass' : 'fail',
+                symbol: Date.parse(from) <= Date.parse(to) ? 'v&nbsp;' : 'x&nbsp;',
+                message: `To is expected to be greater than or equal to From`,
+                // is.iso(from) && is.iso(to) ? from <= to ? 'pass' : 'fail' : 'na',
+              },
+            },
+          },
+          lower: {
+            value: util.isNumber(lower) ? lower : undefined,
+            status: {
+              number: {
+                class: util.isNumber(lower) ? 'pass' : 'fail',
+                symbol: util.isNumber(lower) ? 'v&nbsp;' :  'x&nbsp;',
+                message: `Number Expected; received \'${lower ? lower : ''}\'`,
+              },
+              ge_1e3: {
+                class: lower >= 1e3 ? 'pass' : 'fail',
+                symbol: lower >= 1e3 ? 'v&nbsp;' :  'x&nbsp;',
+                message: `Greater than or equal to 1000`,
+              },
+              multiples_of_1e3: {
+                class: !(lower % 1e3) ? 'pass' : 'fail',
+                symbol: !(lower % 1e3) ? 'v&nbsp;' :  'x&nbsp;',
+                message: `Multiples of a 1000`,
+              },
+            },
+          },
+          upper: {
+            value: util.isNumber(upper) ? upper : undefined,
+            status: {
+              //number: {
+              //  class: util.isNumber(upper) ? 'pass' : 'fail',
+              //  symbol: util.isNumber(upper) ? 'v&nbsp;' :  'x&nbsp;',
+              //  message: `Number Expected; received \'${upper ? upper : ''}\'`,
+              //},
+              //ge_2e3: {
+              //  class: upper >= 2e3 ? 'pass' : 'fail',
+              //  symbol: upper >= 2e3 ? 'v&nbsp;' :  'x&nbsp;',
+              //  message: `Greater than or equal to 2000`,
+              //},
+              //multiples_of_1e3: {
+              //  class: !(lower % 1e3) ? 'pass' : 'fail',
+              //  symbol: !(lower % 1e3) ? 'v&nbsp;' :  'x&nbsp;',
+              //  message: `Multiples of a 1000`,
+              //},
+              //gt_lower: {
+              //  class: upper > lower ? 'pass' : 'fail',
+              //  symbol: !(lower % 1e3) ? 'v&nbsp;' :  'x&nbsp;',
+              //  message: `Multiples of a 1000`,
+              //},
+            },
+          },
+                    //}</code></span><span class="${obj.upper.status.gt_lower}">Upper &gt; Lower</span>
+          mode: {
+            value: '',
+          },
+          grids: {
+            value: '',
+          },
+          investment: {
+            value: '',
+          },
+        };
+
+        if(obj.from.status.format.class == 'pass' && obj.from.status.within_range.class == 'pass') {
+          obj.from.status = {};
+        }
+
+        //let obj2 = require('./date_range_5_5.js');
+        let index = (obj) => eval("`" + fs.readFileSync('./layout/index.html') + "`");
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(index(obj));
+
+      }
+
     } else if (pathname === '/calc') {
 
       let from = url.searchParams.getAll('from').toString();
@@ -271,10 +290,10 @@ const server = http.createServer({}, (req, res) => {
       if(
         util.isValidDate(from)
         && util.isValidDate(to)
-        && Date.parse(from) >= Date.parse(config.FROM)
-        && Date.parse(from) <= Date.parse(config.TO)
-        && Date.parse(to) >= Date.parse(config.FROM)
-        && Date.parse(to) <= Date.parse(config.TO)
+        && Date.parse(from) >= Date.parse(FROM)
+        && Date.parse(from) <= Date.parse(TO)
+        && Date.parse(to) >= Date.parse(FROM)
+        && Date.parse(to) <= Date.parse(TO)
         && Date.parse(from) <= Date.parse(to)
         && util.isValidPriceRangeBoundary(lower)
         && util.isValidPriceRangeBoundary(upper)
@@ -306,7 +325,38 @@ const server = http.createServer({}, (req, res) => {
           },
           recalculate: {
             link: `/${search}`
-          }
+          },
+          table: [
+            ['1', '2.00 USDT', '3.00 USDT', '10.00 USDT', '5.00 BTC', '5 USDT / 50.00%'],
+            ['2', '3.00 USDT', '4.00 USDT', '15.00 USDT', '5.00 BTC', '5 USDT / 33.33%'],
+            ['3', '4.00 USDT', '5.00 USDT', '20.00 USDT', '5.00 BTC', '5 USDT / 25.00%'],
+            ['4', '5.00 USDT', '6.00 USDT', '25.00 USDT', '5.00 BTC', '5 USDT / 20.00%'],
+            ['5', '6.00 USDT', '7.00 USDT', '30.00 USDT', '5.00 BTC', '5 USDT / 16.67%'],
+          ],
+          table2: [
+            ['1',  '0.00 USDT + 5.00 BTC', '2', '1', '15.00 USDT', '15.00 USDT + 0.00 BTC'],
+            ['2',  '5.00 USDT + 5.00 BTC', '2', '1', '20.00 USDT', '20.00 USDT + 0.00 BTC'],
+            ['3', '10.00 USDT + 5.00 BTC', '2', '1', '25.00 USDT', '25.00 USDT + 0.00 BTC'],
+            ['4', '15.00 USDT + 5.00 BTC', '2', '1', '30.00 USDT', '30.00 USDT + 0.00 BTC'],
+            ['5', '20.00 USDT + 5.00 BTC', '2', '1', '35.00 USDT', '35.00 USDT + 0.00 BTC'],
+          ],
+          table3: [
+            {
+              grid: '1',
+              table: [
+                ['1', '2023-10-27 19:30:47', 'Sell', '33.00', '0.74', '25.1600 USDT', '0.7342 BTC' ],
+              ],
+              profit: '--',
+            },
+            {
+              grid: '2',
+              table: [
+                ['2', '2023-10-27 19:30:47', 'Buy',  '33.00', '0.74', '25.1600 USDT', '0.7342 BTC' ],
+                ['2', '2023-10-27 19:30:47', 'Sell', '34.00', '0.74', '25.5548 USDT', '0.0251 USDT'],
+              ],
+              profit: '0.6895 USDT',
+            },
+          ],
         };
 
         let calcPage = (obj) => eval("`" + fs.readFileSync('./layout/calc.html') + "`");
@@ -325,33 +375,14 @@ const server = http.createServer({}, (req, res) => {
       res.setHeader('Content-Type', 'text/css');
       res.write(fs.readFileSync('layout/style.css'));
       res.end();
+    } else if(pathname == '/calc.css') {
+      res.setHeader('Content-Type', 'text/css');
+      res.write(fs.readFileSync('layout/calc.css'));
+      res.end();
     } else {
       res.writeHead(404).end();
     }
 
-////     res.setHeader('Content-Type', 'text/html');
-//// //     // TODO doc about error handling and cases
-//// //     // TODO convention for parameters
-//// //     // price.error
-//// //     // when trying to save user input, need to perform a sanitize procedure to prevent code injection
-//// //     //res.write(index({lower: {value: params.lower, error: 'Expected that: Upper &gt; Lower'}}));
-////     res.write(index(data));
-//
-//
-//    // res.on("change", (event) => {
-//    //     // get value from input
-//    //     const modeHtml = event.target.value;
-//    //
-//    //     params.grid = modeHtml;
-//    //
-//    //     res.send(params);
-//    // });
-//
-//    res.end();
-////
-////     //res.end('gridstat site', 'utf-8');
-////   }
-////   // TODO create page 404
 });
 
 server.listen(8080);

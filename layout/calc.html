@@ -4,10 +4,18 @@
   <meta charset="utf-8"/>
   <title>Result Page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<!--
+  <link href="/calc.css" rel="stylesheet" />
+-->
+
   <link href="/style.css" rel="stylesheet" />
 </head>
 <body>
-<div style="margin: auto; max-width: 720px;">
+
+  <div style="margin: auto; max-width: 800px;">
     <hr>
 
     <form method="GET">
@@ -72,5 +80,108 @@
         </section>
 
     </form>
-</div>
+
+    <h2>Details</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="border-top-left-radius:7px;">Entry Price</th>
+          <th>Last Price</th>
+          <th style="border-top-right-radius:7px;">Amount per Grid</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2.00 USDT</td>
+          <td>7.00 USDT</td>
+          <td>5.00 BTC</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="border-top-left-radius:7px;">Initial Distribution</th>
+          <th>Total Matched Trades</th>
+          <th>Total Executions</th>
+          <th style="border-top-right-radius:7px;">Final Distribution</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>50.00 USDT + 25.00 BTC</td>
+          <td>5</td>
+          <td>10</td>
+          <td>175.00 USDT + 0.00 BTC</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="border-top-left-radius:7px;">Grid #</th>
+          <th>Lower Price</th>
+          <th>Upper Price</th>
+          <th>Investment 100.00</th>
+          <th>Amount per Grid</th>
+          <th style="border-top-right-radius:7px;">Exp. Profit per Grid</th>
+        </tr>
+      </thead>
+      <tbody>${obj.table.map((item, i) => `
+        <tr>
+          <td>${item[0]}</td><td>${item[1]}</td><td>${item[2]}</td><td>${item[3]}</td><td>${item[4]}</td><td>${item[5]}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="border-top-left-radius:7px;">Grid #</th>
+          <th>Initial Distribution</th>
+          <th>Executions</th>
+          <th>Matched Trades</th>
+          <th>Grid Profit</th>
+          <th style="border-top-right-radius:7px;">Final Distribution</th>
+        </tr>
+      </thead>
+      <tbody>${obj.table2.map((item, i) => `
+        <tr>
+          <td>${item[0]}</td><td>${item[1]}</td><td>${item[2]}</td><td>${item[3]}</td><td>${item[4]}</td><td>${item[5]}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+
+    <h2>Order History</h2>
+    ${obj.table3.map((item, i) => `
+    <table>
+      <thead>
+        <tr>
+          <th class="btlr">Grid #</th><th>Order Time</th><th>Side</th><th>Price</th><th>Executed</th><th>Total</th><th class="btrr">Fee</th>
+        </tr>
+      </thead>
+      <tbody>${item.table.map((order, i) => `
+        <tr>
+          <td>${order[0]}</td><td>${order[1]}</td><td class="${order[2].toLowerCase()}">${order[2]}</td><td>${order[3]}</td><td>${order[4]}</td><td>${order[5]}</td><td>${order[6]}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+    <div class="profit"><span>Profit: <span class="green">${item.profit}</span></span></div>\n`).join('')}
+
+    <div>
+      * Calculations are made with a commission of 0.1%
+    </div>
+    <div>
+      ** Date and Time in UTC
+    </div>
+
+    <div class="footer">
+      footer
+    </div>
+
+  </div>
+
 </body>
