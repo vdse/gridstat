@@ -4,7 +4,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="/style.css" rel="stylesheet" />
 </head>
-<body>
+<body>${false ? 'TODO find approach to create and reuse partials for status' : ''}
+  <!-- TODO union label with first span -->
 
   <div style="margin: auto; max-width: 720px;">
 
@@ -61,7 +62,6 @@
           </label>
         </div>
         <div>
-            <!-- TODO aria-invalid -->
             <!-- property size ignored by chrome, but required for firefox to more unify (with chrome) handle min-width -->
             <input required type="number" id="lower" name="lower" aria-describedby="price-range-lower" min="1000" step="1000" size="10" placeholder="&geq;1000" ${obj.lower.value != undefined ? 'value="' + obj.lower.value + '"' : ''}
             />
@@ -98,100 +98,56 @@
         </div>` : ''}
       </fieldset>
 
-        <section>
-            <fieldset>
-                <legend>Grid Parameters</legend>
-                <div>
-                    <label for="mode">
-                        <span id="grid-mode">Mode</span>
-                        <strong><span aria-label="required">*</span></strong>
-                    </label>
-                </div>
-                <div>
-                    <select id="mode" name="mode" aria-describedby="grid-mode">
-                        <option value="arithmetic" selected>Arithmetic</option>
-                        <option value="geometric" disabled>Geometric</option>
-                    </select>
-                </div>
+      <fieldset>
+        <legend>Grid Parameters</legend>
+        <div>
+          <label for="mode">
+            <span id="grid-mode">Mode </span><strong><span aria-label="required">*</span></strong>
+          </label>
+        </div>
+        <div>
+          <select id="mode" name="mode" aria-describedby="grid-mode">
+            <option value="arithmetic" selected>Arithmetic</option>
+            <option value="geometric" disabled>Geometric</option>
+          </select>
+        </div>${obj.mode.status.arithmetic != undefined ? `
+        <div>
+          <span class="${obj.mode.status.arithmetic.class}"><code>${obj.mode.status.arithmetic.symbol}</code></span><span class="${obj.mode.status.arithmetic.class}">${obj.mode.status.arithmetic.message}</span>
+        </div>` : ''}
 
-                ${obj.mode.valid === false ? `
-                    <div>
-                        <span class="${obj.mode.status.arithmetic}"><code>${
-                           obj.mode.status.arithmetic   == 'pass' ? 'v&nbsp;'
-                           : obj.mode.status.arithmetic == 'na'   ? '-&nbsp;'
-                           : obj.mode.status.arithmetic == 'fail' ? 'x&nbsp;'
-                           : 'Something strange happen - '
-                        }</code></span><span class="${obj.mode.status.arithmetic}">Supporting Arithmetic mode only (received: "${obj.mode.value == undefined ? '' : obj.mode.value }")</span>
-                    </div>
-                ` : ''}
+        <div>
+          <label id="grid-grids" for="grids">Grids <strong><span aria-label="required">*</span></strong></label>
+        </div>
+        <div>
+          <input required type="number" id="grids" name="grids" aria-describedby="grid-grids" min="2" max="20" step="1" size="10" placeholder="2~20" ${obj.grids.value != undefined ? 'value="' + obj.grids.value + '"' : ''} />
+        </div>${obj.grids.status.integer != undefined ? `
+        <div>
+          <span class="${obj.grids.status.integer.class}"><code>${obj.grids.status.integer.symbol}</code></span><span class="${obj.grids.status.integer.class}">${obj.grids.status.integer.message}</span>
+        </div>` : ''}${obj.grids.status.within_range != undefined ? `
+        <div>
+          <span class="${obj.grids.status.within_range.class}"><code>${obj.grids.status.within_range.symbol}</code></span><span class="${obj.grids.status.within_range.class}">${obj.grids.status.within_range.message}</span>
+        </div>` : ''}
+      </fieldset>
 
-                <div>
-                    <label for="grids">
-                        <span id="grid-grids">Quantity</span>
-                        <strong><span aria-label="required">*</span></strong>
-                    </label>
-                </div>
-                <div>
-                    <input required type="number" id="grids" name="grids" aria-describedby="grid-grids" min="2"
-                           max="20" step="1" size="10" placeholder="2~20"
-                           ${obj.grids.value !=undefined || !isNaN(obj.grids.value) ? 'value="' + obj.grids.value + '"' : ''}
-                    />
-                </div>
+      <fieldset>
+        <legend>Investment</legend>
+        <div>
+          <label id="investment-amount" for="investment">Amount [USDT] <strong><span aria-label="required">*</span></strong></label>
+        </div>
+        <div>
+          <input required type="number" id="investment" name="investment" aria-describedby="investment-amount" min="1" ${obj.investment.value != undefined ? 'value="' + obj.investment.value + '"' : ''} />
+        </div>${obj.investment.status.number != undefined ? `
+        <div>
+          <span class="${obj.investment.status.number.class}"><code>${obj.investment.status.number.symbol}</code></span><span class="${obj.investment.status.number.class}">${obj.investment.status.number.message}</span>
+        </div>` : ''}${obj.investment.status.ge_1 != undefined ? `
+        <div>
+          <span class="${obj.investment.status.ge_1.class}"><code>${obj.investment.status.ge_1.symbol}</code></span><span class="${obj.investment.status.ge_1.class}">${obj.investment.status.ge_1.message}</span>
+        </div>` : ''}
+      </fieldset>
 
-                ${obj.grids.valid === false ? ` <!-- TODO aria for status messages -->
-                <div>
-                    <span class="${obj.grids.status.number}"><code>${
-                      obj.grids.status.number   == 'pass' ? 'v&nbsp;'
-                      : obj.grids.status.number == 'na'   ? '-&nbsp;'
-                      : obj.grids.status.number == 'fail' ? 'x&nbsp;'
-                      : 'Something strange happen - '
-                    }</code></span><span class="${obj.grids.status.number}">Number Expected</span>
-                </div>
-                ` : ''}
-                ${obj.grids.valid === false ? `
-                <div>
-                    <span class="${obj.grids.status.ge2}"><code>${
-                       obj.grids.status.ge2   == 'pass' ? 'v&nbsp;'
-                       : obj.grids.status.ge2 == 'na'   ? '-&nbsp;'
-                       : obj.grids.status.ge2 == 'fail' ? 'x&nbsp;'
-                       : 'Something strange happen - '
-                    }</code></span><span class="${obj.grids.status.ge2}">Greater than or equal to 2</span>
-                </div>
-                ` : ''}
-                ${obj.grids.valid === false ? `
-                <div>
-                    <span class="${obj.grids.status.le20}"><code>${
-                       obj.grids.status.le20   == 'pass' ? 'v&nbsp;'
-                       : obj.grids.status.le20 == 'na'   ? '-&nbsp;'
-                       : obj.grids.status.le20 == 'fail' ? 'x&nbsp;'
-                       : 'Something strange happen (maybe need to throw error): '
-                    }</code></span><span class="${obj.grids.status.le20}">Lower than or equal to 20</span>
-                </div>
-                ` : ''}
-            </fieldset>
-        </section>
-
-        <section>
-            <fieldset>
-                <legend>Investment</legend>
-                <div>
-                    <label for="investment">
-                        <span id="investment-amount">Amount [USDT]</span>
-                        <strong><span aria-label="required">*</span></strong>
-                    </label>
-                </div>
-                <div>
-                    <input required type="number" id="investment" name="investment" aria-describedby="investment-amount"
-                           min="1" max="1M" size="10" value="${obj.investment.value}"/>
-                </div>
-            </fieldset>
-        </section>
-
-        <section>
-            <div> <!-- this div required for symmetry of layout -->
-                <button type="submit">Compute</button>
-            </div>
-        </section>
+      <div> <!-- this div required for symmetry of layout -->
+        <button type="submit">Compute</button>
+      </div>
 
     </form>
 </div>

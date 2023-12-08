@@ -156,6 +156,8 @@ const server = http.createServer({}, (req, res) => {
         let upper = url.searchParams.getAll('upper').toString();
         let mode = url.searchParams.getAll('mode').toString();
         let grids = url.searchParams.getAll('grids').toString();
+        // TODO in future version can be base inv and quote inv, maybe unify in this version?
+        let investment = url.searchParams.getAll('investment').toString();
 
         // TODO remade
         function date_class(date) {
@@ -250,19 +252,50 @@ const server = http.createServer({}, (req, res) => {
               },
               gt_lower: {
                 class: is.number(lower) && is.number(upper) ? Number(upper) > Number(lower) ? 'pass' : 'fail' : 'na',
-                symbol: is.number(lower) && is.number(upper) ? Number(upper) > Number(lower) ? 'v&nbsp;' :  'x&nbsp;' : '-&nbsp;',
+                symbol: is.number(lower) && is.number(upper) ? Number(upper) > Number(lower) ? 'v&nbsp;' : 'x&nbsp;' : '-&nbsp;',
                 message: `Greater than Lower`,
               },
             },
           },
           mode: {
-            value: '',
+            value: mode, // value not used at this moment
+            status: {
+              arithmetic: {
+                class: is.arithmetic(mode) ? 'pass' : 'fail',
+                symbol: is.arithmetic(mode) ? 'v&nbsp;' : 'x&nbsp;',
+                message: `Supporting Arithmetic mode only, received: \'${mode == undefined ? '' : mode}'`,
+              },
+            }
           },
           grids: {
-            value: '',
+            value: is.number(grids) ? grids : undefined,
+            status: {
+              integer: {
+                class: is.number(grids) && Number.isInteger(Number(grids)) ? 'pass' : 'fail',
+                symbol: is.number(grids) && Number.isInteger(Number(grids)) ? 'v&nbsp;' : 'x&nbsp;',
+                message: `Integer expected, received: \'${grids}'`,
+              },
+              within_range: {
+                class: is.number(grids) ? grids >= 2 && grids <= 20 ? 'pass' : 'fail' : 'na',
+                symbol: is.number(grids) ? grids >= 2 && grids <= 20 ?  'v&nbsp;' : 'x&nbsp;' : '-&nbsp;',
+                message: `Expected to be within range 2 ... 20`,
+              },
+            },
           },
           investment: {
-            value: '',
+            value: is.number(investment) ? investment : undefined,
+            status: {
+              number: {
+                class: is.number(investment) ? 'pass' : 'fail',
+                symbol: is.number(investment) ? 'v&nbsp;' : 'x&nbsp;',
+                message: `Integer expected, received: \'${investment}'`,
+              },
+              ge_1: {
+                class: is.number(investment) ? investment >= 1 ? 'pass' : 'fail' : 'na',
+                symbol: is.number(investment) ? investment >= 1 ?  'v&nbsp;' : 'x&nbsp;' : '-&nbsp;',
+                message: `Expected to be greater than 1`,
+              },
+            },
           },
         };
 
@@ -297,6 +330,26 @@ const server = http.createServer({}, (req, res) => {
           && obj.upper.status.gt_lower.class == 'pass'
         ) {
           obj.upper.status = {};
+        }
+
+        if(
+          obj.mode.status.arithmetic.class == 'pass'
+        ) {
+          obj.mode.status = {};
+        }
+
+        if(
+          obj.grids.status.integer.class == 'pass'
+          && obj.grids.status.within_range.class == 'pass'
+        ) {
+          obj.grids.status = {};
+        }
+
+        if(
+          obj.investment.status.number.class == 'pass'
+          && obj.investment.status.ge_1.class == 'pass'
+        ) {
+          obj.investment.status = {};
         }
 
 

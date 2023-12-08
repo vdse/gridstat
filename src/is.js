@@ -84,17 +84,17 @@ function number(str) {
 //console.log();
 //console.log(number('NaN'));
 
-function isValidMode(str) {
+function arithmetic(str) {
 
-  console.log('isValidMode(\'' + str + '\')');
+  //console.log('arithmetic(\'' + str + '\')');
 
   if(typeof str != 'string') {
-    console.log('\tnot a string');
+    //console.log('\tnot a string');
     return false;
   }
 
   if(str.valueOf() != 'arithmetic') {
-    console.log('\tmode is not arithmetic');
+    //console.log('\tmode is not arithmetic');
     return false;
   }
 
@@ -102,15 +102,15 @@ function isValidMode(str) {
 
 }
 
-//console.log(isValidMode(undefined));
+//console.log(arithmetic(undefined));
 //console.log();
-//console.log(isValidMode(null));
+//console.log(arithmetic(null));
 //console.log();
-//console.log(isValidMode('geometric'));
+//console.log(arithmetic('geometric'));
 //console.log();
-//console.log(isValidMode('arithmetic'));
+//console.log(arithmetic('arithmetic'));
 //console.log();
-//console.log(isValidMode(' arithmetic'));
+//console.log(arithmetic(' arithmetic'));
 //console.log();
 
 function isValidGrids(str) {
@@ -221,5 +221,6 @@ module.exports = {
   iso,
   range,
   number,
+  arithmetic,
 };
 
