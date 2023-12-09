@@ -293,7 +293,7 @@ const server = http.createServer({}, (req, res) => {
               ge_1: {
                 class: is.number(investment) ? investment >= 1 ? 'pass' : 'fail' : 'na',
                 symbol: is.number(investment) ? investment >= 1 ?  'v&nbsp;' : 'x&nbsp;' : '-&nbsp;',
-                message: `Expected to be greater than 1`,
+                message: `Expected to be greater or equal to 1`,
               },
             },
           },
@@ -368,6 +368,7 @@ const server = http.createServer({}, (req, res) => {
       let upper = url.searchParams.getAll('upper').toString();
       let mode = url.searchParams.getAll('mode').toString();
       let grids = url.searchParams.getAll('grids').toString();
+      let inv = url.searchParams.getAll('investment').toString();
 
       if(
         util.isValidDate(from)
@@ -382,6 +383,8 @@ const server = http.createServer({}, (req, res) => {
         && upper > lower
         && util.isValidMode(mode)
         && util.isValidGrids(grids)
+        && is.number(inv)
+        && inv > 1
       ) {
         let obj = {
           from: {
@@ -390,12 +393,8 @@ const server = http.createServer({}, (req, res) => {
           to: {
             value: to,
           },
-          lower: {
-            value: lower,
-          },
-          upper: {
-            value: upper,
-          },
+          lower: undefined,
+          upper: undefined,
           mode: {
             value: mode,
           },
@@ -408,13 +407,14 @@ const server = http.createServer({}, (req, res) => {
           recalculate: {
             link: `/${search}`
           },
-          table: [
+          amountPerGrid: undefined,
+          table: [/*
             ['1', '2.00 USDT', '3.00 USDT', '10.00 USDT', '5.00 BTC', '5 USDT / 50.00%'],
             ['2', '3.00 USDT', '4.00 USDT', '15.00 USDT', '5.00 BTC', '5 USDT / 33.33%'],
             ['3', '4.00 USDT', '5.00 USDT', '20.00 USDT', '5.00 BTC', '5 USDT / 25.00%'],
             ['4', '5.00 USDT', '6.00 USDT', '25.00 USDT', '5.00 BTC', '5 USDT / 20.00%'],
             ['5', '6.00 USDT', '7.00 USDT', '30.00 USDT', '5.00 BTC', '5 USDT / 16.67%'],
-          ],
+          */],
           table2: [
             ['1',  '0.00 USDT + 5.00 BTC', '2', '1', '15.00 USDT', '15.00 USDT + 0.00 BTC'],
             ['2',  '5.00 USDT + 5.00 BTC', '2', '1', '20.00 USDT', '20.00 USDT + 0.00 BTC'],
@@ -440,6 +440,49 @@ const server = http.createServer({}, (req, res) => {
             },
           ],
         };
+
+        lower = Number(lower);
+        upper = Number(upper);
+        grids = Number(grids);
+        inv = Number(inv);
+
+        let grid = []; // {num, lower, upper, inv, prof, yield}
+        let lower_sum = 0;
+
+        let spread = (upper - lower) / grids;
+
+        for(let i = 0; i < grids; i++) {
+          lower_sum += lower + spread * i;
+        }
+
+        let amount = inv / lower_sum;
+
+        for(let i = 0; i < grids; i++) {
+          grid[i] = {};
+          grid[i].num = i + 1;
+          grid[i].lower = lower + spread * i;
+          grid[i].upper = lower + spread * (i + 1);
+          grid[i].inv = amount * grid[i].lower;
+          grid[i].prof = amount * (1 - 0.001) * grid[i].upper * (1 - 0.001) - amount * grid[i].lower;
+          grid[i].yield = (grid[i].upper * (1 - 0.001) * (1 - 0.001) - grid[i].lower) / grid[i].lower;
+        }
+
+        console.log(grid);
+
+        obj.lower = lower.toFixed(2);
+        obj.upper = upper.toFixed(2);
+        obj.amountPerGrid = amount.toFixed(4);
+
+        // forming first table
+        for(let i = 0; i < grids; i++) {
+          obj.table[i] = [];
+          obj.table[i][0] = grid[i].num.toFixed(0);
+          obj.table[i][1] = grid[i].lower.toFixed(2) + ' USDT';
+          obj.table[i][2] = grid[i].upper.toFixed(2) + ' USDT';
+          obj.table[i][3] = grid[i].inv.toFixed(2) + ' USDT';
+          obj.table[i][4] = grid[i].prof.toFixed(2) + ' USDT';
+          obj.table[i][5] = (grid[i].yield * 100).toFixed(2) + '%';
+        }
 
         let calcPage = (obj) => eval("`" + fs.readFileSync('./layout/calc.html') + "`");
         res.writeHead(200, { 'Content-Type': 'text/html' });

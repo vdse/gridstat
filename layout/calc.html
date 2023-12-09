@@ -8,10 +8,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <!--
-  <link href="/calc.css" rel="stylesheet" />
--->
-
   <link href="/style.css" rel="stylesheet" />
+-->
+  <link href="/calc.css" rel="stylesheet" />
+
 </head>
 <body>
 
@@ -43,12 +43,10 @@
         <section>
             <h3>Price Range</h3>
             <div>
-                <span id="price-range-lower">Lower [USDT]: </span>
-                <span class="obj-value">${obj.lower.value}</span>
+                <span id="price-range-lower">Lower: ${obj.lower} USDT</span>
             </div>
             <div>
-                <span id="price-range-upper">Upper [USDT]: </span>
-                <span class="obj-value">${obj.upper.value}</span>
+                <span id="price-range-upper">Upper: ${obj.upper} USDT</span>
             </div>
         </section>
 
@@ -93,9 +91,9 @@
       </thead>
       <tbody>
         <tr>
-          <td>2.00 USDT</td>
-          <td>7.00 USDT</td>
-          <td>5.00 BTC</td>
+          <td>TODO USDT</td>
+          <td>TODO USDT</td>
+          <td>${obj.amountPerGrid} BTC</td>
         </tr>
       </tbody>
     </table>
@@ -111,10 +109,10 @@
       </thead>
       <tbody>
         <tr>
-          <td>50.00 USDT + 25.00 BTC</td>
-          <td>5</td>
-          <td>10</td>
-          <td>175.00 USDT + 0.00 BTC</td>
+          <td>TODO USDT + TODO BTC</td>
+          <td>TODO</td>
+          <td>TODO</td>
+          <td>TODO USDT + TODO BTC</td>
         </tr>
       </tbody>
     </table>
@@ -126,8 +124,8 @@
           <th>Lower Price</th>
           <th>Upper Price</th>
           <th>Investment 100.00</th>
-          <th>Amount per Grid</th>
-          <th style="border-top-right-radius:7px;">Exp. Profit per Grid</th>
+          <th>Profit per Grid</th>
+          <th style="border-top-right-radius:7px;">Profit per Grid %</th>
         </tr>
       </thead>
       <tbody>${obj.table.map((item, i) => `
