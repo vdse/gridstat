@@ -1,4 +1,5 @@
 # gridstat
+date --date='1970-01-01T00:00:00Z' +"%s"
 
 # tmp
 <link rel="icon" href="/favicon.ico" sizes="any">

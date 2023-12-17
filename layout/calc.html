@@ -32,11 +32,11 @@
             <h3>Date Range</h3>
             <div>
                 <span id="date-range-from">From: </span>
-                <span>${obj.from.value}</span>
+                <span>${obj.from}</span>
             </div>
             <div>
                 <span id="date-range-to">To: </span>
-                <span>${obj.to.value}</span>
+                <span>${obj.to}</span>
             </div>
         </section>
 
@@ -54,11 +54,11 @@
             <h3>Grid Parameters</h3>
             <div>
                 <span id="grid-mode">Mode: </span>
-                <span class="obj-value">${obj.mode.value}</span>
+                <span class="obj-value">${obj.mode}</span>
             </div>
             <div>
                 <span id="grid-grids">Quantity: </span>
-                <span class="obj-value">${obj.grids.value}</span>
+                <span class="obj-value">${obj.grids}</span>
             </div>
         </section>
 
@@ -66,7 +66,7 @@
             <h3>Investment</h3>
             <div>
                 <span id="investment-amount">Amount [USDT]: </span>
-                <span>${obj.investment.value}</span>
+                <span>${obj.inv}</span>
             </div>
         </section>
 
@@ -79,21 +79,59 @@
 
     </form>
 
+    <div>
+      <br>
+      BTC/USDT Spot Grid ${obj.period} days
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th class="btlr">Total Investment</th>
+          <th>Balance</th>
+          <th class="btrr">Annualized Return</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>${obj.inv} USDT</td>
+          <td>${obj.balance} USDT</td>
+          <td>${obj.annual_pc}%</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table>
+      <thead>
+        <tr>
+          <th class="btlr">Total PnL ${obj.total_pnl_pc}%</th>
+          <th>Grid Profit ${obj.grid_profit_pc}%</th>
+          <th class="btrr">Floating PnL ${obj.floating_pnl_pc}%</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>${obj.total_pnl} USDT</td>
+          <td>${obj.grid_profit} USDT</td>
+          <td>${obj.floating_pnl} USDT</td>
+        </tr>
+      </tbody>
+    </table>
+
     <h2>Details</h2>
 
     <table>
       <thead>
         <tr>
-          <th style="border-top-left-radius:7px;">Entry Price</th>
+          <th class="btlr">Entry Price</th>
           <th>Last Price</th>
-          <th style="border-top-right-radius:7px;">Amount per Grid</th>
+          <th class="btrr">Amount per Grid</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>TODO USDT</td>
-          <td>TODO USDT</td>
-          <td>${obj.amountPerGrid} BTC</td>
+          <td>${obj.first} USDT</td>
+          <td>${obj.last} USDT</td>
+          <td>${obj.amount} BTC</td>
         </tr>
       </tbody>
     </table>
@@ -101,18 +139,18 @@
     <table>
       <thead>
         <tr>
-          <th style="border-top-left-radius:7px;">Initial Distribution</th>
+          <th style="btlr">Initial Distribution</th>
           <th>Total Matched Trades</th>
           <th>Total Executions</th>
-          <th style="border-top-right-radius:7px;">Final Distribution</th>
+          <th style="btrr">Final Distribution</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>TODO USDT + TODO BTC</td>
-          <td>TODO</td>
-          <td>TODO</td>
-          <td>TODO USDT + TODO BTC</td>
+          <td>${obj.first_quote} USDT + ${obj.first_base} BTC</td>
+          <td>${obj.total_exec}</td>
+          <td>${obj.total_match}</td>
+          <td>${obj.last_quote} USDT + ${obj.last_base} BTC</td>
         </tr>
       </tbody>
     </table>
@@ -120,51 +158,56 @@
     <table>
       <thead>
         <tr>
-          <th style="border-top-left-radius:7px;">Grid #</th>
+          <th style="btlr">Grid #</th>
           <th>Lower Price</th>
           <th>Upper Price</th>
-          <th>Investment 100.00</th>
+          <th>Investment TODO</th>
           <th>Profit per Grid</th>
-          <th style="border-top-right-radius:7px;">Profit per Grid %</th>
+          <th style="btrr">Profit per Grid %</th>
         </tr>
       </thead>
-      <tbody>${obj.table.map((item, i) => `
+      <tbody>${obj.grid.map((item, i) => `
         <tr>
-          <td>${item[0]}</td><td>${item[1]}</td><td>${item[2]}</td><td>${item[3]}</td><td>${item[4]}</td><td>${item[5]}</td>
+          <td>${i + 1}</td><td>${item.lower}</td><td>${item.upper}</td><td>${item.inv}</td><td>${item.profit_per_grid}</td><td>${item.profit_per_grid_pc}</td>
         </tr>`).join('')}
       </tbody>
     </table>
 
+<!--
     <table>
       <thead>
         <tr>
-          <th style="border-top-left-radius:7px;">Grid #</th>
+          <th style="btlr">Grid #</th>
           <th>Initial Distribution</th>
           <th>Executions</th>
           <th>Matched Trades</th>
           <th>Grid Profit</th>
-          <th style="border-top-right-radius:7px;">Final Distribution</th>
+          <th style="btrr">Final Distribution</th>
         </tr>
       </thead>
-      <tbody>${obj.table2.map((item, i) => `
+      <tbody>${obj.log.map((item, i) => `
         <tr>
-          <td>${item[0]}</td><td>${item[1]}</td><td>${item[2]}</td><td>${item[3]}</td><td>${item[4]}</td><td>${item[5]}</td>
+          <td>${item.grid}</td><td>${item[1]}</td><td>${item[2]}</td><td>${item[3]}</td><td>${item[4]}</td><td>${item[5]}</td>
         </tr>`).join('')}
       </tbody>
     </table>
+-->
 
     <h2>Order History</h2>
-    ${obj.table3.map((item, i) => `
+    ${obj.log.map((item, i) => `
     <table>
       <thead>
         <tr>
           <th class="btlr">Grid #</th><th>Order Time</th><th>Side</th><th>Price</th><th>Executed</th><th>Total</th><th class="btrr">Fee</th>
         </tr>
       </thead>
-      <tbody>${item.table.map((order, i) => `
+      <tbody>${item.buy != undefined ? `
         <tr>
-          <td>${order[0]}</td><td>${order[1]}</td><td class="${order[2].toLowerCase()}">${order[2]}</td><td>${order[3]}</td><td>${order[4]}</td><td>${order[5]}</td><td>${order[6]}</td>
-        </tr>`).join('')}
+          <td>${item.grid}</td><td>${item.buy.time}</td><td class="buy">buy</td><td>${item.buy.price} USDT</td><td>${item.buy.exec} BTC</td><td>${item.buy.total} USDT</td><td>${item.buy.fee} BTC</td>
+        </tr>` : ''}${item.sell != undefined ? `
+        <tr>
+          <td></td><td>${item.sell.time}</td><td class="sell">sell</td><td>${item.sell.price} USDT</td><td>${item.sell.exec} BTC</td><td>${item.sell.total} USDT</td><td>${item.sell.fee} USDT</td>
+        </tr>` : ''}
       </tbody>
     </table>
     <div class="profit"><span>Profit: <span class="green">${item.profit}</span></span></div>\n`).join('')}

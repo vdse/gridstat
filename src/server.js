@@ -4,6 +4,7 @@ const URL = require('node:url').URL;
 
 const util = require('./util.js');
 const is = require('./is.js');
+const grid = require('./grid.js');
 
 const { FROM, TO }= require('../config');
 
@@ -71,7 +72,7 @@ const { FROM, TO }= require('../config');
 // *
 // */
 
-const server = http.createServer({}, (req, res) => {
+const server = http.createServer({}, async (req, res) => {
 //    // console.log('http request');
 ////   console.log(req.headers); // TODO try catch for internal server error
 ////   // TODO find way how to make request to https server with command line utils like telnet, netcat, etc
@@ -135,12 +136,15 @@ const server = http.createServer({}, (req, res) => {
           },
           mode: {
             value: '',
+            status: {},
           },
           grids: {
             value: '',
+            status: {},
           },
           investment: {
             value: '',
+            status: {},
           },
         };
 
@@ -384,109 +388,162 @@ const server = http.createServer({}, (req, res) => {
         && util.isValidMode(mode)
         && util.isValidGrids(grids)
         && is.number(inv)
-        && inv > 1
+        && inv >= 1
       ) {
-        let obj = {
-          from: {
-            value: from,
-          },
-          to: {
-            value: to,
-          },
-          lower: undefined,
-          upper: undefined,
-          mode: {
-            value: mode,
-          },
-          grids: {
-            value: grids,
-          },
-          investment: {
-            value: '1000',
-          },
-          recalculate: {
-            link: `/${search}`
-          },
-          amountPerGrid: undefined,
-          table: [/*
-            ['1', '2.00 USDT', '3.00 USDT', '10.00 USDT', '5.00 BTC', '5 USDT / 50.00%'],
-            ['2', '3.00 USDT', '4.00 USDT', '15.00 USDT', '5.00 BTC', '5 USDT / 33.33%'],
-            ['3', '4.00 USDT', '5.00 USDT', '20.00 USDT', '5.00 BTC', '5 USDT / 25.00%'],
-            ['4', '5.00 USDT', '6.00 USDT', '25.00 USDT', '5.00 BTC', '5 USDT / 20.00%'],
-            ['5', '6.00 USDT', '7.00 USDT', '30.00 USDT', '5.00 BTC', '5 USDT / 16.67%'],
-          */],
-          table2: [
-            ['1',  '0.00 USDT + 5.00 BTC', '2', '1', '15.00 USDT', '15.00 USDT + 0.00 BTC'],
-            ['2',  '5.00 USDT + 5.00 BTC', '2', '1', '20.00 USDT', '20.00 USDT + 0.00 BTC'],
-            ['3', '10.00 USDT + 5.00 BTC', '2', '1', '25.00 USDT', '25.00 USDT + 0.00 BTC'],
-            ['4', '15.00 USDT + 5.00 BTC', '2', '1', '30.00 USDT', '30.00 USDT + 0.00 BTC'],
-            ['5', '20.00 USDT + 5.00 BTC', '2', '1', '35.00 USDT', '35.00 USDT + 0.00 BTC'],
-          ],
-          table3: [
-            {
-              grid: '1',
-              table: [
-                ['1', '2023-10-27 19:30:47', 'Sell', '33.00', '0.74', '25.1600 USDT', '0.7342 BTC' ],
-              ],
-              profit: '--',
-            },
-            {
-              grid: '2',
-              table: [
-                ['2', '2023-10-27 19:30:47', 'Buy',  '33.00', '0.74', '25.1600 USDT', '0.7342 BTC' ],
-                ['2', '2023-10-27 19:30:47', 'Sell', '34.00', '0.74', '25.5548 USDT', '0.0251 USDT'],
-              ],
-              profit: '0.6895 USDT',
-            },
-          ],
-        };
+        //let obj = {
+        //  from: from,
+        //  to: to,
+        //  lower: lower,
+        //  upper: upper,
+        //  mode: mode,
+        //  grids: grids,
+        //  inv: inv,
+        //  amountPerGrid: undefined,
+        //  table: [/*
+        //    ['1', '2.00 USDT', '3.00 USDT', '10.00 USDT', '5.00 BTC', '5 USDT / 50.00%'],
+        //    ['2', '3.00 USDT', '4.00 USDT', '15.00 USDT', '5.00 BTC', '5 USDT / 33.33%'],
+        //    ['3', '4.00 USDT', '5.00 USDT', '20.00 USDT', '5.00 BTC', '5 USDT / 25.00%'],
+        //    ['4', '5.00 USDT', '6.00 USDT', '25.00 USDT', '5.00 BTC', '5 USDT / 20.00%'],
+        //    ['5', '6.00 USDT', '7.00 USDT', '30.00 USDT', '5.00 BTC', '5 USDT / 16.67%'],
+        //  */],
+        //  table2: [
+        //    ['1',  '0.00 USDT + 5.00 BTC', '2', '1', '15.00 USDT', '15.00 USDT + 0.00 BTC'],
+        //    ['2',  '5.00 USDT + 5.00 BTC', '2', '1', '20.00 USDT', '20.00 USDT + 0.00 BTC'],
+        //    ['3', '10.00 USDT + 5.00 BTC', '2', '1', '25.00 USDT', '25.00 USDT + 0.00 BTC'],
+        //    ['4', '15.00 USDT + 5.00 BTC', '2', '1', '30.00 USDT', '30.00 USDT + 0.00 BTC'],
+        //    ['5', '20.00 USDT + 5.00 BTC', '2', '1', '35.00 USDT', '35.00 USDT + 0.00 BTC'],
+        //  ],
+        //  table3: [
+        //    {
+        //      grid: '1',
+        //      table: [
+        //        ['1', '2023-10-27 19:30:47', 'Sell', '33.00', '0.74', '25.1600 USDT', '0.7342 BTC' ],
+        //      ],
+        //      profit: '--',
+        //    },
+        //    {
+        //      grid: '2',
+        //      table: [
+        //        ['2', '2023-10-27 19:30:47', 'Buy',  '33.00', '0.74', '25.1600 USDT', '0.7342 BTC' ],
+        //        ['2', '2023-10-27 19:30:47', 'Sell', '34.00', '0.74', '25.5548 USDT', '0.0251 USDT'],
+        //      ],
+        //      profit: '0.6895 USDT',
+        //    },
+        //  ],
+        //};
 
+        //obj.recalculate = {link: `/${search}`};
+
+        //lower = Number(lower);
+        //upper = Number(upper);
+        //grids = Number(grids);
+        //inv = Number(inv);
+
+        //let grid = []; // {num, lower, upper, inv, prof, yield}
+        //let lower_sum = 0;
+
+        //let spread = (upper - lower) / grids;
+
+        //for(let i = 0; i < grids; i++) {
+        //  lower_sum += lower + spread * i;
+        //}
+
+        //let amount = inv / lower_sum;
+
+        //for(let i = 0; i < grids; i++) {
+        //  grid[i] = {};
+        //  grid[i].num = i + 1;
+        //  grid[i].lower = lower + spread * i;
+        //  grid[i].upper = lower + spread * (i + 1);
+        //  grid[i].inv = amount * grid[i].lower;
+        //  grid[i].prof = amount * (1 - 0.001) * grid[i].upper * (1 - 0.001) - amount * grid[i].lower;
+        //  grid[i].yield = (grid[i].upper * (1 - 0.001) * (1 - 0.001) - grid[i].lower) / grid[i].lower;
+        //}
+
+        //console.log(grid);
+
+        //obj.lower = lower.toFixed(2);
+        //obj.upper = upper.toFixed(2);
+        //obj.amountPerGrid = amount.toFixed(4);
+
+        //// forming first table
+        //for(let i = 0; i < grids; i++) {
+        //  obj.table[i] = [];
+        //  obj.table[i][0] = grid[i].num.toFixed(0);
+        //  obj.table[i][1] = grid[i].lower.toFixed(2) + ' USDT';
+        //  obj.table[i][2] = grid[i].upper.toFixed(2) + ' USDT';
+        //  obj.table[i][3] = grid[i].inv.toFixed(2) + ' USDT';
+        //  obj.table[i][4] = grid[i].prof.toFixed(2) + ' USDT';
+        //  obj.table[i][5] = (grid[i].yield * 100).toFixed(2) + '%';
+        //}
+
+        
         lower = Number(lower);
         upper = Number(upper);
         grids = Number(grids);
         inv = Number(inv);
+        let obj = await grid(new Date(from).getTime(), new Date(to).getTime(), lower, upper, mode, grids, inv);
+        obj.from = from;
+        obj.to = to;
+        obj.lower = obj.lower.toFixed(2);
+        obj.upper = obj.upper.toFixed(2);
+        obj.inv = obj.inv.toFixed(2);
+        obj.first = obj.first ? obj.first.toFixed(2) : '--';
+        obj.balance = obj.balance.toFixed(2);
+        obj.amout = obj.amount.toFixed(6);
+        obj.last = obj.last ? obj.last.toFixed(2) : '--';
+        obj.annual_pc = obj.annual_pc.toFixed(2);
+        obj.total_pnl = obj.total_pnl.toFixed(2);
+        obj.total_pnl_pc = obj.total_pnl_pc.toFixed(2);
+        obj.grid_profit = obj.grid_profit.toFixed(2);
+        obj.grid_profit_pc = obj.grid_profit_pc.toFixed(2);
+        obj.floating_pnl = obj.floating_pnl.toFixed(2);
+        obj.floating_pnl_pc = obj.floating_pnl_pc.toFixed(2);
 
-        let grid = []; // {num, lower, upper, inv, prof, yield}
-        let lower_sum = 0;
+        obj.first_base = obj.first_base.toFixed(6);
+        obj.first_quote = obj.first_quote.toFixed(2);
+        obj.total_exec = obj.total_exec.toFixed(0);
+        obj.total_match = obj.total_match.toFixed(0); // <- TODO review maybe another function
+        obj.last_base = obj.last_base.toFixed(6);
+        obj.last_quote = obj.last_quote.toFixed(2);
+        obj.grid = obj.grid.map(item => {
+          item.lower = item.lower.toFixed(2);
+          item.upper = item.upper.toFixed(2);
+          item.inv = item.inv.toFixed(2);
+          item.profit_per_grid = item.profit_per_grid.toFixed(2);
+          item.profit_per_grid_pc = item.profit_per_grid_pc.toFixed(2);
+          return item
+        });
+        obj.log = obj.log.map(item => {
+          item.grid += 1;
+          item.buy.time = new Date(item.buy.time).toISOString().slice(0,19).replace('T', ' ');
+          item.buy.price = item.buy.price.toFixed(2);
+          item.buy.exec = item.buy.exec.toFixed(4);
+          item.buy.total = item.buy.total.toFixed(2);
+          item.buy.fee = item.buy.fee.toFixed(6);
+          if(item.sell) {
+            item.sell.time = new Date(item.sell.time).toISOString().slice(0,19).replace('T', ' ');
+            item.sell.price = item.sell.price.toFixed(2);
+            item.sell.exec = item.sell.exec.toFixed(6);
+            item.sell.total = item.sell.total.toFixed(2);
+            item.sell.fee = item.sell.fee.toFixed(6);
+          }
+          item.profit ??= '--';
+          return item
+        });
 
-        let spread = (upper - lower) / grids;
-
-        for(let i = 0; i < grids; i++) {
-          lower_sum += lower + spread * i;
-        }
-
-        let amount = inv / lower_sum;
-
-        for(let i = 0; i < grids; i++) {
-          grid[i] = {};
-          grid[i].num = i + 1;
-          grid[i].lower = lower + spread * i;
-          grid[i].upper = lower + spread * (i + 1);
-          grid[i].inv = amount * grid[i].lower;
-          grid[i].prof = amount * (1 - 0.001) * grid[i].upper * (1 - 0.001) - amount * grid[i].lower;
-          grid[i].yield = (grid[i].upper * (1 - 0.001) * (1 - 0.001) - grid[i].lower) / grid[i].lower;
-        }
-
-        console.log(grid);
-
-        obj.lower = lower.toFixed(2);
-        obj.upper = upper.toFixed(2);
-        obj.amountPerGrid = amount.toFixed(4);
-
-        // forming first table
-        for(let i = 0; i < grids; i++) {
-          obj.table[i] = [];
-          obj.table[i][0] = grid[i].num.toFixed(0);
-          obj.table[i][1] = grid[i].lower.toFixed(2) + ' USDT';
-          obj.table[i][2] = grid[i].upper.toFixed(2) + ' USDT';
-          obj.table[i][3] = grid[i].inv.toFixed(2) + ' USDT';
-          obj.table[i][4] = grid[i].prof.toFixed(2) + ' USDT';
-          obj.table[i][5] = (grid[i].yield * 100).toFixed(2) + '%';
-        }
+        obj.recalculate = {link: `/${search}`};
+        //console.log(JSON.stringify(obj, null, 2));
 
         let calcPage = (obj) => eval("`" + fs.readFileSync('./layout/calc.html') + "`");
         res.writeHead(200, { 'Content-Type': 'text/html' });
         res.end(calcPage(obj));
+
+        //grid().then((obj) => {
+        //  console.log(JSON.stringify(obj, null, 2));
+        //}, (err) => {
+        //  console.log('error on grid');
+        //});
 
       } else {
         res.writeHead(302, { Location: `http://${req.headers.host}/${search}` });
