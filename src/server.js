@@ -490,7 +490,7 @@ const server = http.createServer({}, async (req, res) => {
         obj.inv = obj.inv.toFixed(2);
         obj.first = obj.first ? obj.first.toFixed(2) : '--';
         obj.balance = obj.balance.toFixed(2);
-        obj.amout = obj.amount.toFixed(6);
+        obj.amount = obj.amount.toFixed(6);
         obj.last = obj.last ? obj.last.toFixed(2) : '--';
         obj.annual_pc = obj.annual_pc.toFixed(2);
         obj.total_pnl = obj.total_pnl.toFixed(2);
@@ -528,7 +528,7 @@ const server = http.createServer({}, async (req, res) => {
             item.sell.total = item.sell.total.toFixed(2);
             item.sell.fee = item.sell.fee.toFixed(6);
           }
-          item.profit ??= '--';
+          item.profit = item.profit ? item.profit.toFixed(6) : '--';
           return item
         });
 
@@ -567,5 +567,5 @@ const server = http.createServer({}, async (req, res) => {
 
 });
 
-server.listen(8080);
+server.listen(8080, 'localhost');
 

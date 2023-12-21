@@ -8,9 +8,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <!--
-  <link href="/style.css" rel="stylesheet" />
--->
   <link href="/calc.css" rel="stylesheet" />
+-->
+  <link href="/style.css" rel="stylesheet" />
 
 </head>
 <body>
@@ -140,8 +140,8 @@
       <thead>
         <tr>
           <th style="btlr">Initial Distribution</th>
-          <th>Total Matched Trades</th>
           <th>Total Executions</th>
+          <th>Total Matched Trades</th>
           <th style="btrr">Final Distribution</th>
         </tr>
       </thead>
@@ -173,7 +173,6 @@
       </tbody>
     </table>
 
-<!--
     <table>
       <thead>
         <tr>
@@ -185,13 +184,12 @@
           <th style="btrr">Final Distribution</th>
         </tr>
       </thead>
-      <tbody>${obj.log.map((item, i) => `
+      <tbody>${obj.grid.map((item, i) => `
         <tr>
-          <td>${item.grid}</td><td>${item[1]}</td><td>${item[2]}</td><td>${item[3]}</td><td>${item[4]}</td><td>${item[5]}</td>
+          <td>${i + 1}</td><td>${item[1]}</td><td>${item.exec}</td><td>${item.match}</td><td>${item.profit}</td><td>${item[5]}</td>
         </tr>`).join('')}
       </tbody>
     </table>
--->
 
     <h2>Order History</h2>
     ${obj.log.map((item, i) => `
@@ -210,7 +208,7 @@
         </tr>` : ''}
       </tbody>
     </table>
-    <div class="profit"><span>Profit: <span class="green">${item.profit}</span></span></div>\n`).join('')}
+    <div class="profit"><span>Profit: <span class="green">${item.profit}</span> USDT</span></div>\n`).join('')}
 
     <div>
       * Calculations are made with a commission of 0.1%

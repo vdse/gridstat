@@ -3,10 +3,13 @@ const open = require('node:fs/promises').open;
 
 //export async function grid() {
 
+let fee = 0.001;
+
 async function grid(from, to, lower, upper, mode, grids, inv) {
-  const file = await open('./test.csv');
+  //const file = await open('./test.csv');
   //const file = await open('../BTCUSDT-trades-2023-07.csv');
-  
+  const file = await open(`../data/BTCUSDT-trades-2023-07.csv.${String(grids).padStart(2, '0')}`);
+
   //let from = 0;
   //let to = 4 * 86400 * 1000;
   //let lower = 2.0;
@@ -38,7 +41,7 @@ async function grid(from, to, lower, upper, mode, grids, inv) {
     grid[i].exec = 0;
     grid[i].match = 0;
     grid[i].profit = 0;
-    grid[i].profit_per_grid = amount * grid[i].upper * 0.999 * 0.999 - amount * grid[i].lower;
+    grid[i].profit_per_grid = amount * grid[i].upper * (1 - fee) * (1 - fee) - amount * grid[i].lower;
     grid[i].profit_per_grid_pc = grid[i].profit_per_grid / (amount * grid[i].lower) * 100.0;
   }
   
@@ -69,11 +72,11 @@ async function grid(from, to, lower, upper, mode, grids, inv) {
         first = last = price;
         for(let i = 0; i < grids; i++) {
           if(price <= grid[i].lower) {
-            grid[i].base = amount * 0.999;
+            grid[i].base = amount * (1 - fee);
             grid[i].quote -= amount * price;
             grid[i].side = 'sell';
             grid[i].exec = 1;
-            log.unshift({grid: i, buy: {time: time, price: price, exec: amount, total: amount * price, fee: amount * 0.001}});
+            log.unshift({grid: i, buy: {time: time, price: price, exec: amount, total: amount * price, fee: amount * fee}});
           }
         }
         first_base = grid.reduce((acc, val) => acc + val.base, 0);
@@ -83,24 +86,24 @@ async function grid(from, to, lower, upper, mode, grids, inv) {
         for(let i = 0; i < grids; i++) {
           if(grid[i].side == 'buy') {
             if(price <= grid[i].lower) {
-              grid[i].base = amount * 0.999;
+              grid[i].base = amount * (1 - fee);
               grid[i].quote -= amount * price;
               grid[i].side = 'sell';
               grid[i].exec += 1;
-              log.unshift({grid: i, buy: {time: time, price: price, exec: amount, total: amount * price, fee: amount * 0.001}});
+              log.unshift({grid: i, buy: {time: time, price: price, exec: amount, total: amount * price, fee: amount * fee}});
             }
           } else { //        'sell'
             if(price >= grid[i].upper) {
-              grid[i].quote += grid[i].base * price * 0.999;
+              grid[i].quote += grid[i].base * price * (1 - fee);
               //grid[i].base = 0;
               grid[i].side = 'buy';
               grid[i].exec += 1;
               grid[i].match += 1;
               let j = log.findIndex((e) => e.grid == i); // grid[i].sell must be undefined
               log.unshift(log.splice(j, 1)[0]);
-              log[0].sell = {time: time, price: price, exec: grid[i].base, total: grid[i].base * price, fee: grid[i].base * price * 0.001};
+              log[0].sell = {time: time, price: price, exec: grid[i].base, total: grid[i].base * price, fee: grid[i].base * price * fee};
               grid[i].base = 0;
-              log[0].profit = amount * log[0].sell.price * 0.999 * 0.999 - amount * log[0].buy.price ;
+              log[0].profit = amount * log[0].sell.price * (1 - fee) * (1 - fee) - amount * log[0].buy.price ;
               grid[i].profit += log[0].profit;
             }
           }
@@ -113,7 +116,7 @@ async function grid(from, to, lower, upper, mode, grids, inv) {
     balance = 0;
     for(let i = 0; i < grids; i++) {
       //console.log('i:', i, 'base:', grid[i].base, 'quote:', grid[i].quote);
-      balance += grid[i].base * last * 0.999;
+      balance += grid[i].base * last * (1 - fee);
       balance += grid[i].quote;
     }
   } else {
@@ -123,11 +126,12 @@ async function grid(from, to, lower, upper, mode, grids, inv) {
   let total_pnl = balance - inv;
   let total_pnl_pc = total_pnl / inv * 100.0;
   let period = (to - from) / 86400000;
-  let annual_pc = total_pnl * 365 / period;
+  let annual_pc = total_pnl_pc * 365 / period;
   let grid_profit = grid.reduce((acc, val) => acc + val.profit, 0);
-  let grid_profit_pc = grid_profit * 365 / period;
+  let grid_profit_pc = grid_profit / inv * 100;
   let floating_pnl = total_pnl - grid_profit;
-  let floating_pnl_pc = floating_pnl * 365 / period;
+  let floating_pnl_pc = floating_pnl / inv * 100;
+  //let floating_pnl_pc = floating_pnl / inv * 365 / period;
   last_base = grid.reduce((acc, val) => acc + val.base, 0);
   last_quote = grid.reduce((acc, val) => acc + val.quote, 0);
   total_exec = grid.reduce((acc, val) => acc + val.exec, 0);
