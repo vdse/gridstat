@@ -557,9 +557,21 @@ const server = http.createServer({}, async (req, res) => {
       res.setHeader('Content-Type', 'text/css');
       res.write(fs.readFileSync('layout/style.css'));
       res.end();
+    } else if(pathname == '/gridstat.css') {
+      res.setHeader('Content-Type', 'text/css');
+      res.write(fs.readFileSync('layout/gridstat.css'));
+      res.end();
     } else if(pathname == '/calc.css') {
       res.setHeader('Content-Type', 'text/css');
       res.write(fs.readFileSync('layout/calc.css'));
+      res.end();
+    } else if(pathname == '/btc.svg') {
+      res.setHeader('Content-Type', 'image/svg+xml');
+      res.write(fs.readFileSync('./layout/btc.svg'));
+      res.end();
+    } else if(pathname == '/usdt.svg') {
+      res.setHeader('Content-Type', 'image/svg+xml');
+      res.write(fs.readFileSync('./layout/usdt.svg'));
       res.end();
     } else {
       res.writeHead(404).end();
