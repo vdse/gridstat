@@ -47,7 +47,7 @@ input {
 /* TODO make this block safari specific */
 input[type="date"] {
   -webkit-appearance: initial;
-  height: 30px;
+  height: 30px; 
   color: black;
   background-color: white;
 }
@@ -131,21 +131,6 @@ button:active {
   display: inline-block;
   margin: 2px 0px;
   color: red;
-}
-
-table {
-  width: 100%;
-  margin-top: 16px 0;
-  margin-bottom: 20px;
-  border: 1px solid rgba(44, 46, 45, 1);
-  border-collapse: collapse;
-  border-radius: 4px;
-}
-
-th, td {
-  padding: 4px;
-  text-align: left;
-  border: 1px solid gray;
 }
 
 .profit {
@@ -363,6 +348,7 @@ th, td {
     .hero {
       display: grid;
       grid-template-columns: 1fr 320px;
+      gap: 12px;
     }
 
     .hero > .text {
@@ -423,3 +409,68 @@ th, td {
   }
 
 }
+
+table, th, td {
+  border-spacing: 0px;
+}
+
+table {
+  width: 100%;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(44, 46, 45, 1);
+  border-radius: 8px;
+}
+
+thead {
+}
+
+.btlr {
+  border-top-left-radius: 7px;
+}
+
+.btrr {
+  border-top-right-radius: 7px;
+}
+
+th {
+  font-size: 13.50px;
+  font-weight: 500;
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid rgba(44, 46, 45, 1);
+  /*background: rgba(30, 32, 31, 1);*/
+}
+
+td {
+  padding: 10px;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  display: inline;
+}
+
+.green, .buy {
+  color: #00A000;
+}
+
+.red, .sell {
+  color: #B80000;
+}
+
+.profit {
+  margin-bottom: 20px;
+  text-align: right;
+}
+
+.footer {
+  margin: 6.5px 0;
+  text-align: right;
+}
+

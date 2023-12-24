@@ -38,6 +38,8 @@ async function grid(from, to, lower, upper, mode, grids, inv) {
     grid[i].inv = amount * grid[i].lower;
     grid[i].base = 0.0;
     grid[i].quote = amount * grid[i].lower;
+    grid[i].first_base = 0.0;
+    grid[i].first_quote = 0.0;
     grid[i].exec = 0;
     grid[i].match = 0;
     grid[i].profit = 0;
@@ -64,7 +66,7 @@ async function grid(from, to, lower, upper, mode, grids, inv) {
     let qty = Number(trade[2]);
     let quote = Number(trade[3]);
     let time = Number(trade[4]);
-    console.log('id:', id, 'price:', price, 'qty:', qty, 'quote:', quote, 'time:', time);
+    //console.log('id:', id, 'price:', price, 'qty:', qty, 'quote:', quote, 'time:', time);
     lines++;
   
     if(time >= from && time < to) {
@@ -78,6 +80,10 @@ async function grid(from, to, lower, upper, mode, grids, inv) {
             grid[i].exec = 1;
             log.unshift({grid: i, buy: {time: time, price: price, exec: amount, total: amount * price, fee: amount * fee}});
           }
+        }
+        for(let i = 0; i < grids; i++) {
+          grid[i].first_base = grid[i].base;
+          grid[i].first_quote = grid[i].quote;
         }
         first_base = grid.reduce((acc, val) => acc + val.base, 0);
         first_quote = grid.reduce((acc, val) => acc + val.quote, 0);
@@ -137,33 +143,33 @@ async function grid(from, to, lower, upper, mode, grids, inv) {
   total_exec = grid.reduce((acc, val) => acc + val.exec, 0);
   total_match = grid.reduce((acc, val) => acc + val.match, 0);
   
-  console.log('inv:\t\t\t', inv);
-  console.log('amount:\t\t\t', amount);
-  console.log('first:\t\t\t', first);
-  console.log('first_base:\t\t', first_base);
-  console.log('first_quote:\t\t', first_quote);
-  console.log('total_exec:\t\t', total_exec);
-  console.log('total_match:\t\t', total_match);
-  console.log('last_base:\t\t', last_base);
-  console.log('last_quote:\t\t', last_quote);
-  console.log('last:\t\t\t', last);
-  console.log('balance:\t\t', balance);
-  console.log('total_pnl:\t\t', total_pnl);
-  console.log('total_pnl_pc:\t\t', total_pnl_pc);
-  console.log('period:\t\t\t', period);
-  console.log('annual_pc:\t\t', annual_pc);
-  console.log('grid_profit:\t\t', grid_profit);
-  console.log('grid_profit_pc:\t\t', grid_profit_pc);
-  console.log('floating_pnl:\t\t', floating_pnl);
-  console.log('floating_pnl_pc:\t', floating_pnl_pc);
+  //console.log('inv:\t\t\t', inv);
+  //console.log('amount:\t\t\t', amount);
+  //console.log('first:\t\t\t', first);
+  //console.log('first_base:\t\t', first_base);
+  //console.log('first_quote:\t\t', first_quote);
+  //console.log('total_exec:\t\t', total_exec);
+  //console.log('total_match:\t\t', total_match);
+  //console.log('last_base:\t\t', last_base);
+  //console.log('last_quote:\t\t', last_quote);
+  //console.log('last:\t\t\t', last);
+  //console.log('balance:\t\t', balance);
+  //console.log('total_pnl:\t\t', total_pnl);
+  //console.log('total_pnl_pc:\t\t', total_pnl_pc);
+  //console.log('period:\t\t\t', period);
+  //console.log('annual_pc:\t\t', annual_pc);
+  //console.log('grid_profit:\t\t', grid_profit);
+  //console.log('grid_profit_pc:\t\t', grid_profit_pc);
+  //console.log('floating_pnl:\t\t', floating_pnl);
+  //console.log('floating_pnl_pc:\t', floating_pnl_pc);
   
-  console.table(grid);
+  //console.table(grid);
   
 //  for(let i = 0; i < grids; i++) {
 //    log[i].buy = JSON.stringify(log[i].buy);
 //    log[i].sell = JSON.stringify(log[i].sell);
 //  }
-  console.table(log);
+  //console.table(log);
   
   //console.log(lines);
 

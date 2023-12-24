@@ -1,8 +1,8 @@
 // https://stackoverflow.com/a/35413963
 
 function isValidDate(date) {
-  console.log('date: ' + date);
-  console.log('typeof date: ' + (typeof date));
+  //console.log('date: ' + date);
+  //console.log('typeof date: ' + (typeof date));
   if(typeof date != 'string') {
     return false;
   }
@@ -99,15 +99,15 @@ function isValidPriceRangeBoundary(str) {
 
 function isValidMode(str) {
 
-  console.log('isValidMode(\'' + str + '\')');
+  //console.log('isValidMode(\'' + str + '\')');
 
   if(typeof str != 'string') {
-    console.log('\tnot a string');
+    //console.log('\tnot a string');
     return false;
   }
 
   if(str.valueOf() != 'arithmetic') {
-    console.log('\tmode is not arithmetic');
+    //console.log('\tmode is not arithmetic');
     return false;
   }
 

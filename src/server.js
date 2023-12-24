@@ -525,9 +525,14 @@ const server = http.createServer({}, async (req, res) => {
         obj.grid = obj.grid.map(item => {
           item.lower = item.lower.toFixed(2);
           item.upper = item.upper.toFixed(2);
-          item.inv = item.inv.toFixed(2);
-          item.profit_per_grid = item.profit_per_grid.toFixed(2);
+          item.inv = item.inv.toFixed(4);
+          item.profit_per_grid = item.profit_per_grid.toFixed(4);
           item.profit_per_grid_pc = item.profit_per_grid_pc.toFixed(2);
+          item.profit = item.profit.toFixed(4);
+          item.base = item.base.toFixed(6);
+          item.quote = item.quote.toFixed(2);
+          item.first_base = item.first_base.toFixed(6);
+          item.first_quote = item.first_quote.toFixed(2);
           return item
         });
         obj.log = obj.log.map(item => {
@@ -595,5 +600,6 @@ const server = http.createServer({}, async (req, res) => {
 
 });
 
-server.listen(8080, 'localhost');
+//server.listen(8080, 'localhost');
+server.listen(8080);
 
