@@ -106,7 +106,8 @@ const server = http.createServer({}, async (req, res) => {
     if (pathname === '/') {
 
       if(
-        url.searchParams.getAll('from').length == 0
+        url.searchParams.getAll('symbol').length == 0
+        && url.searchParams.getAll('from').length == 0
         && url.searchParams.getAll('to').length == 0
         && url.searchParams.getAll('lower').length == 0
         && url.searchParams.getAll('upper').length == 0
@@ -114,6 +115,10 @@ const server = http.createServer({}, async (req, res) => {
         && url.searchParams.getAll('grids').length == 0
       ) {
         let obj = {
+          symbol: {
+            value: '',
+            status: {},
+          },
           from: {
             value: '',
             min: FROM,
@@ -154,6 +159,7 @@ const server = http.createServer({}, async (req, res) => {
 
       } else {
 
+        let symbol = url.searchParams.getAll('symbol').toString();
         let from = url.searchParams.getAll('from').toString();
         let to = url.searchParams.getAll('to').toString();
         let lower = url.searchParams.getAll('lower').toString();
@@ -176,6 +182,14 @@ const server = http.createServer({}, async (req, res) => {
 
         let obj = {
           // TODO na status
+          symbol: {
+            value: symbol,
+            status: {
+              class: symbol === 'BTCUSDT' ? 'pass' : 'fail',
+              symbol: symbol === 'BTCUSDT' ? 'v&nbsp;' :  'x&nbsp;',
+              message: `Expected symbol=BTCUSDT; received: \'${symbol == undefined ? '' : symbol}'`,
+            },
+          },
           from: {
             value: is.iso(from) ? from : undefined,
             min: FROM,
@@ -366,6 +380,7 @@ const server = http.createServer({}, async (req, res) => {
 
     } else if (pathname === '/calc') {
 
+      let symbol = url.searchParams.getAll('symbol').toString();
       let from = url.searchParams.getAll('from').toString();
       let to = url.searchParams.getAll('to').toString();
       let lower = url.searchParams.getAll('lower').toString();
@@ -375,7 +390,8 @@ const server = http.createServer({}, async (req, res) => {
       let inv = url.searchParams.getAll('investment').toString();
 
       if(
-        util.isValidDate(from)
+        symbol === 'BTCUSDT'
+        && util.isValidDate(from)
         && util.isValidDate(to)
         && Date.parse(from) >= Date.parse(FROM)
         && Date.parse(from) <= Date.parse(TO)

@@ -31,13 +31,18 @@
 
       <h3 class="title">
         <span class="B">&nbsp;</span><span>BTC/USDT Spot Grid Calculator</span>
-      </h3>
+      </h3>${obj.symbol.status.class != 'pass' ? `
+      <div>
+        <span class="${obj.symbol.status.class}"><code>${obj.symbol.status.symbol}</code></span><span class="${obj.symbol.status.class}">${obj.symbol.status.message}</span>
+       </div>` : ''}
 
       <hr/>
 
       <p class="required-fields">
         Required fields are followed by <strong><span aria-label="required">*</span></strong>.
       </p>
+
+      <input type="hidden" name="symbol" value="BTCUSDT" />
 
       <fieldset class="date-range">
         <legend>Date Range <span style="font-size:12px;">(date within 2023)</span></legend>

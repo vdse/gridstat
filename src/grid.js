@@ -8,7 +8,7 @@ let fee = 0.001;
 async function grid(from, to, lower, upper, mode, grids, inv) {
   //const file = await open('./test.csv');
   //const file = await open('../BTCUSDT-trades-2023-07.csv');
-  const file = await open(`../data/BTCUSDT-trades-2023-07.csv.${String(grids).padStart(2, '0')}`);
+  const file = await open(`../data/BTCUSDT-trades-2023-01-11.csv.${String(grids).padStart(2, '0')}`);
 
   //let from = 0;
   //let to = 4 * 86400 * 1000;

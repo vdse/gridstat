@@ -1,6 +1,11 @@
 # gridstat
 date --date='1970-01-01T00:00:00Z' +"%s"
 
+https://observablehq.com/@d3/candlestick-chart/2?intent=fork
+https://tradingview.github.io/lightweight-charts/docs
+https://apexcharts.com/javascript-chart-demos/candlestick-charts/basic/
+https://www.youtube.com/watch?v=ERgUCaYaI1Y&t=0s
+
 # tmp
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
