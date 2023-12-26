@@ -556,6 +556,8 @@ const server = http.createServer({}, async (req, res) => {
         obj.recalculate = {link: `/${search}`};
         //console.log(JSON.stringify(obj, null, 2));
 
+       console.log(JSON.stringify(obj, null, 2));
+
         let calcPage = (obj) => eval("`" + fs.readFileSync('./layout/calc.html') + "`");
         res.writeHead(200, { 'Content-Type': 'text/html' });
         res.end(calcPage(obj));
@@ -582,6 +584,10 @@ const server = http.createServer({}, async (req, res) => {
       res.setHeader('Content-Type', 'text/css');
       res.write(fs.readFileSync('layout/gridstat.css'));
       res.end();
+    } else if(pathname == '/gridstat2.css') {
+      res.setHeader('Content-Type', 'text/css');
+      res.write(fs.readFileSync('layout/gridstat2.css'));
+      res.end();
     } else if(pathname == '/calc.css') {
       res.setHeader('Content-Type', 'text/css');
       res.write(fs.readFileSync('layout/calc.css'));
@@ -589,6 +595,10 @@ const server = http.createServer({}, async (req, res) => {
     } else if(pathname == '/btc.svg') {
       res.setHeader('Content-Type', 'image/svg+xml');
       res.write(fs.readFileSync('./layout/btc.svg'));
+      res.end();
+    } else if(pathname == '/chart.svg') {
+      res.setHeader('Content-Type', 'image/svg+xml');
+      res.write(fs.readFileSync('./layout/chart.svg'));
       res.end();
     } else if(pathname == '/usdt.svg') {
       res.setHeader('Content-Type', 'image/svg+xml');
@@ -601,5 +611,5 @@ const server = http.createServer({}, async (req, res) => {
 });
 
 //server.listen(8080, 'localhost');
-server.listen(8080);
+server.listen(8080, '0.0.0.0');
 

@@ -10,27 +10,127 @@
   <link href="/style.css" rel="stylesheet" />
 -->
   <link href="/gridstat.css" rel="stylesheet" />
+  <link href="/gridstat2.css" rel="stylesheet" />
 </head>
 <body>${false ? 'TODO find approach to create and reuse partials for status' : ''}
   <!-- TODO union label with first span -->
 
-  <div>
-    <div style="margin: auto; max-width: 720px;">
-      header
-    </div>
+  <div style="margin: auto; max-width: 720px;">
+    <div style="padding: 7px;">header</div>
+    <hr style="margin: 0px 7px;">
   </div>
 
   <div style="margin: auto; max-width: 720px;">
 
     <div class="hero">
 
-      <div class="text">
-        <h1>Grid Trading Strategy</h1>
+    <img src="chart.svg" />
 
-    <div>
-      <br>
-      BTC/USDT Spot Grid ${obj.period} days
+    <div class="form">
+      <form method="GET" action="/calc">
+
+        <h3 class="title">
+          <span class="B">&nbsp;</span><span>BTC/USDT Spot Grid ${obj.period} days</span>
+        </h3>
+
+        <hr/>
+
+        <p class="required-fields">
+          Required fields are followed by <strong><span aria-label="required">*</span></strong>.
+        </p>
+
+        <input type="hidden" name="symbol" value="BTCUSDT" />
+
+        <fieldset class="date-range">
+          <legend>Date Range <span style="font-size:12px;">(date within 2023)</span></legend>
+          <div class="from"> <!-- div required for vertical layout in w3m, lynx, links etc -->
+            <div class="label">
+              <label for="from">
+                <span id="date-range-from">From <strong><span class="asterisk" aria-label="required">*</span></strong></span>
+              </label>
+            </div>
+            <input type="date" id="from" name="from" required aria-describedby="date-range-from" value="${obj.from}" disabled />
+          </div>
+
+          <div class="to">
+            <div class="label">
+              <label for="to">
+                <span id="date-range-to">To <strong><span class="asterisk" aria-label="required">*</span></strong></span>
+              </label>
+            </div>
+            <input type="date" id="to" name="to" required aria-describedby="date-range-to" value="${obj.to}" disabled />
+          </div>
+
+        </fieldset>
+
+        <fieldset class="price-range">
+          <legend>Price Range <span style="font-size:12px;font-weight:400;">(multiple of 1000)</span></legend>
+          <div class="lower">
+            <div class="label">
+              <label for="lower">
+                <span class="name">Lower</span><span class="spacer"> </span><span class="usdt"><span class="bracket">[</span>USDT<span class="bracket">]</span></span><strong><span class="asterisk" aria-label="required"> *</span></strong><span class="T"></span>
+              </label>
+            </div>
+              <!-- property size ignored by chrome, but required for firefox to more unify (with chrome) handle min-width -->
+              <input required type="number" id="lower" name="lower" aria-describedby="price-range-lower" min="1000" step="1000" size="10" placeholder="&geq;1000" value="${obj.lower}" disabled />
+          </div>
+
+          <div class="upper">
+            <div class="label">
+              <label for="upper">
+                <span class="name">Upper</span><span class="spacer"> </span><span class="usdt"><span class="bracket">[</span>USDT<span class="bracket">]</span></span><strong><span class="asterisk" aria-label="required"> *</span></strong><span class="T"></span>
+              </label>
+            </div>
+            <input required type="number" id="upper" name="upper" aria-describedby="price-range-upper" min="2000" step="1000" size="10" placeholder="&gt;Lower" value="${obj.upper}" disabled />
+          </div>
+
+        </fieldset>
+
+        <fieldset>
+          <legend>Grid Parameters</legend>
+          <div class="mode">
+            <div class="label">
+              <label for="mode">
+                <span class="name" id="grid-mode">Mode </span><strong><span class="asterisk" aria-label="required">*</span></strong>
+              </label>
+            </div>
+            <select id="mode" name="mode" aria-describedby="grid-mode" disabled>
+              <option value="arithmetic" selected>Arithmetic</option>
+              <option value="geometric" disabled>Geometric</option>
+            </select>
+          </div>
+          <div class="grids">
+            <div class="label">
+              <label id="mode-grids" for="grids">
+                <span class="name">Grids </span><strong><span class="asterisk" aria-label="required">*</span></strong>
+              </label>
+            </div>
+            <input required type="number" id="grids" name="grids" aria-describedby="mode-grids" min="2" max="20" step="1" size="10" placeholder="2~20" value="${obj.grids}" disabled />
+          </div>
+
+        </fieldset>
+
+        <fieldset>
+          <legend>Investment</legend>
+          <div class="investment">
+            <div class="label">
+              <label id="investment-amount" for="investment">
+                <span class="name">Amount</span><span class="spacer"> </span><span class="usdt"><span class="bracket">[</span>USDT<span class="bracket">]</span></span><strong><span class="asterisk" aria-label="required"> *</span></strong><span class="T"></span>
+              </label>
+            </div>
+            <input required type="number" id="investment" name="investment" aria-describedby="investment-amount" min="1" value="${obj.inv}" disabled />
+          </div>
+
+        </fieldset>
+
+        <div class="link">
+          <a href="${obj.recalculate.link}">Recalculate</a>
+        </div>
+
+      </form>
     </div>
+
+    <div class="table">
     <table>
       <thead>
         <tr>
@@ -47,7 +147,9 @@
         </tr>
       </tbody>
     </table>
+    </div>
 
+    <div class="table">
     <table>
       <thead>
         <tr>
@@ -64,118 +166,13 @@
         </tr>
       </tbody>
     </table>
-
-      </div>
-
-    <form class="form" method="GET" action="/calc">
-
-      <h3 class="title">
-        <span class="B">&nbsp;</span><span>BTC/USDT Spot Grid Calculator</span>
-      </h3>
-
-      <hr/>
-
-      <p class="required-fields">
-        Required fields are followed by <strong><span aria-label="required">*</span></strong>.
-      </p>
-
-      <input type="hidden" name="symbol" value="BTCUSDT" />
-
-      <fieldset class="date-range">
-        <legend>Date Range <span style="font-size:12px;">(date within 2023)</span></legend>
-        <div class="from"> <!-- div required for vertical layout in w3m, lynx, links etc -->
-          <div>
-            <label class="label" for="from">
-              <span id="date-range-from">From <strong><span class="asterisk" aria-label="required">*</span></strong></span>
-            </label>
-          </div>
-          <div>
-            <input type="date" id="from" name="from" required aria-describedby="date-range-from" value="${obj.from}" disabled />
-          </div>
-        </div>
-
-        <div class="to">
-          <div>
-            <label class="label" for="to">
-              <span id="date-range-to">To <strong><span class="asterisk" aria-label="required">*</span></strong></span>
-            </label>
-          </div>
-          <input type="date" id="to" name="to" required aria-describedby="date-range-to" value="${obj.to}" disabled />
-        </div>
-
-      </fieldset>
-
-      <fieldset class="price-range">
-        <legend>Price Range <span style="font-size:12px;font-weight:400;">(multiple of 1000)</span></legend>
-        <div class="lower">
-          <div>
-            <label class="label" for="lower">
-              <span class="name">Lower</span><span class="spacer"> </span><span class="usdt"><span class="bracket">[</span>USDT<span class="bracket">]</span></span><strong><span class="asterisk" aria-label="required"> *</span></strong><span class="T"></span>
-            </label>
-          </div>
-            <!-- property size ignored by chrome, but required for firefox to more unify (with chrome) handle min-width -->
-            <input required type="number" id="lower" name="lower" aria-describedby="price-range-lower" min="1000" step="1000" size="10" placeholder="&geq;1000" value="${obj.lower}" disabled />
-        </div>
-
-        <div class="upper">
-          <div>
-            <label class="label" for="upper">
-              <span class="name">Upper</span><span class="spacer"> </span><span class="usdt"><span class="bracket">[</span>USDT<span class="bracket">]</span></span><strong><span class="asterisk" aria-label="required"> *</span></strong><span class="T"></span>
-            </label>
-          </div>
-          <input required type="number" id="upper" name="upper" aria-describedby="price-range-upper" min="2000" step="1000" size="10" placeholder="&gt;Lower" value="${obj.upper}" disabled />
-        </div>
-
-      </fieldset>
-
-      <fieldset>
-        <legend>Grid Parameters</legend>
-        <div class="mode">
-          <div>
-            <label class="label" for="mode">
-              <span class="name" id="grid-mode">Mode </span><strong><span class="asterisk" aria-label="required">*</span></strong>
-            </label>
-          </div>
-          <select id="mode" name="mode" aria-describedby="grid-mode" disabled>
-            <option value="arithmetic" selected>Arithmetic</option>
-            <option value="geometric" disabled>Geometric</option>
-          </select>
-        </div>
-
-        <div class="grids">
-          <div>
-            <label class="label" id="mode-grids" for="grids">
-              <span class="name">Grids </span><strong><span class="asterisk" aria-label="required">*</span></strong>
-            </label>
-          </div>
-          <input required type="number" id="grids" name="grids" aria-describedby="mode-grids" min="2" max="20" step="1" size="10" placeholder="2~20" value="${obj.grids}" disabled />
-        </div>
-
-      </fieldset>
-
-      <fieldset>
-        <legend>Investment</legend>
-        <div class="investment">
-          <div>
-            <label class="label" id="investment-amount" for="investment">
-              <span class="name">Amount</span><span class="spacer"> </span><span class="usdt"><span class="bracket">[</span>USDT<span class="bracket">]</span></span><strong><span class="asterisk" aria-label="required"> *</span></strong><span class="T"></span>
-            </label>
-          </div>
-          <input required type="number" id="investment" name="investment" aria-describedby="investment-amount" min="1" value="${obj.inv}" disabled />
-        </div>
-
-      </fieldset>
-
-      <div>
-        <a href="${obj.recalculate.link}">Recalculate</a>
-      </div>
-
-    </form>
+    </div>
   
     </div>
 
     <h2>Details</h2>
 
+    <div class="table">
     <table>
       <thead>
         <tr>
@@ -192,14 +189,16 @@
         </tr>
       </tbody>
     </table>
+    </div>
 
+    <div class="table">
     <table>
       <thead>
         <tr>
-          <th style="btlr">Initial Distribution</th>
-          <th>Total Executions</th>
-          <th>Total Matched Trades</th>
-          <th style="btrr">Final Distribution</th>
+          <th style="btlr">Initial&nbsp;Distribution</th>
+          <th>Total&nbsp;Executions</th>
+          <th>Total&nbsp;Matched&nbsp;Trades</th>
+          <th style="btrr">Final&nbsp;Distribution</th>
         </tr>
       </thead>
       <tbody>
@@ -211,7 +210,9 @@
         </tr>
       </tbody>
     </table>
+    </div>
 
+    <div class="table">
     <table>
       <thead>
         <tr>
@@ -229,7 +230,9 @@
         </tr>`).join('')}
       </tbody>
     </table>
+    </div>
 
+    <div class="table">
     <table>
       <thead>
         <tr>
@@ -247,9 +250,12 @@
         </tr>`).join('')}
       </tbody>
     </table>
+    </div>
 
     <h2>Order History</h2>
     ${obj.log.map((item, i) => `
+
+    <div class="table">
     <table>
       <thead>
         <tr>
@@ -265,20 +271,21 @@
         </tr>` : ''}
       </tbody>
     </table>
-    <div class="profit"><span>Profit: <span class="green">${item.profit}</span> USDT</span></div>\n`).join('')}
+    <div class="profit"><span>Profit: <span class="green">${item.profit}</span> USDT</span></div></div>\n`).join('')}
+    
 
-    <div>
+    <p>
       1 Algorithm of Initial Distribution can significantly impact on result (different implementation of trading bot can differently implement Initial Distribution)
-    </div>
-    <div>
+    </p>
+    <p>
       2 Calculations are made with a commission of 0.1%
-    </div>
-    <div>
+    </p>
+    <p>
       3 Date and Time in UTC
-    </div>
-    <div>
+    </p>
+    <p>
       4 For calculate Annualized % 365 days used
-    </div>
+    </p>
 
     <div class="footer">
       <hr />
@@ -288,21 +295,6 @@
         <li>TODO Contact</li>
       </ul>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   </div>
 </body>

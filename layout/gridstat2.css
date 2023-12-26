@@ -1,0 +1,237 @@
+
+@supports (display: grid) {
+
+  h3 {
+  }
+
+  fieldset {
+    margin: 0px;
+    padding: 0px 0px 2px 0px;
+    border: 0;
+  }
+
+  legend {
+    font-weight: 500;
+  }
+
+  label {
+    display: flex;
+    box-sizing: border-box;
+    height: 100%;
+    padding: 8px;
+    align-items: center;
+  }
+
+  .lower label, .upper label, .investment label {
+    padding: 7px;
+  }
+
+  input {
+    width: 100%;
+  }
+  input[type="date"] {
+    -webkit-appearance: initial;
+    min-height: 30px;
+    padding: 4px 4px 4px 80px;
+    color: black;
+    background-color: white;
+  }
+  @supports (-webkit-touch-callout: none) {
+    /* CSS specific to iOS devices */ 
+    input[type="date"] {
+      min-height: 34px;
+    }
+  }
+
+  select {
+    width: 100%;
+  }
+
+  button {
+    width: 100%;
+  }
+
+  .required-fields {
+    display: none;
+  }
+
+  .fail > code, .na > code, .pass > code {
+    display: none;
+  }
+
+  .from, .to, .lower, .upper, .mode, .grids, .investment {
+    margin: 0px;
+    padding: 5px 7px;
+    position: relative;
+    min-width: 200px;
+  }
+
+  .label {
+    position: absolute;
+    inset: 0;
+    padding: 5px 7px;
+    pointer-events: none;
+  }
+
+  .spacer {
+    flex-grow: 1;
+    z-index: 0;
+  }
+
+  .usdt {
+    display: block;
+    width: 46px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    z-index: 1;
+  }
+
+  .bracket {
+    display: none;
+  }
+
+  .asterisk {
+    display: none;
+  }
+
+  .B {
+    display: block;
+    width: 18px;
+    height: 18px;
+    margin: 0px 4px 0px 0px;
+    background-image: url(/btc.svg);
+    background-size: 100% 100%;
+    z-index: 1;
+  }
+
+  .T {
+    background-image: url(/usdt.svg);
+    width: 18px;
+    height: 18px;
+    background-size: 100% 100%;
+    z-index: 1;
+  }
+
+  #lower, #upper, #investment  {
+    padding: 7px 74px 7px 71px; /* 7px (2 + 46 + 18 + 7 + 1)px 7px (1 + 4 + 62 + 4)px */
+  }
+
+  #mode, #grids {
+    padding: 7px 7px 7px 59px; /* 7px 7px 7px (1 + 4 + 50 + 4)px */
+  }
+
+  .name {
+    width: 62px; 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    z-index: 1;
+  }
+
+  .button {
+    padding: 7px;
+  }
+
+  .footer > hr {
+    border: 0.5px solid black;
+  }
+
+
+  @media (min-width: 480px) {
+
+    body {
+      font-size: 12px;
+    }
+
+    h3 {
+      font-size: 13.5px;
+      font-weight: 500;
+    }
+
+    legend {
+      font-size: 13.5px;
+    }
+
+    input {
+      font-size: 12px;
+    }
+
+    select {
+      font-size: 12px;
+    }
+
+    button {
+      font-size: 13.5px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      box-sizing: border-box;
+      /*grid-auto-rows: minmax(3px, auto);*/
+      /*gap: 12px;*/
+    }
+
+    .hero > .text {
+      grid-column: 1;
+      grid-row: 1;
+      color: green;
+    }
+
+    .hero > .form {
+      grid-column: 2;
+      grid-row: 1 / 4;
+    }
+
+    .lower .name, .upper .name {
+      width: 36px; 
+    }
+
+    .usdt {
+      width: 36px;
+    }
+
+    .B {
+      width: 16px;
+      height: 16px;
+      /*transform: translateY(-0.5px);*/
+    }
+
+    .T {
+      width: 16px;
+      height: 16px;
+      /*transform: translateY(-0.5px);*/
+    }
+
+    #lower, #upper {
+      padding: 7px 60px 7px 45px; /* 7px (36 + 16 + 7 + 1)px 7px (1 + 4 + 36 + 4)px */
+    }
+
+    .mode .name, .grids .name {
+      width: 36px; 
+    }
+
+    #mode, #grids {
+      padding: 7px 7px 7px 45px; /* 7px 7px 7px (1 + 4 + 36 + 4)px */
+    }
+
+    .investment .name {
+      width: 48px; 
+    }
+
+    #investment {
+      padding: 7px 60px 7px 57px; /* 7px (36 + 16 + 7 + 1)px 7px (1 + 4 + 48 + 4)px */
+    }
+
+    th {
+      font-size: 13.50px;
+    }
+
+    td {
+      font-size: 12px;
+    }
+
+  }
+
+}
