@@ -6,21 +6,31 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-<!--
-  <link href="/style.css" rel="stylesheet" />
--->
   <link href="/gridstat.css" rel="stylesheet" />
   <link href="/gridstat2.css" rel="stylesheet" />
+  <link href="/colors.css" rel="stylesheet" />
+  <style>
+    input {
+      border: 1px solid #2C2E2D;
+    }
+    select {
+      border: 1px solid #2C2E2D;
+    }
+    input:hover, select:hover {
+      box-shadow: none;
+    }
+  </style>
 </head>
 <body>${false ? 'TODO find approach to create and reuse partials for status' : ''}
-  <!-- TODO union label with first span -->
 
   <div style="margin: auto; max-width: 720px;">
-    <div style="padding: 7px;">header</div>
-    <hr style="margin: 0px 7px;">
-  </div>
 
-  <div style="margin: auto; max-width: 720px;">
+    <div>
+      <header>
+        <p style="font-size: 20px;"><a href="/">Grid Trading Strategies</a></p>
+        <hr style="margin: 0px 7px 7px 7px;">
+      </header>
+    </div>
 
     <div class="hero">
 
@@ -288,12 +298,13 @@
     </p>
 
     <div class="footer">
-      <hr />
-      <ul>
-        <li>TODO Terms</li>
-        <li>TODO Privacy</li>
-        <li>TODO Contact</li>
-      </ul>
+      <footer>
+        <hr style="margin: 14px 7px 0px 7px;">
+        <ul>
+          <li><a href="/terms">Terms of Use</a></li>
+          <li><a href="mailto:contact@grid-trading-strategy.info">Contact by Email</a></li>
+        </ul>
+      </footer>
     </div>
 
   </div>

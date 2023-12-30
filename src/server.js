@@ -572,14 +572,18 @@ const server = http.createServer({}, async (req, res) => {
         res.writeHead(302, { Location: `http://${req.headers.host}/${search}` });
         res.end();
       }
+    } else if(pathname == '/terms') {
+      res.setHeader('Content-Type', 'text/html');
+      res.write(fs.readFileSync('./layout/terms.html'));
+      res.end();
     } else if(pathname == '/favicon.ico') {
       res.setHeader('Content-Type', 'image/x-icon');
       res.write(fs.readFileSync('favicon.ico'));
       res.end();
-    } else if(pathname == '/style.css') {
+    /*} else if(pathname == '/style.css') {
       res.setHeader('Content-Type', 'text/css');
       res.write(fs.readFileSync('layout/style.css'));
-      res.end();
+      res.end();*/
     } else if(pathname == '/gridstat.css') {
       res.setHeader('Content-Type', 'text/css');
       res.write(fs.readFileSync('layout/gridstat.css'));
@@ -588,11 +592,15 @@ const server = http.createServer({}, async (req, res) => {
       res.setHeader('Content-Type', 'text/css');
       res.write(fs.readFileSync('layout/gridstat2.css'));
       res.end();
-    } else if(pathname == '/calc.css') {
+    } else if(pathname == '/colors.css') {
+      res.setHeader('Content-Type', 'text/css');
+      res.write(fs.readFileSync('layout/colors.css'));
+      res.end();
+    } /*else if(pathname == '/calc.css') {
       res.setHeader('Content-Type', 'text/css');
       res.write(fs.readFileSync('layout/calc.css'));
       res.end();
-    } else if(pathname == '/btc.svg') {
+    }*/ else if(pathname == '/btc.svg') {
       res.setHeader('Content-Type', 'image/svg+xml');
       res.write(fs.readFileSync('./layout/btc.svg'));
       res.end();

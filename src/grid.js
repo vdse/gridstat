@@ -109,8 +109,11 @@ async function grid(from, to, lower, upper, mode, grids, inv) {
               log.unshift(log.splice(j, 1)[0]);
               log[0].sell = {time: time, price: price, exec: grid[i].base, total: grid[i].base * price, fee: grid[i].base * price * fee};
               grid[i].base = 0;
-              log[0].profit = amount * log[0].sell.price * (1 - fee) * (1 - fee) - amount * log[0].buy.price ;
-              grid[i].profit += log[0].profit;
+              /* Different Approaches to calculate floating profit */
+              //log[0].profit = amount * log[0].sell.price * (1 - fee) * (1 - fee) - amount * log[0].buy.price;
+              //grid[i].profit += log[0].profit;
+              log[0].profit = grid[i].profit_per_grid;
+              grid[i].profit += grid[i].profit_per_grid;
             }
           }
         }

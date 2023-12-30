@@ -11,178 +11,277 @@
 -->
   <link href="/gridstat.css" rel="stylesheet" />
   <link href="/gridstat2.css" rel="stylesheet" />
+  <link href="/colors.css" rel="stylesheet" />
+
 </head>
 <body>${false ? 'TODO find approach to create and reuse partials for status' : ''}
-  <!-- TODO union label with first span -->
 
-  <div>
-    <div style="margin: auto; max-width: 720px;">
-      header
+  <div style="min-height: 100%; margin: auto; max-width: 720px;">
+
+    <div>
+      <header>
+        <p style="font-size: 20px;"><a href="/">Grid Trading Strategies</a></p>
+        <hr style="margin: 0px 7px 7px 7px;">
+      </header>
     </div>
-  </div>
-
-  <div style="margin: auto; max-width: 720px;">
 
     <div class="hero">
 
-      <div class="text">
-        <h1>Grid Trading Strategy</h1>
+      <div>
+        <h1>Estimate the Profitability of Grid Trading based on 2023 data</h1>
       </div>
 
-    <form class="form" method="GET" action="/calc">
+      <img src="chart.svg" />
 
-      <h3 class="title">
-        <span class="B">&nbsp;</span><span>BTC/USDT Spot Grid Calculator</span>
-      </h3>${obj.symbol.status.class != undefined && obj.symbol.status.class != 'pass' ? `
-      <div class="message">
-        <span class="${obj.symbol.status.class}"><code>${obj.symbol.status.symbol}</code></span><span class="${obj.symbol.status.class}">${obj.symbol.status.message}</span>
-       </div>` : ''}
+      <div class="form">
+        <form class="form" method="GET" action="/calc">
 
-      <hr/>
+          <h3 class="title">
+            <span class="B">&nbsp;</span><span>BTC/USDT Spot Grid Calculator</span>
+          </h3>${obj.symbol.status.class != undefined && obj.symbol.status.class != 'pass' ? `
+          <div class="message">
+            <span class="${obj.symbol.status.class}"><code>${obj.symbol.status.symbol}</code></span><span class="${obj.symbol.status.class}">${obj.symbol.status.message}</span>
+           </div>` : ''}
 
-      <p class="required-fields">
-        Required fields are followed by <strong><span aria-label="required">*</span></strong>.
-      </p>
+          <hr/>
 
-      <input type="hidden" name="symbol" value="BTCUSDT" />
+          <p class="required-fields">
+            Required fields are followed by <strong><span aria-label="required">*</span></strong>.
+          </p>
 
-      <fieldset class="date-range">
-        <legend>Date Range <span style="font-size:12px;">(date within 2023)</span></legend>
-        <div class="from"> <!-- div required for vertical layout in w3m, lynx, links etc -->
-          <div class="label">
-            <label for="from">
-              <span id="date-range-from">From <strong><span class="asterisk" aria-label="required">*</span></strong></span>
-            </label>
+          <input type="hidden" name="symbol" value="BTCUSDT" />
+
+          <fieldset class="date-range">
+            <legend>Date Range <span style="font-size:12px;font-weight:400;">(date within 2023)</span></legend>
+            <div class="from"> <!-- div required for vertical layout in w3m, lynx, links etc -->
+              <div class="label">
+                <label for="from">
+                  <span id="date-range-from">From <strong><span class="asterisk" aria-label="required">*</span></strong></span>
+                </label>
+              </div>
+              <input type="date" id="from" name="from" required aria-describedby="date-range-from" min="${obj.from.min}" max="${obj.from.max}" ${obj.from.value ? 'value="' + obj.from.value + '"' : ''}/>
+            </div>${obj.from.status.format != undefined ? `
+            <div class="message">
+              <span class="${obj.from.status.format.class}"><code>${obj.from.status.format.symbol}</code></span><span class="${obj.from.status.format.class}">${obj.from.status.format.message}</span>
+            </div>` : ''}${obj.from.status.within_range != undefined ? `
+            <div class="message">
+              <span class="${obj.from.status.within_range.class}"><code>${obj.from.status.within_range.symbol}</code></span><span class="${obj.from.status.within_range.class}">${obj.from.status.within_range.message}</span>
+            </div>` : ''}
+            <div class="to">
+              <div class="label">
+                <label for="to">
+                  <span id="date-range-to">To <strong><span class="asterisk" aria-label="required">*</span></strong></span>
+                </label>
+              </div>
+              <input type="date" id="to" name="to" required aria-describedby="date-range-to" min="${obj.to.min}" max="${obj.to.max}" ${obj.to.value ? 'value="' + obj.to.value + '"' : ''}/>
+            </div>${obj.to.status.format != undefined ? `
+            <div class="message">
+              <span class="${obj.to.status.format.class}"><code>${obj.to.status.format.symbol}</code></span><span class="${obj.to.status.format.class}">${obj.to.status.format.message}</span>
+            </div>` : ''}${obj.to.status.within_range != undefined ? `
+            <div class="message">
+              <span class="${obj.to.status.within_range.class}"><code>${obj.to.status.within_range.symbol}</code></span><span class="${obj.to.status.within_range.class}">${obj.to.status.within_range.message}</span>
+            </div>` : ''}${obj.to.status.to_ge_from != undefined ? `
+            <div class="message">
+              <span class="${obj.to.status.to_ge_from.class}"><code>${obj.to.status.to_ge_from.symbol}</code></span><span class="${obj.to.status.to_ge_from.class}">${obj.to.status.to_ge_from.message}</span>
+            </div>` : ''}
+          </fieldset>
+
+          <fieldset class="price-range">
+            <legend>Price Range <span style="font-size:12px;font-weight:400;">(multiple of 1000)</span></legend>
+            <div class="lower">
+              <div class="label">
+                <label for="lower">
+                  <span class="name">Lower</span><span class="spacer"> </span><span class="usdt"><span class="bracket">[</span>USDT<span class="bracket">]</span></span><strong><span class="asterisk" aria-label="required"> *</span></strong><span class="T"></span>
+                </label>
+              </div>
+                <!-- property size ignored by chrome, but required for firefox to more unify (with chrome) handle min-width -->
+                <input required type="number" id="lower" name="lower" aria-describedby="price-range-lower" min="1000" step="1000" size="10" placeholder="&geq;1000" ${obj.lower.value != undefined ? 'value="' + obj.lower.value + '"' : ''}
+                />
+            </div>${obj.lower.status.number != undefined ? `
+            <div class="message">
+              <span class="${obj.lower.status.number.class}"><code>${obj.lower.status.number.symbol}</code></span><span class="${obj.lower.status.number.class}">${obj.lower.status.number.message}</span>
+            </div>` : ''}${obj.lower.status.ge_1e3 != undefined ? `
+            <div class="message">
+              <span class="${obj.lower.status.ge_1e3.class}"><code>${obj.lower.status.ge_1e3.symbol}</code></span><span class="${obj.lower.status.ge_1e3.class}">${obj.lower.status.ge_1e3.message}</span>
+            </div>` : ''}${obj.lower.status.multiples_of_1e3 != undefined ? `
+            <div class="message">
+              <span class="${obj.lower.status.multiples_of_1e3.class}"><code>${obj.lower.status.multiples_of_1e3.symbol}</code></span><span class="${obj.lower.status.multiples_of_1e3.class}">${obj.lower.status.multiples_of_1e3.message}</span>
+            </div>` : ''}
+
+            <div class="upper">
+              <div class="label">
+                <label for="upper">
+                  <span class="name">Upper</span><span class="spacer"> </span><span class="usdt"><span class="bracket">[</span>USDT<span class="bracket">]</span></span><strong><span class="asterisk" aria-label="required"> *</span></strong><span class="T"></span>
+                </label>
+              </div>
+              <input required type="number" id="upper" name="upper" aria-describedby="price-range-upper" min="2000" step="1000" size="10" placeholder="&gt;Lower" ${obj.upper.value != undefined ? 'value="' + obj.upper.value + '"' : ''} />
+            </div>${obj.upper.status.number !== undefined ? `
+            <div class="message">
+              <span class="${obj.upper.status.number.class}"><code>${obj.upper.status.number.symbol}</code></span><span class="${obj.upper.status.number.class}">${obj.upper.status.number.message}</span>
+            </div>` : ''}${obj.upper.status.ge_2e3 != undefined ? `
+            <div class="message">
+              <span class="${obj.upper.status.ge_2e3.class}"><code>${obj.upper.status.ge_2e3.symbol}</code></span><span class="${obj.upper.status.ge_2e3.class}">${obj.upper.status.ge_2e3.message}</span>
+            </div>` : ''}${obj.upper.status.multiples_of_1e3 != undefined ? `
+            <div class="message">
+              <span class="${obj.upper.status.multiples_of_1e3.class}"><code>${obj.upper.status.multiples_of_1e3.symbol}</code></span><span class="${obj.upper.status.multiples_of_1e3.class}">${obj.upper.status.multiples_of_1e3.message}</span>
+            </div>` : ''}${obj.upper.status.gt_lower != undefined ? `
+            <div class="message">
+              <span class="${obj.upper.status.gt_lower.class}"><code>${obj.upper.status.gt_lower.symbol}</code></span><span class="${obj.upper.status.gt_lower.class}">${obj.upper.status.gt_lower.message}</span>
+            </div>` : ''}
+          </fieldset>
+
+          <fieldset>
+            <legend>Grid Parameters</legend>
+            <div class="mode">
+              <div class="label">
+                <label for="mode">
+                  <span class="name" id="grid-mode">Mode </span><strong><span class="asterisk" aria-label="required">*</span></strong>
+                </label>
+              </div>
+              <select id="mode" name="mode" aria-describedby="grid-mode">
+                <option value="arithmetic" selected>Arithmetic</option>
+                <option value="geometric" disabled>Geometric</option>
+              </select>
+            </div>${obj.mode.status.arithmetic != undefined ? `
+            <div class="message">
+              <span class="${obj.mode.status.arithmetic.class}"><code>${obj.mode.status.arithmetic.symbol}</code></span><span class="${obj.mode.status.arithmetic.class}">${obj.mode.status.arithmetic.message}</span>
+            </div>` : ''}
+
+            <div class="grids">
+              <div class="label">
+                <label id="mode-grids" for="grids">
+                  <span class="name">Grids </span><strong><span class="asterisk" aria-label="required">*</span></strong>
+                </label>
+              </div>
+              <input required type="number" id="grids" name="grids" aria-describedby="mode-grids" min="2" max="20" step="1" size="10" placeholder="2~20" ${obj.grids.value != undefined ? 'value="' + obj.grids.value + '"' : ''} />
+            </div>${obj.grids.status.integer != undefined ? `
+            <div class="message">
+              <span class="${obj.grids.status.integer.class}"><code>${obj.grids.status.integer.symbol}</code></span><span class="${obj.grids.status.integer.class}">${obj.grids.status.integer.message}</span>
+            </div>` : ''}${obj.grids.status.within_range != undefined ? `
+            <div class="message">
+              <span class="${obj.grids.status.within_range.class}"><code>${obj.grids.status.within_range.symbol}</code></span><span class="${obj.grids.status.within_range.class}">${obj.grids.status.within_range.message}</span>
+            </div>` : ''}
+          </fieldset>
+
+          <fieldset>
+            <legend>Investment</legend>
+            <div class="investment">
+              <div class="label">
+                <label id="investment-amount" for="investment">
+                  <span class="name">Amount</span><span class="spacer"> </span><span class="usdt"><span class="bracket">[</span>USDT<span class="bracket">]</span></span><strong><span class="asterisk" aria-label="required"> *</span></strong><span class="T"></span>
+                </label>
+              </div>
+              <input required type="number" id="investment" name="investment" aria-describedby="investment-amount" min="1" ${obj.investment.value != undefined ? 'value="' + obj.investment.value + '"' : ''} />
+            </div>${obj.investment.status.number != undefined ? `
+            <div class="message">
+              <span class="${obj.investment.status.number.class}"><code>${obj.investment.status.number.symbol}</code></span><span class="${obj.investment.status.number.class}">${obj.investment.status.number.message}</span>
+            </div>` : ''}${obj.investment.status.ge_1 != undefined ? `
+            <div class="message">
+              <span class="${obj.investment.status.ge_1.class}"><code>${obj.investment.status.ge_1.symbol}</code></span><span class="${obj.investment.status.ge_1.class}">${obj.investment.status.ge_1.message}</span>
+            </div>` : ''}
+          </fieldset>
+
+          <div class="button"> <!-- this div required for symmetry of layout -->
+            <button type="submit">CALCULATE PROFIT</button>
           </div>
-          <input type="date" id="from" name="from" required aria-describedby="date-range-from" min="${obj.from.min}" max="${obj.from.max}" ${obj.from.value ? 'value="' + obj.from.value + '"' : ''}/>
-        </div>${obj.from.status.format != undefined ? `
-        <div class="message">
-          <span class="${obj.from.status.format.class}"><code>${obj.from.status.format.symbol}</code></span><span class="${obj.from.status.format.class}">${obj.from.status.format.message}</span>
-        </div>` : ''}${obj.from.status.within_range != undefined ? `
-        <div class="message">
-          <span class="${obj.from.status.within_range.class}"><code>${obj.from.status.within_range.symbol}</code></span><span class="${obj.from.status.within_range.class}">${obj.from.status.within_range.message}</span>
-        </div>` : ''}
-        <div class="to">
-          <div class="label">
-            <label for="to">
-              <span id="date-range-to">To <strong><span class="asterisk" aria-label="required">*</span></strong></span>
-            </label>
-          </div>
-          <input type="date" id="to" name="to" required aria-describedby="date-range-to" min="${obj.to.min}" max="${obj.to.max}" ${obj.to.value ? 'value="' + obj.to.value + '"' : ''}/>
-        </div>${obj.to.status.format != undefined ? `
-        <div class="message">
-          <span class="${obj.to.status.format.class}"><code>${obj.to.status.format.symbol}</code></span><span class="${obj.to.status.format.class}">${obj.to.status.format.message}</span>
-        </div>` : ''}${obj.to.status.within_range != undefined ? `
-        <div class="message">
-          <span class="${obj.to.status.within_range.class}"><code>${obj.to.status.within_range.symbol}</code></span><span class="${obj.to.status.within_range.class}">${obj.to.status.within_range.message}</span>
-        </div>` : ''}${obj.to.status.to_ge_from != undefined ? `
-        <div class="message">
-          <span class="${obj.to.status.to_ge_from.class}"><code>${obj.to.status.to_ge_from.symbol}</code></span><span class="${obj.to.status.to_ge_from.class}">${obj.to.status.to_ge_from.message}</span>
-        </div>` : ''}
-      </fieldset>
 
-      <fieldset class="price-range">
-        <legend>Price Range <span style="font-size:12px;font-weight:400;">(multiple of 1000)</span></legend>
-        <div class="lower">
-          <div class="label">
-            <label for="lower">
-              <span class="name">Lower</span><span class="spacer"> </span><span class="usdt"><span class="bracket">[</span>USDT<span class="bracket">]</span></span><strong><span class="asterisk" aria-label="required"> *</span></strong><span class="T"></span>
-            </label>
-          </div>
-            <!-- property size ignored by chrome, but required for firefox to more unify (with chrome) handle min-width -->
-            <input required type="number" id="lower" name="lower" aria-describedby="price-range-lower" min="1000" step="1000" size="10" placeholder="&geq;1000" ${obj.lower.value != undefined ? 'value="' + obj.lower.value + '"' : ''}
-            />
-        </div>${obj.lower.status.number != undefined ? `
-        <div class="message">
-          <span class="${obj.lower.status.number.class}"><code>${obj.lower.status.number.symbol}</code></span><span class="${obj.lower.status.number.class}">${obj.lower.status.number.message}</span>
-        </div>` : ''}${obj.lower.status.ge_1e3 != undefined ? `
-        <div class="message">
-          <span class="${obj.lower.status.ge_1e3.class}"><code>${obj.lower.status.ge_1e3.symbol}</code></span><span class="${obj.lower.status.ge_1e3.class}">${obj.lower.status.ge_1e3.message}</span>
-        </div>` : ''}${obj.lower.status.multiples_of_1e3 != undefined ? `
-        <div class="message">
-          <span class="${obj.lower.status.multiples_of_1e3.class}"><code>${obj.lower.status.multiples_of_1e3.symbol}</code></span><span class="${obj.lower.status.multiples_of_1e3.class}">${obj.lower.status.multiples_of_1e3.message}</span>
-        </div>` : ''}
-
-        <div class="upper">
-          <div class="label">
-            <label for="upper">
-              <span class="name">Upper</span><span class="spacer"> </span><span class="usdt"><span class="bracket">[</span>USDT<span class="bracket">]</span></span><strong><span class="asterisk" aria-label="required"> *</span></strong><span class="T"></span>
-            </label>
-          </div>
-          <input required type="number" id="upper" name="upper" aria-describedby="price-range-upper" min="2000" step="1000" size="10" placeholder="&gt;Lower" ${obj.upper.value != undefined ? 'value="' + obj.upper.value + '"' : ''} />
-        </div>${obj.upper.status.number !== undefined ? `
-        <div class="message">
-          <span class="${obj.upper.status.number.class}"><code>${obj.upper.status.number.symbol}</code></span><span class="${obj.upper.status.number.class}">${obj.upper.status.number.message}</span>
-        </div>` : ''}${obj.upper.status.ge_2e3 != undefined ? `
-        <div class="message">
-          <span class="${obj.upper.status.ge_2e3.class}"><code>${obj.upper.status.ge_2e3.symbol}</code></span><span class="${obj.upper.status.ge_2e3.class}">${obj.upper.status.ge_2e3.message}</span>
-        </div>` : ''}${obj.upper.status.multiples_of_1e3 != undefined ? `
-        <div class="message">
-          <span class="${obj.upper.status.multiples_of_1e3.class}"><code>${obj.upper.status.multiples_of_1e3.symbol}</code></span><span class="${obj.upper.status.multiples_of_1e3.class}">${obj.upper.status.multiples_of_1e3.message}</span>
-        </div>` : ''}${obj.upper.status.gt_lower != undefined ? `
-        <div class="message">
-          <span class="${obj.upper.status.gt_lower.class}"><code>${obj.upper.status.gt_lower.symbol}</code></span><span class="${obj.upper.status.gt_lower.class}">${obj.upper.status.gt_lower.message}</span>
-        </div>` : ''}
-      </fieldset>
-
-      <fieldset>
-        <legend>Grid Parameters</legend>
-        <div class="mode">
-          <div class="label">
-            <label for="mode">
-              <span class="name" id="grid-mode">Mode </span><strong><span class="asterisk" aria-label="required">*</span></strong>
-            </label>
-          </div>
-          <select id="mode" name="mode" aria-describedby="grid-mode">
-            <option value="arithmetic" selected>Arithmetic</option>
-            <option value="geometric" disabled>Geometric</option>
-          </select>
-        </div>${obj.mode.status.arithmetic != undefined ? `
-        <div class="message">
-          <span class="${obj.mode.status.arithmetic.class}"><code>${obj.mode.status.arithmetic.symbol}</code></span><span class="${obj.mode.status.arithmetic.class}">${obj.mode.status.arithmetic.message}</span>
-        </div>` : ''}
-
-        <div class="grids">
-          <div class="label">
-            <label id="mode-grids" for="grids">
-              <span class="name">Grids </span><strong><span class="asterisk" aria-label="required">*</span></strong>
-            </label>
-          </div>
-          <input required type="number" id="grids" name="grids" aria-describedby="mode-grids" min="2" max="20" step="1" size="10" placeholder="2~20" ${obj.grids.value != undefined ? 'value="' + obj.grids.value + '"' : ''} />
-        </div>${obj.grids.status.integer != undefined ? `
-        <div class="message">
-          <span class="${obj.grids.status.integer.class}"><code>${obj.grids.status.integer.symbol}</code></span><span class="${obj.grids.status.integer.class}">${obj.grids.status.integer.message}</span>
-        </div>` : ''}${obj.grids.status.within_range != undefined ? `
-        <div class="message">
-          <span class="${obj.grids.status.within_range.class}"><code>${obj.grids.status.within_range.symbol}</code></span><span class="${obj.grids.status.within_range.class}">${obj.grids.status.within_range.message}</span>
-        </div>` : ''}
-      </fieldset>
-
-      <fieldset>
-        <legend>Investment</legend>
-        <div class="investment">
-          <div class="label">
-            <label id="investment-amount" for="investment">
-              <span class="name">Amount</span><span class="spacer"> </span><span class="usdt"><span class="bracket">[</span>USDT<span class="bracket">]</span></span><strong><span class="asterisk" aria-label="required"> *</span></strong><span class="T"></span>
-            </label>
-          </div>
-          <input required type="number" id="investment" name="investment" aria-describedby="investment-amount" min="1" ${obj.investment.value != undefined ? 'value="' + obj.investment.value + '"' : ''} />
-        </div>${obj.investment.status.number != undefined ? `
-        <div class="message">
-          <span class="${obj.investment.status.number.class}"><code>${obj.investment.status.number.symbol}</code></span><span class="${obj.investment.status.number.class}">${obj.investment.status.number.message}</span>
-        </div>` : ''}${obj.investment.status.ge_1 != undefined ? `
-        <div class="message">
-          <span class="${obj.investment.status.ge_1.class}"><code>${obj.investment.status.ge_1.symbol}</code></span><span class="${obj.investment.status.ge_1.class}">${obj.investment.status.ge_1.message}</span>
-        </div>` : ''}
-      </fieldset>
-
-      <div class="button"> <!-- this div required for symmetry of layout -->
-        <button type="submit">CALCULATE PROFIT</button>
+        </form>
       </div>
 
-    </form>
+      <div class="table">
+        <table>
+          <caption style="padding: 4px 0px; text-align:left">Some Examples in 2023:</caption>
+          <thead>
+            <tr>
+              <th class="btlr">From ... To</th>
+              <th>Lower</th>
+              <th>Upper</th>
+              <th>Grids</th>
+              <th class="btrr">PnL%</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a href="/calc?symbol=BTCUSDT&from=2023-01-01&to=2023-11-30&lower=20000&upper=30000&mode=arithmetic&grids=10&investment=1000">Jan ... Nov</a></td>
+              <td><a href="/calc?symbol=BTCUSDT&from=2023-01-01&to=2023-11-30&lower=20000&upper=30000&mode=arithmetic&grids=10&investment=1000">20k</a></td>
+              <td><a href="/calc?symbol=BTCUSDT&from=2023-01-01&to=2023-11-30&lower=20000&upper=30000&mode=arithmetic&grids=10&investment=1000">30k</a></td>
+              <td><a href="/calc?symbol=BTCUSDT&from=2023-01-01&to=2023-11-30&lower=20000&upper=30000&mode=arithmetic&grids=10&investment=1000">10</a></td>
+              <td><a href="/calc?symbol=BTCUSDT&from=2023-01-01&to=2023-11-30&lower=20000&upper=30000&mode=arithmetic&grids=10&investment=1000">53.73%</a></td>
+            </tr>
+            <tr>
+              <td><a href="calc?symbol=BTCUSDT&from=2023-01-01&to=2023-11-30&lower=20000&upper=35000&mode=arithmetic&grids=10&investment=1000">Jan ... Nov</a></td>
+              <td><a href="calc?symbol=BTCUSDT&from=2023-01-01&to=2023-11-30&lower=20000&upper=35000&mode=arithmetic&grids=10&investment=1000">20k</a></td>
+              <td><a href="calc?symbol=BTCUSDT&from=2023-01-01&to=2023-11-30&lower=20000&upper=35000&mode=arithmetic&grids=10&investment=1000">35k</a></td>
+              <td><a href="calc?symbol=BTCUSDT&from=2023-01-01&to=2023-11-30&lower=20000&upper=35000&mode=arithmetic&grids=10&investment=1000">10</a></td>
+              <td><a href="calc?symbol=BTCUSDT&from=2023-01-01&to=2023-11-30&lower=20000&upper=35000&mode=arithmetic&grids=10&investment=1000">53.81%</a></td>
+            </tr>
+            <tr>
+              <td><a href="/calc?symbol=BTCUSDT&from=2023-01-01&to=2023-11-30&lower=20000&upper=40000&mode=arithmetic&grids=10&investment=1000">Jan ... Nov</a></td>
+              <td><a href="/calc?symbol=BTCUSDT&from=2023-01-01&to=2023-11-30&lower=20000&upper=40000&mode=arithmetic&grids=10&investment=1000">20k</a></td>
+              <td><a href="/calc?symbol=BTCUSDT&from=2023-01-01&to=2023-11-30&lower=20000&upper=40000&mode=arithmetic&grids=10&investment=1000">40k</a></td>
+              <td><a href="/calc?symbol=BTCUSDT&from=2023-01-01&to=2023-11-30&lower=20000&upper=40000&mode=arithmetic&grids=10&investment=1000">10</a></td>
+              <td><a href="/calc?symbol=BTCUSDT&from=2023-01-01&to=2023-11-30&lower=20000&upper=40000&mode=arithmetic&grids=10&investment=1000">56.91%</a></td>
+            </tr>
+            <tr>
+              <td><a href="/calc?symbol=BTCUSDT&from=2023-01-01&to=2023-11-30&lower=20000&upper=40000&mode=arithmetic&grids=4&investment=1000">Jan ... Nov</a></td>
+              <td><a href="/calc?symbol=BTCUSDT&from=2023-01-01&to=2023-11-30&lower=20000&upper=40000&mode=arithmetic&grids=4&investment=1000">20k</a></td>
+              <td><a href="/calc?symbol=BTCUSDT&from=2023-01-01&to=2023-11-30&lower=20000&upper=40000&mode=arithmetic&grids=4&investment=1000">40k</a></td>
+              <td><a href="/calc?symbol=BTCUSDT&from=2023-01-01&to=2023-11-30&lower=20000&upper=40000&mode=arithmetic&grids=4&investment=1000">4</a></td>
+              <td><a href="/calc?symbol=BTCUSDT&from=2023-01-01&to=2023-11-30&lower=20000&upper=40000&mode=arithmetic&grids=4&investment=1000">69.21%</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
   
     </div>
+
+    <section>
+      <h3>Grid basics idea are explained simply</h3>
+
+      <p>Grid trading algorithm could be applied to anything you can buy and sell. The only requirement to trade is to access the items with volatile prices, either sales, special offers, discounts at the real economy, or exchange rate fluctuations. The simplest example is when you buy something at a reduced price and then wait for its price to get higher to sell it and get a profit, then you buy again at the reduced price and sell again at the raised price.</p>
+
+      <p>Applying this very basic example to crypto trading we are talking about buying, let's say, bitcoin (BTC) at a lower tokenized dollar (USDT) price and then later selling it at a higher USDT price.</p>
+
+      <p>An step-by-step explanation of how you trade within one grid:</p>
+      <ol>
+        <li>Let's assume that you have some USDT in your exchange account.</li>
+        <li>Chose the crypto pair you'd like to trade (in our case BTC/USDT).</li>
+        <li>Choose the price you'd buy (Lower Price) and the price you'd sell (Upper Price).</li>
+        <li>Wait until the market price be equal or lower than Lower Price.</li>
+        <li>Buy at the Lower Price.</li>
+        <li>Then you wait until the price rises up to equal or greater than Upper Price.</li>
+        <li>Sell at the chosen Upper Price.</li>
+        <li>Collect Profit.</li>
+        <li>Repeat steps 4 and 8 multiple times.</li>
+      </ol>
+
+      <p>Let's add numbers.</p>
+      <ol>
+        <li>Reserve 100 USDT in your exchange account.</li>
+        <li>Choose the crypto pair Bitcoin (BTC) and Tether (USDT).</li>
+        <li>Choose Lower Price = 32000 USDT/BTC and Upper Price = 42000 USDT/BTC.</li>
+        <li>Wait until the price drops to 32000 USDT/BTC.</li>
+        <li>Buy at the Lower Price, 100 USDT / 32000 USDT/BTC = 0.003125 BTC.</li>
+        <li>Then wait until price grows to 42000 BTC.</li>
+        <li>Sell at the Upper Price, so we have 0.003125 BTC * 42000 USDT/BTC = 131.25 USDT.</li>
+        <li>So we collect Profit 131.25 USDT – 100 USDT = 31.25 USDT.</li>
+        <li>Evry next repeat of steps 4 ... 8 will give us the same Profit amount of 31.25 USDT.</li>
+      </ol>
+
+      <p>A detailed, step-by-step description of how the Grid Trading strategy works will be published soon.</p>
+
+    </section>
+
+    <div class="footer">
+      <footer>
+        <hr style="margin: 14px 7px 0px 7px;">
+        <ul>
+          <li><a href="/terms">Terms of Use</a></li>
+          <li><a href="mailto:contact@grid-trading-strategy.info">Contact by Email</a></li>
+        </ul>
+      </footer>
+    </div>
+
   </div>
 </body>
 </html>

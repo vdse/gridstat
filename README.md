@@ -5,11 +5,21 @@ https://observablehq.com/@d3/candlestick-chart/2?intent=fork
 https://tradingview.github.io/lightweight-charts/docs
 https://apexcharts.com/javascript-chart-demos/candlestick-charts/basic/
 https://www.youtube.com/watch?v=ERgUCaYaI1Y&t=0s
+https://www.google.com/search?q=chart+js+monthes+shift&oq=chart+js+monthes+shi&gs_lcrp=EgZjaHJvbWUqCQgBECEYChigATIGCAAQRRg5MgkIARAhGAoYoAEyCQgCECEYChigATIJCAMQIRgKGKABMgoIBBAhGBYYHRge0gEIOTkxN2owajeoAgCwAgA&sourceid=chrome&ie=UTF-8#fpstate=ive&vld=cid:bd4c0164,vid:EVHi41f7psQ,st:0
 
 # tmp
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#4a4a4a">
+
+
+/**
+ * TODO read https://css-tricks.com/linearly-scale-font-size-with-css-clamp-based-on-the-viewport/
+ * TODO review https://css-tricks.com/linearly-scale-font-size-with-css-clamp-based-on-the-viewport/
+ * TODO aria for status messages
+ * TODO describe template data
+ * TODO rename out_of_range to within_range
+ */
 
 # 02 nov 2023 21:17
 todo: https://web.dev/articles/sign-in-form-best-practices
