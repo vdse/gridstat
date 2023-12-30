@@ -1,0 +1,62 @@
+
+body {
+  color: #FFFFFF;
+  background: #141817;
+}
+
+hr {
+  border: 0.5px solid rgba(44, 46, 45, 1);
+}
+
+form {
+  background-color: #1E201F;
+}
+
+input {
+  color: #FFFFFF;
+  /*color: #26A17B;*/
+  background-color: #1E201F;
+}
+
+input:disabled {
+  /*color: #26A17B;*/
+  -webkit-text-fill-color: #FFFFFF;
+  opacity: 1;
+  background-color: #1E201F;
+}
+
+input:hover {
+  box-shadow: 0 0 0 1px #4F5150;
+}
+
+input[type="date"] {
+  color: #FFFFFF;
+  /*color: #26A17B;*/
+  background-color: #1E201F;
+}
+
+select {
+  color: #FFFFFF;
+  /*color: #26A17B;*/
+  background-color: #1E201F;
+}
+
+select:hover {
+  box-shadow: 0 0 0 1px #4F5150;
+}
+
+select:disabled {
+  opacity: 1.0;
+}
+
+a {
+  color: #26A17B;
+}
+
+table a {
+  color: #FFFFFF;
+}
+
+th {
+  background-color: #1E201F;
+}

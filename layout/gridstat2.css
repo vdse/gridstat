@@ -1,6 +1,19 @@
 
 @supports (display: grid) {
 
+  header a {
+    font-size: 18px;
+  }
+
+  h1 {
+    font-size: 20px;
+    font-weight: 400;
+  }
+
+  h2 {
+    font-size: 16px;
+  }
+
   h3 {
   }
 
@@ -133,9 +146,9 @@
     padding: 7px;
   }
 
-  .footer > hr {
+  /*.footer > hr {
     border: 0.5px solid black;
-  }
+  }*/
 
 
   @media (min-width: 480px) {
@@ -163,6 +176,22 @@
 
     button {
       font-size: 13.5px;
+    }
+
+    a {
+      font-size: 13.5px;
+    }
+
+    table a {
+      font-size: 12.0px;
+      text-decoration: none;
+      text-decoration-color: gray;
+    }
+
+    table a:hover {
+      font-size: 12.0px;
+      text-decoration: underline;
+      /*text-decoration-color: gray;*/
     }
 
     .hero {
