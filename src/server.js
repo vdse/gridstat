@@ -539,7 +539,7 @@ const server = http.createServer({}, async (req, res) => {
           item.grid += 1;
           item.buy.time = new Date(item.buy.time).toISOString().slice(0,19).replace('T', ' ');
           item.buy.price = item.buy.price.toFixed(2);
-          item.buy.exec = item.buy.exec.toFixed(4);
+          item.buy.exec = item.buy.exec.toFixed(6);
           item.buy.total = item.buy.total.toFixed(2);
           item.buy.fee = item.buy.fee.toFixed(6);
           if(item.sell) {
