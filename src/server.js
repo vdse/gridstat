@@ -1,6 +1,7 @@
 const http = require('node:http');
 const fs = require('node:fs');
 const URL = require('node:url').URL;
+const crypto = require('crypto');
 
 const util = require('./util.js');
 const is = require('./is.js');
@@ -94,6 +95,18 @@ const server = http.createServer({}, async (req, res) => {
   let url = new URL(req.url, 'http://' + req.headers.host + '/');
   let pathname = url.pathname;
   let search = url.search;
+
+  var ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress 
+  console.log('ip:', ip);
+  var log = JSON.parse(JSON.stringify(req.headers));
+  log['x-forwarded-for-hash'] = crypto.createHash('md5').update(log['x-forwarded-for'] + 'ipv4').digest('hex');
+  let octets = log['x-forwarded-for'].split('.');
+  octets.pop();
+  octets.push('0');
+  log['x-forwarded-for'] = octets.join('.');
+  log.url = url;
+  console.log('log:', JSON.stringify(log, null, 2));
+
 
 //     /**
 //      * TODO (for next project) consider automatic validation and status message generation using JSON Schema
@@ -556,7 +569,7 @@ const server = http.createServer({}, async (req, res) => {
         obj.recalculate = {link: `/${search}`};
         //console.log(JSON.stringify(obj, null, 2));
 
-       console.log(JSON.stringify(obj, null, 2));
+       //console.log(JSON.stringify(obj, null, 2));
 
         let calcPage = (obj) => eval("`" + fs.readFileSync('./layout/calc.html') + "`");
         res.writeHead(200, { 'Content-Type': 'text/html' });
