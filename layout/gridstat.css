@@ -5,6 +5,10 @@ body {
   font-family: system-ui, arial;
 }
 
+img svg {
+  font-family: system-ui, arial;
+}
+
 .form {
   padding: 7px;
 }
@@ -138,7 +142,7 @@ button:active {
 
 img {
   width: 100%;
-  padding: 7px;
+  /*padding: 7px;*/
   box-sizing: border-box;
   /*margin: 0px;
   padding: 0px;*/

@@ -1,0 +1,13 @@
+<svg width="386" height="217" viewBox="0 0 640 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="640" height="360" fill="#F0FBFF"/>
+    <path d="M297.437 359V359.5H297.937H639H639.5V359V261.09V260.883L639.353 260.736L442.685 64.2013L442.319 63.8359L441.966 64.2135L297.572 218.656L297.437 218.8V218.997V359Z" fill="#E3E3E3" stroke="black"/>
+    <path d="M409 99.5L442.603 63L515.5 137L469.744 104.591L458.083 125.97L438.648 97.5947L420.379 114.698L409 99.5Z" fill="white" stroke="black" stroke-miterlimit="16"/>
+    <path d="M525.5 359.5H526.708L525.853 358.646L300.558 133.646L300.203 133.292L299.85 133.648L76.645 358.648L75.7997 359.5H77H189H525.5Z" fill="#F0F0F0" stroke="black"/>
+    <path d="M274.059 341.648L83.5 308.816L0.5 346V359.5H639.5V313.5L520.776 341.648L408.134 281L274.059 341.648Z" fill="#A8F2C5" stroke="black"/>
+    <path d="M605.5 68.5018C605.5 89.4874 588.487 106.5 567.502 106.5C546.513 106.5 529.5 89.4874 529.5 68.5018C529.5 47.5126 546.513 30.5 567.502 30.5C588.487 30.5 605.5 47.5126 605.5 68.5018Z" fill="#FFC107" stroke="black"/>
+    <rect x="0.5" y="0.5" width="639" height="359" stroke="black"/>
+    <text x="8" y="20" font-family="Roboto Mono, monospace" font-size="16" fill="#000000">w: 386</text>
+    <text x="8" y="40" font-family="Roboto Mono, monospace" font-size="16" fill="#000000">h: 217</text>
+    <text x="8" y="60" font-family="Roboto Mono, monospace" font-size="16" fill="#000000">f: svg</text>
+</svg>
+
