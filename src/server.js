@@ -97,15 +97,20 @@ const server = http.createServer({}, async (req, res) => {
   let search = url.search;
 
   var ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress 
-  console.log('ip:', ip);
+  //console.log('ip:', ip);
   var log = JSON.parse(JSON.stringify(req.headers));
   log['x-forwarded-for-hash'] = crypto.createHash('md5').update(log['x-forwarded-for'] + 'ipv4').digest('hex');
-  let octets = log['x-forwarded-for'].split('.');
-  octets.pop();
-  octets.push('0');
-  log['x-forwarded-for'] = octets.join('.');
+  //let octets = log['x-forwarded-for'].split('.');
+  if(ip) {
+    let octets = ip.split('.');
+    octets.pop();
+    octets.push('0');
+    log['x-forwarded-for'] = octets.join('.');
+  }
   log.url = url;
-  console.log('log:', JSON.stringify(log, null, 2));
+  log.time = new Date().toISOString();
+  //console.log('log:', JSON.stringify(log, null, 2));
+  console.log(JSON.stringify(log));
 
 
 //     /**
@@ -413,7 +418,7 @@ const server = http.createServer({}, async (req, res) => {
         && Date.parse(from) <= Date.parse(to)
         && util.isValidPriceRangeBoundary(lower)
         && util.isValidPriceRangeBoundary(upper)
-        && upper > lower
+        && Number(upper) > Number(lower) // TODO add to tests caser without Number; upper = 7000 > lower = 20000
         && util.isValidMode(mode)
         && util.isValidGrids(grids)
         && is.number(inv)
@@ -631,6 +636,6 @@ const server = http.createServer({}, async (req, res) => {
 
 });
 
-//server.listen(8080, 'localhost');
-server.listen(8080, '0.0.0.0');
+server.listen(8080, 'localhost');
+//server.listen(8080, '0.0.0.0');
 
