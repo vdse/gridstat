@@ -1,4 +1,4 @@
-const { FROM, TO }= require('../config.js');
+const { FROM, TO } = require('../config.js').BTCUSDT;
 
 // https://stackoverflow.com/a/35413963
 

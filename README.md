@@ -18,6 +18,10 @@ add data for dec 23
 
 # Backlog
 
+# 19 jan 2024 15:41
+conditional http auth
+https://stackoverflow.com/a/72182385
+
 # 02 nov 2023 21:17
 todo: https://web.dev/articles/sign-in-form-best-practices
 todo: https://web.dev/learn/forms/welcome?continue=https%3A%2F%2Fweb.dev%2Flearn%2Fforms%23article-https%3A%2F%2Fweb.dev%2Flearn%2Fforms%2Fwelcome

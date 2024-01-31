@@ -130,13 +130,12 @@
             </div>
             <input required type="number" id="investment" name="investment" aria-describedby="investment-amount" min="1" value="${obj.inv}" disabled />
           </div>
-
         </fieldset>
-
+${obj.recalculate ? `
         <div class="link">
           <a href="${obj.recalculate.link}">Recalculate</a>
         </div>
-
+` : ''}
       </form>
     </div>
 
@@ -281,7 +280,7 @@
         </tr>` : ''}
       </tbody>
     </table>
-    <div class="profit"><span>Profit: <span class="green">${item.profit}</span> USDT</span></div></div>\n`).join('')}
+    <div class="profit"><span>Grid Profit: <span class="green">${item.profit}</span> USDT</span></div></div>\n`).join('')}
     
 
     <p>
