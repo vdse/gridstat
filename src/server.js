@@ -111,7 +111,8 @@ const server = http.createServer({}, async (req, res) => {
   log.url = url;
   log.time = new Date().toISOString();
   //console.log('log:', JSON.stringify(log, null, 2));
-  console.log(JSON.stringify(log));
+  // XXX uncommnet before commit
+  //console.log(JSON.stringify(log));
 
 
 //     /**
@@ -120,6 +121,8 @@ const server = http.createServer({}, async (req, res) => {
 //      * review for schema generation https://github.com/fastify/fluent-json-schema
 //      * documentation https://json-schema.org/draft/2020-12/json-schema-validation
 //      */
+
+console.log('pathname:', pathname);
 
 
     if (pathname === '/') {
@@ -391,6 +394,7 @@ const server = http.createServer({}, async (req, res) => {
 
 
         //let obj2 = require('./date_range_5_5.js');
+        console.log('obj:', JSON.stringify(obj, null, 2));
         let index = (obj) => eval("`" + fs.readFileSync('./layout/index.html') + "`");
         res.writeHead(200, { 'Content-Type': 'text/html' });
         res.end(index(obj));
@@ -404,6 +408,14 @@ const server = http.createServer({}, async (req, res) => {
     } else if(pathname == '/terms') {
       res.setHeader('Content-Type', 'text/html');
       res.write(fs.readFileSync('./layout/terms.html'));
+      res.end();
+    } else if(pathname == '/privacy-policy') {
+      res.setHeader('Content-Type', 'text/html');
+      res.write(fs.readFileSync('./layout/privacy-policy.html'));
+      res.end();
+    } else if(pathname == '/cookie-policy') {
+      res.setHeader('Content-Type', 'text/html');
+      res.write(fs.readFileSync('./layout/cookie-policy.html'));
       res.end();
     } else if(pathname == '/favicon.ico') {
       res.setHeader('Content-Type', 'image/x-icon');
@@ -447,6 +459,6 @@ const server = http.createServer({}, async (req, res) => {
 
 });
 
-server.listen(8080, 'localhost');
-//server.listen(8080, '0.0.0.0');
+//server.listen(8080, 'localhost');
+server.listen(8080, '0.0.0.0');
 

@@ -21,7 +21,7 @@ form {
   /*background-color: #1E201F;*/
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
   margin: 0;
   padding: 7px;
 }
@@ -188,7 +188,7 @@ td {
 }
 
 ul {
-  margin: 0px;
+  margin: 0px 0px 0px 32px;
   padding: 7px 0px;
 }
 
