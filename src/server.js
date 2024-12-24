@@ -409,6 +409,14 @@ console.log('pathname:', pathname);
       res.setHeader('Content-Type', 'text/html');
       res.write(fs.readFileSync('./layout/terms.html'));
       res.end();
+    } else if(pathname == '/articles') {
+      res.setHeader('Content-Type', 'text/html');
+      res.write(fs.readFileSync('./layout/articles.html'));
+      res.end();
+    } else if(pathname == '/articles/definitions') {
+      res.setHeader('Content-Type', 'text/html');
+      res.write(fs.readFileSync('./layout/definitions.html'));
+      res.end();
     } else if(pathname == '/privacy-policy') {
       res.setHeader('Content-Type', 'text/html');
       res.write(fs.readFileSync('./layout/privacy-policy.html'));
@@ -421,37 +429,41 @@ console.log('pathname:', pathname);
       res.setHeader('Content-Type', 'image/x-icon');
       res.write(fs.readFileSync('favicon.ico'));
       res.end();
-    /*} else if(pathname == '/style.css') {
+    } else if(pathname == '/typography.css') {
       res.setHeader('Content-Type', 'text/css');
-      res.write(fs.readFileSync('layout/style.css'));
-      res.end();*/
-    } else if(pathname == '/gridstat.css') {
-      res.setHeader('Content-Type', 'text/css');
-      res.write(fs.readFileSync('layout/gridstat.css'));
+      res.write(fs.readFileSync('layout/typography.css'));
       res.end();
-    } else if(pathname == '/gridstat2.css') {
+    } else if(pathname == '/layout.css') {
       res.setHeader('Content-Type', 'text/css');
-      res.write(fs.readFileSync('layout/gridstat2.css'));
+      res.write(fs.readFileSync('layout/layout.css'));
+      res.end();
+    } else if(pathname == '/card.css') {
+      res.setHeader('Content-Type', 'text/css');
+      res.write(fs.readFileSync('layout/card.css'));
       res.end();
     } else if(pathname == '/colors.css') {
       res.setHeader('Content-Type', 'text/css');
       res.write(fs.readFileSync('layout/colors.css'));
       res.end();
-    } /*else if(pathname == '/calc.css') {
+    } else if(pathname == '/controls.css') {
       res.setHeader('Content-Type', 'text/css');
-      res.write(fs.readFileSync('layout/calc.css'));
+      res.write(fs.readFileSync('layout/controls.css'));
       res.end();
-    }*/ else if(pathname == '/btc.svg') {
+    } else if(pathname == '/btc.svg') {
       res.setHeader('Content-Type', 'image/svg+xml');
       res.write(fs.readFileSync('./layout/btc.svg'));
       res.end();
-    } else if(pathname == '/chart.svg') {
+    } else if(pathname == '/BTCUSDT-1d-candlestick-2023.svg') {
       res.setHeader('Content-Type', 'image/svg+xml');
-      res.write(fs.readFileSync('./layout/chart.svg'));
+      res.write(fs.readFileSync('./layout/BTCUSDT-1d-candlestick-2023.svg'));
       res.end();
     } else if(pathname == '/usdt.svg') {
       res.setHeader('Content-Type', 'image/svg+xml');
       res.write(fs.readFileSync('./layout/usdt.svg'));
+      res.end();
+    } else if(pathname == '/definitions.jpg') {
+      res.setHeader('Content-Type', 'image/jpeg');
+      res.write(fs.readFileSync('./layout/definitions.jpg'));
       res.end();
     } else {
       res.writeHead(404).end();

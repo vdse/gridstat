@@ -1,0 +1,168 @@
+@supports (display: grid) {
+  .container {
+    min-height: 100%; 
+    margin: auto; 
+    max-width: 900px;
+  }
+
+  fieldset {
+    margin: 0px;
+    padding: 0px 0px 2px 0px;
+    border: 0;
+  }
+
+  label {
+    display: flex;
+    box-sizing: border-box;
+    height: 100%;
+    padding: 8px;
+    align-items: center;
+  }
+
+  input {
+    width: 100%;
+  }
+
+  input[type="date"] {
+    display: inline-block;
+  }
+
+  select {
+    width: 100%;
+  }
+
+  button {
+    width: 100%;
+  }
+
+  .required-fields {
+    display: none;
+  }
+
+  .fail > code, .na > code, .pass > code {
+    display: none;
+  }
+
+  .label {
+    position: absolute;
+    inset: 0;
+    padding: 5px 8px;
+    pointer-events: none;
+  }
+
+  .spacer {
+    flex-grow: 1;
+    z-index: 0;
+  }
+
+  .usdt {
+    display: block;
+    width: 46px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    z-index: 1;
+  }
+
+  .bracket {
+    display: none;
+  }
+
+  .asterisk {
+    display: none;
+  }
+
+  .B {
+    display: block;
+    width: 18px;
+    height: 18px;
+    margin: 0px 4px 0px 0px;
+    background-image: url(/btc.svg);
+    background-size: 100% 100%;
+    z-index: 1;
+  }
+
+  .T {
+    background-image: url(/usdt.svg);
+    width: 18px;
+    height: 18px;
+    background-size: 100% 100%;
+    z-index: 1;
+  }
+
+  .lower input, .upper input, .investment input  {
+    padding: 8px 74px 8px 71px;
+  }
+
+  .mode select, .grids input {
+    padding: 8px 8px 8px 59px;
+  }
+
+  .name {
+    width: 62px; 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    z-index: 1;
+  }
+
+  .article-cards {
+    display: flex; 
+    flex-direction: column; 
+    gap: 16px;
+    padding: 8px;
+    color: #d5d2d2;
+  }
+
+  .math {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2px;
+  }
+
+  .math-container {
+    padding-block: 24px;
+  }
+
+  @supports (hanging-punctuation: first) and (font: -apple-system-body) and (-webkit-appearance: none) {
+    .math-container {
+      overflow-x: auto; 
+      white-space: nowrap; 
+    }
+  }
+
+  @media (min-width: 640px) {
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      box-sizing: border-box;
+    }
+
+    .hero > .text {
+      grid-column: 1;
+      grid-row: 1;
+      color: green;
+    }
+
+    .hero > .form {
+      grid-column: 2;
+      grid-row: 1 / 4;
+    }
+
+    .article-card {
+      flex-direction: row;
+    }
+
+    .article-card-img {
+      width: 324px;
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+  }
+}

@@ -1,0 +1,328 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0px;
+  padding: 8px;
+  font-family: system-ui, arial;
+  font-size: 16px;
+}
+
+header a {
+  padding: 0px;
+  font-size: 24px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+}
+
+nav ul li a {
+  font-size: 18px;
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: 400;
+}
+
+h2 {
+  font-size: 20px;
+}
+
+h3 {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+h4 {
+  font-weight: 500;
+}
+
+h1, h2, h3, h4 {
+  margin: 0;
+  padding: 8px;
+}
+
+h3 a {
+  font-size: inherit;
+  font-weight: inherit;
+  text-decoration: none;
+  color: inherit;
+}
+
+.main {
+  padding: 8px;
+}
+
+.chart {
+  width: 100%;
+  height: auto;
+  padding: 8px;
+  box-sizing: border-box;
+  vertical-align: bottom; 
+  /* vertical-align: bottom; removes extra space under the image that appears as image is an inline element */
+}
+
+.form {
+padding: 8px;
+}
+
+form {
+  border: 1px solid #2C2E2D;
+  border-radius: 8px;
+}
+
+.B {
+  display: none;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+}
+
+fieldset {
+  margin: 8px;
+  padding: 8px;
+  padding-top: 0px;
+  border-radius: 4px;
+  border: 1px solid gray;
+}
+
+legend {
+  margin: 0;
+  padding: 8px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.from, .to, .lower, .upper, .mode, .grids, .investment {
+  margin: 0px;
+  padding: 5px 8px;
+  position: relative;
+  min-width: 200px;
+}
+
+.range-details {
+  font-size:12px;
+  font-weight:400;
+}
+
+a {
+  font-size: 16px;
+}
+
+img svg {
+  font-family: system-ui, arial;
+}
+
+p {
+  margin: 0;
+  padding: 8px;
+}
+
+.required-fields {
+  padding: 2px 8px;
+}
+
+hr {
+  margin: 8px;
+}
+
+.hr {
+  margin: 8px -8px;
+  border: 0.5px solid rgba(44, 46, 45, 1);
+}
+
+table a {
+  font-size: 16px;
+  text-decoration: none;
+  text-decoration-color: gray;
+}
+
+table a:hover {
+  font-size: 16px;
+  text-decoration: underline;
+}
+
+.button {
+  padding: 8px;
+}
+
+.link {
+  padding: 5px 8px;
+}
+
+button {
+  padding: 8px 20px;
+  font-family: system-ui, arial;
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+  border: 0;
+  border-radius: 4px;
+  background-color: #26A17B;
+}
+
+button:hover {
+  background-color: #2dbf92;
+}
+
+button:active {
+  background-color: #218e6c;
+}
+
+.caption {
+  padding: 8px 0;
+  text-align: left;
+  font-size: 18px;
+}
+
+table, th, td {
+  border-spacing: 0px;
+}
+
+table {
+  width: 100%;
+  border: 1px solid #2C2E2D;
+  border-radius: 8px;
+}
+
+.table {
+  padding: 8px;
+}
+
+th {
+  font-weight: 500;
+  text-align: left;
+  padding: 8px;
+  border-bottom: 1px solid rgba(44, 46, 45, 1);
+}
+
+td {
+  padding: 8px;
+  font-weight: 400;
+}
+
+.btrr {
+  border-top-right-radius: 7px;
+}
+
+.btlr {
+  border-top-left-radius: 7px;
+}
+
+ul {
+  margin: 0;
+  padding: 8px 0 8px 32px;
+}
+
+ol {
+  margin: 0;
+  padding: 8px 0 8px 32px;
+}
+
+li {
+  padding: 0 8px;
+}
+
+dfn {
+  font-style: normal;
+  font-weight: bold;
+}
+
+dfn a, strong a {
+  font-size: inherit;
+  font-weight: inherit;
+  text-decoration: none;
+  color: inherit;
+}
+
+.article {
+  border: 1px solid rgba(44, 46, 45, 1);
+  border-radius: 8px;
+  background-color:  #1E201F;
+  padding: 8px;
+  color: #d5d2d2;
+}
+
+math {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+math * {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+footer {
+  text-align: right;
+}
+
+.footer ul {
+  list-style: none;
+}
+
+.footer li {
+  display: inline;
+}
+
+.footer li > a {
+  white-space: nowrap;
+}
+
+.message {
+  padding: 2px 8px;
+}
+
+.green, .buy {
+  /*color: #00A000;*/
+  color: #26A17B;
+}
+
+.red, .sell {
+  /*color: #B80000;*/
+  color: #D2475E;
+}
+
+.profit {
+  padding: 5px 8px;
+  /*margin-bottom: 20px;*/
+  text-align: right;
+}
+
+.pass {
+  display: inline-block;
+  color: green;
+}
+
+.na {
+  display: inline-block;
+  color: gray;
+}
+
+.fail {
+  display: inline-block;
+  color: red;
+}
+
+::selection {
+  color: black;
+  background-color: #B4D5FE;
+}
+
+.table::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}

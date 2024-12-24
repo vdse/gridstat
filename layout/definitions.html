@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="/typography.css" rel="stylesheet" />
+  <link href="/layout.css" rel="stylesheet" />
+  <link href="/card.css" rel="stylesheet" />
+  <link href="/colors.css" rel="stylesheet" />
+  <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/fcf7691b3295720421fa97fa/script.js"></script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R46E7C4SJN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-R46E7C4SJN');
+  </script>
+
+  <script type="text/javascript">
+    (function() {
+    window.__insp = window.__insp || [];
+    __insp.push(['wid', 807725469]);
+    var ldinsp = function(){
+    if(typeof window.__inspld != "undefined") return; window.__inspld = 1; var insp = document.createElement('script'); insp.type = 'text/javascript'; insp.async = true; insp.id = "inspsync"; insp.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://cdn.inspectlet.com/inspectlet.js?wid=807725469&r=' + Math.floor(new Date().getTime()/3600000); var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(insp, x); };
+    setTimeout(ldinsp, 0);
+    })();
+  </script>
+
+  <script>
+    (function(h,o,t,j,a,r){
+      h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+      h._hjSettings={hjid:5060166,hjsv:6};
+      a=o.getElementsByTagName('head')[0];
+      r=o.createElement('script');r.async=1;
+      r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+      a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+  </script>
+</head>
+<body style="line-height: 1.4;">
+
+  <div class="container">
+
+    <div>
+      <header>
+        <div class="header-container">
+          <p><a href="/">Grid Trading Strategy</a></p>
+          <nav class="nav">
+            <ul>
+              <li><a href="/articles">Articles</a></li>
+            </ul>
+          </nav>
+        </div>
+        <hr />
+      </header>
+    </div>
+
+    <main class="main">
+      <article class="article">
+        <p><dfn id="base-asset"><a href="#base-asset">Base Asset:</a></dfn> is cryptocurrency that will be bought or sold.</p>
+
+        <p><dfn id="quote-asset"><a href="#quote-asset">Quote Asset:</a></dfn> the quote asset determines the value of the Base Asset in the pair.</p>
+
+        <p><dfn id="fee"><a href="#fee">Fee:</a></dfn> the commission charged by the exchange when making buy or sell.</p>
+
+        <p><dfn id="investment"><a href="#investment">Investment:</a></dfn> is an amount of funds in <strong><a href="#quote-asset">Quote Asset</a></strong> (and/or <strong><a href="#base-asset">Base Asset</a></strong>) that we invest in the grid trading strategy.</p>
+
+        <p><dfn id="date-range"><a href="#date-range">Date Range:</a></dfn> is the period selected for the grid trading strategy to perform, defined by a start time <strong>From</strong> and an end time <strong>To</strong>.</p>
+        
+        <p><dfn id="price-range"><a href="#price-range">Price Range:</a></dfn> is the range formed by selecting the <strong>Upper</strong> price and the <strong>Lower</strong> price for the grid trading strategy. It defines the boundaries within which the strategy will buy and sell the asset.</p>
+
+        <p><dfn id="number-of-grids"><a href="#number-of-grids">Number of Grids</a></dfn> (also called <strong>Grid Number</strong>)<strong>:</strong> is an amount of grids across which the <strong><a href="#investment">Investment</a></strong> is distributed. Every grid has its own defined <strong>Lower</strong> price and <strong>Upper</strong> price within a specified <strong><a href="#price-range">Price Range</a></strong>.</p>
+        
+        <p><dfn id="spread"><a href="#spread">Spread:</a></dfn> is the difference between <strong>Lower</strong> and <strong>Upper</strong> price of each grid.</p>
+
+        <p><dfn id="grid-mode"><a href="#grid-mode">Grid Mode:</a></dfn> There are two main grid modes: <strong><a href="#arithmetic-mode">Arithmetic</a></strong> and <strong><a href="#geometric-mode">Geometric</a></strong>.</p>
+
+        <p><dfn id="arithmetic-mode"><a href="#arithmetic-mode">Arithmetic mode:</a></dfn> equal <strong><a href="#spread">Spread</a></strong> for each grid.</p>
+
+        <p><dfn id="geometric-mode"><a href="#geometric-mode">Geometric mode:</a></dfn> equal <strong><a href="#spread">Spread</a></strong> ratio.</p>
+
+        <p><dfn id="entry-price"><a href="#entry-price">Entry Price:</a></dfn> is a market price when grid trading strategy starts (at a time <strong><a href="#date-range">From</a></strong>).</p>
+
+        <p><dfn id="last-price"><a href="#last-price">Last Price:</a></dfn> is the market price when the grid trading strategy ends (at a time <strong><a href="#date-range">To</a></strong>).</p>
+
+        <p><dfn id="amount-per-grid"><a href="#amount-per-grid">Amount per Grid:</a></dfn> is an amount of the <strong><a href="#base-asset">Base Asset</a></strong> chosen for buying and selling in each grid. <strong><a href="#investment">Investment</a></strong> is distributed in such a way as to ensure equal parts for each grid in the <strong><a href="#base-asset">Base Asset</a></strong>.</p>
+
+        <p><dfn id="investment-per-grid"><a href="#investment-per-grid">Investment per Grid:</a></dfn> is the portion of Investment expressed in <strong><a href="#quote-asset">Quote Asset</a></strong> that is reserved to purchase <strong><a href="#amount-per-grid">Amount per Grid</a></strong> for each individual grid.</p>
+
+        <p><dfn id="initial-distribution"><a href="#initial-distribution">Initial Distribution:</a></dfn> is the allocation of funds in every grid in <strong><a href="#base-asset">Base Asset</a></strong> or <strong><a href="#quote-asset">Quote Asset</a></strong> after the initial launch and purchases has been initialized (purchases at the time of launch).</p>
+
+        <p><dfn id="matched-trade"><a href="#matched-trade">Matched Trade:</a></dfn> is the pair of executed orders BUY and SELL or SELL and BUY for the same grid cell.</p>
+
+        <p><dfn id="profit-per-grid"><a href="#profit-per-grid">Profit per Grid:</a></dfn> is the earnings/profit generated when both the BUY and SELL (SELL and BUY) orders are executed within a grid.</p>
+        <p class="math-container">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" class="math">
+            <mi>Profit per Grid</mi>
+            <mo>[</mo>
+            <mi>n</mi>
+            <mo>]</mo>
+            <mo>=</mo>
+            <mi>Amount per Grid</mi>
+            <mo>&#xD7;</mo>
+            <mo>(</mo>
+            <mn>1</mn>
+            <mo>-</mo>
+            <mi>fee</mi>
+            <mo>)</mo>
+            <mo>&#xD7;</mo>
+            <mi>Upper Price</mi>
+            <mo>[</mo>
+            <mi>n</mi>
+            <mo>]</mo>
+            <mo>&#xD7;</mo>
+            <mo>(</mo>
+            <mn>1</mn>
+            <mo>-</mo>
+            <mi>fee</mi>
+            <mo>)</mo>
+            <mo>-</mo>
+            <mi>Amount per Grid</mi>
+            <mo>&#xD7;</mo>
+            <mi>Lower Price</mi>
+            <mo>[</mo>
+            <mi>n</mi>
+            <mo>]</mo>
+          </math>
+        </p>
+        
+        <p>Usually, Profit per Grid is also presented as a percentage. It&rsquo;s calculated as the ratio of Profit per Grid[n] to the Investment per Grid[n] for the particular grid:</p>
+        <p class="math-container">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" class="math">
+            <mi>Profit per Grid</mi>
+            <mo>[</mo>
+            <mi>n</mi>
+            <mo>]</mo>
+            <mo>%</mo>
+            <mo>=</mo>
+            <mfrac>
+              <mrow>
+                <mi>Profit per Grid</mi>
+                <mo>[</mo>
+                <mi>n</mi>
+                <mo>]</mo>
+              </mrow>
+              <mrow>
+                <mi>Investment per Grid</mi>
+                <mo>[</mo>
+                <mi>n</mi>
+                <mo>]</mo>
+              </mrow>
+            </mfrac>
+            <mo>&#xD7;</mo>
+            <mn>100</mn>
+            <mo>%</mo>
+          </math>
+        </p>
+                
+        <p><dfn id="final-distribution"><a href="#final-distribution">Final Distribution:</a></dfn> is the total holdings of <strong><a href="#quote-asset">Quote Asset</a></strong> and <strong><a href="#base-asset">Base Asset</a></strong> located in every grid at the moment of the end of date <strong><a href="#date-range">To</a></strong>.</p>
+
+        <p><dfn id="balance"><a href="#balance">Balance:</a></dfn> is the total value of all assets at the moment when the grid trading strategy ends, and is expressed in the <strong><a href="#quote-asset">Quote Asset</a></strong>. <br />
+          Balance is calculated based on the <strong><a href="#last-price">Last Price</a></strong> of the <strong><a href="#base-asset">Base Asset</a></strong> with <strong><a href="#fee">Fee</a></strong> deduction.
+        </p>
+        <p class="math-container">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" class="math">
+            <mi>Balance</mi>
+            <mo>=</mo>
+            <mo>&#x2211;</mo>
+            <mi>Quote Asset Grid</mi>
+            <mo>[</mo>
+            <mi>n</mi>
+            <mo>]</mo>
+            <mo>+</mo>
+            <mo>&#x2211;</mo>
+            <mi>Base Asset Grid</mi>
+            <mo>[</mo>
+            <mi>n</mi>
+            <mo>]</mo>
+            <mo>&#xD7;</mo>
+            <mi>Last Price</mi>
+            <mo>&#xD7;</mo>
+            <mo>(</mo>
+            <mn>1</mn>
+            <mo>-</mo>
+            <mi>fee</mi>
+            <mo>)</mo>
+          </math>
+        </p>        
+
+        <p><dfn id="total-pnl"><a href="#total-pnl">Total PnL:</a></dfn>  is a metric that represents the net financial outcome from the trading activities (from the grid trading strategy operations).</p>
+        <p class="math-container">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" class="math">
+            <mi>Total PnL</mi>
+            <mo>=</mo>
+            <mi>Balance</mi>
+            <mo>-</mo>
+            <mi>Investment</mi>
+          </math>          
+        </p>
+        
+        <p><dfn id="annualized-return"><a href="#annualized-return">Annualized Return:</a></dfn> is a measure of the yearly return on investment expressed as a percentage. It provides a possibility to estimate the performance of the grid trading strategy over a specific period.</p>
+        <p class="math-container">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" class="math">
+            <mi>Annualized Return</mi>
+            <mo>=</mo>
+            <mo>(</mo>
+            <mfrac>
+              <mi>Total PnL</mi>
+              <mi>Investment</mi>
+            </mfrac>
+            <mo>&#xD7;</mo>
+            <mfrac>
+              <mn>365</mn>
+              <mi>Runtime</mi>
+            </mfrac>
+            <mo>)</mo>
+            <mo>&#xD7;</mo>
+            <mn>100</mn>
+            <mo>%</mo>
+          </math>
+        </p>
+        
+        <p><dfn id="grid-profit"><a href="#grid-profit">Grid Profit:</a></dfn> is the sum of <strong><a href="#profit-per-grid">Profit per Grid</a></strong> for each of the <strong><a href="#matched-trade">Matched Trades</a></strong>.</p>
+        <p class="math-container">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" class="math">
+            <mi>Grid Profit</mi>
+            <mo>=</mo>
+            <mo>&#x2211;</mo>
+            <mi>Profit per Grid</mi>
+            <mo>&nbsp;(</mo>
+            <mi>of the Matched Trades</mi>
+            <mo>)</mo>
+          </math>
+        </p>
+                
+        <p><dfn id="floating-pnl"><a href="#floating-pnl">Floating PnL:</a></dfn> is the difference between Total PnL and Grid Profit (valued in the <strong><a href="#quote-asset">Quote Asset</a></strong>). Profits from the Matched Trades aren't included. <br/>
+          It refers to the difference in market prices when Grid Trading Strategy was initialized and when it was closed.</p>
+        <p class="math-container">
+          <math xmlns="http://www.w3.org/1998/Math/MathML" class="math">
+            <mi>Floating PnL</mi>
+            <mo>=</mo>
+            <mi>Total PnL</mi>
+            <mo>-</mo>
+            <mi>Grid Profit</mi>
+          </math>
+        </p>
+      </article>
+    </main>
+
+    <div class="footer">
+      <footer>
+        <hr/>
+        <ul>
+          <li><a href="/terms">Terms of Use</a></li>
+          <li><a href="/cookie-policy">Cookie Policy</a></li>
+          <li><a href="/privacy-policy">Privacy Policy</a></li>
+          <li><a href="mailto:grid.trading.strategy@gmail.com">Contact by Email</a></li>
+        </ul>
+      </footer>
+    </div>
+
+  </div>
+</body>
+</html>

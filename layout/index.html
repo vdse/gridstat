@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8"/>
@@ -6,14 +7,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-<!--
-  <link href="/style.css" rel="stylesheet" />
--->
-  <link href="/gridstat.css" rel="stylesheet" />
-  <link href="/gridstat2.css" rel="stylesheet" />
+  <link href="/typography.css" rel="stylesheet" />
+  <link href="/controls.css" rel="stylesheet" />
+  <link href="/layout.css" rel="stylesheet" />
   <link href="/colors.css" rel="stylesheet" />
   <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/fcf7691b3295720421fa97fa/script.js"></script>
-  
+
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-R46E7C4SJN"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -22,7 +21,7 @@
 
     gtag('config', 'G-R46E7C4SJN');
   </script>
-  
+
   <script type="text/javascript">
     (function() {
     window.__insp = window.__insp || [];
@@ -32,7 +31,7 @@
     setTimeout(ldinsp, 0);
     })();
   </script>
-    
+
   <script>
     (function(h,o,t,j,a,r){
       h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
@@ -46,12 +45,19 @@
 </head>
 <body>${false ? 'TODO find approach to create and reuse partials for status' : ''}
 
-  <div style="min-height: 100%; margin: auto; max-width: 720px;">
+  <div class="container">
 
     <div>
       <header>
-        <p style="font-size: 20px;"><a href="/">Grid Trading Strategies</a></p>
-        <hr style="margin: 0px 7px 7px 7px;">
+        <div class="header-container">
+          <p><a href="/">Grid Trading Strategy</a></p>
+          <nav class="nav">
+            <ul>
+              <li><a href="/articles">Articles</a></li>
+            </ul>
+          </nav>
+        </div>
+        <hr />
       </header>
     </div>
 
@@ -61,7 +67,7 @@
         <h1>Estimate the Profitability of BTC/USDT Grid Trading based on 2023 data</h1>
       </div>
 
-      <img width="405" height="232" src="chart.svg" />
+      <img width="405" height="232" class="chart" src="BTCUSDT-1d-candlestick-2023.svg" alt="BTC USDT 1d candlestick 2023"/>
 
       <div class="form">
         <form class="form" method="GET" action="/calc">
@@ -73,16 +79,16 @@
             <span class="${obj.symbol.status.class}"><code>${obj.symbol.status.symbol}</code></span><span class="${obj.symbol.status.class}">${obj.symbol.status.message}</span>
            </div>` : ''}
 
-          <hr/>
+          <hr class="hr"/>
 
           <p class="required-fields">
-            Required fields are followed by <strong><span aria-label="required">*</span></strong>.
+            Required fields are followed by <strong><span aria-label="required">*</span></strong>.${false ? 'TODO recheck usage of this message' : ''}
           </p>
 
           <input type="hidden" name="symbol" value="BTCUSDT" />
 
           <fieldset class="date-range">
-            <legend>Date Range <span style="font-size:12px;font-weight:400;">(date within 2023)</span></legend>
+            <legend>Date Range <span class="range-details">(date within 2023)</span></legend>
             <div class="from"> <!-- div required for vertical layout in w3m, lynx, links etc -->
               <div class="label">
                 <label for="from">
@@ -117,7 +123,7 @@
           </fieldset>
 
           <fieldset class="price-range">
-            <legend>Price Range <span style="font-size:12px;font-weight:400;">(multiple of 1000)</span></legend>
+            <legend>Price Range <span class="range-details">(multiple of 1000)</span></legend>
             <div class="lower">
               <div class="label">
                 <label for="lower">
@@ -220,7 +226,7 @@
 
       <div class="table">
         <table>
-          <caption style="padding: 4px 0px; text-align:left">Some Examples in 2023:</caption>
+          <caption class="caption">Some Examples in 2023:</caption>
           <thead>
             <tr>
               <th class="btlr">From ... To</th>
@@ -304,11 +310,11 @@
 
     <div class="footer">
       <footer>
-        <hr style="margin: 14px 7px 0px 7px;">
+        <hr/>
         <ul>
           <li><a href="/terms">Terms of Use</a></li>
           <li><a href="/cookie-policy">Cookie Policy</a></li>
-          <li><a href="/privacy-policy">Policy Policy</a></li>
+          <li><a href="/privacy-policy">Privacy Policy</a></li>
           <li><a href="mailto:grid.trading.strategy@gmail.com">Contact by Email</a></li>
         </ul>
       </footer>

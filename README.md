@@ -1,6 +1,7 @@
 # gridstat
 date --date='1970-01-01T00:00:00Z' +"%s"
 
+http://localhost:8080/calc?symbol=GTSTEST&from=2024-01-01&to=2024-05-31&lower=2&upper=7&mode=arithmetic&grids=5&investment=100
 
 # TODO
 
