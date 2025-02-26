@@ -51,6 +51,10 @@ idea: bitcoin lowest price for 2023 (pages with facts)
 # 26 dec 2023 00:03
 todo: remade composite input from absolute to composite
 
+# 28 dec 2023 02:10
+binance data issue
+https://github.com/binance/binance-public-data/issues/298
+
 
 read https://css-tricks.com/linearly-scale-font-size-with-css-clamp-based-on-the-viewport/
 review https://css-tricks.com/linearly-scale-font-size-with-css-clamp-based-on-the-viewport/

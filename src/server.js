@@ -417,6 +417,10 @@ console.log('pathname:', pathname);
       res.setHeader('Content-Type', 'text/html');
       res.write(fs.readFileSync('./layout/definitions.html'));
       res.end();
+    } else if(pathname == '/articles/step-by-step-grid-trading-example-conservative-approach-to-investment-allocation') {
+      res.setHeader('Content-Type', 'text/html');
+      res.write(fs.readFileSync('./layout/conservative.html'));
+      res.end();
     } else if(pathname == '/privacy-policy') {
       res.setHeader('Content-Type', 'text/html');
       res.write(fs.readFileSync('./layout/privacy-policy.html'));
@@ -464,6 +468,10 @@ console.log('pathname:', pathname);
     } else if(pathname == '/definitions.jpg') {
       res.setHeader('Content-Type', 'image/jpeg');
       res.write(fs.readFileSync('./layout/definitions.jpg'));
+      res.end();
+    } else if(pathname == '/conservative.jpg') {
+      res.setHeader('Content-Type', 'image/jpeg');
+      res.write(fs.readFileSync('./layout/conservative.jpg'));
       res.end();
     } else {
       res.writeHead(404).end();

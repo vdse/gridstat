@@ -1,0 +1,1767 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="/typography.css" rel="stylesheet" />
+  <link href="/layout.css" rel="stylesheet" />
+  <link href="/card.css" rel="stylesheet" />
+  <link href="/colors.css" rel="stylesheet" />
+  <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/fcf7691b3295720421fa97fa/script.js"></script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R46E7C4SJN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-R46E7C4SJN');
+  </script>
+
+  <script type="text/javascript">
+    (function() {
+    window.__insp = window.__insp || [];
+    __insp.push(['wid', 807725469]);
+    var ldinsp = function(){
+    if(typeof window.__inspld != "undefined") return; window.__inspld = 1; var insp = document.createElement('script'); insp.type = 'text/javascript'; insp.async = true; insp.id = "inspsync"; insp.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://cdn.inspectlet.com/inspectlet.js?wid=807725469&r=' + Math.floor(new Date().getTime()/3600000); var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(insp, x); };
+    setTimeout(ldinsp, 0);
+    })();
+  </script>
+
+  <script>
+    (function(h,o,t,j,a,r){
+      h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+      h._hjSettings={hjid:5060166,hjsv:6};
+      a=o.getElementsByTagName('head')[0];
+      r=o.createElement('script');r.async=1;
+      r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+      a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+  </script>
+</head>
+<body style="line-height: 1.4;">
+
+  <div class="container">
+
+    <div>
+      <header>
+        <div class="header-container">
+          <p><a href="/">Grid Trading Strategy</a></p>
+          <nav class="nav">
+            <ul>
+              <li><a href="/articles">Articles</a></li>
+            </ul>
+          </nav>
+        </div>
+        <hr />
+      </header>
+    </div>
+
+    <main class="main">
+      <article class="article">
+        <h1 class="article-title">Step-by-Step Grid Trading Example <br />
+          (Conservative Approach to Investment allocation)
+        </h1>
+        <p>This article provides a basic demonstration of how Spot Grid Trading works using an example with simplified, hypothetical data. The goal is to explain every stage of the process, starting from configuring the Grid Trading Strategy to calculating final profits. By the end, readers will have a clear understanding of the mechanics behind Grid Trading and its potential outcomes.</p>
+
+        <h2>Legend</h2>
+        <p>For this example, we demonstrate a grid trading strategy using the BTC/USDT trading pair.</p>
+        <p>Let’s assume the price of BTC is hypothetical and measured in units of dollars per 1.00 BTC. This will make the explanation clearer and easier to follow.</p>
+        <p>All activities described in the example occurred in the past, specifically between January 1, 2024, and May 31, 2024.</p>
+
+        <h2>Example Setup</h2>
+        <p>The following parameters of Grid Trading were chosen for this example:</p>
+        <ul>
+          <li>Date Range: <br/>
+              From — January 1, 2024; <br/>
+              To — May 31, 2024</li>
+          <li>Price Range: 2.00-7.00 USDT</li>
+          <li>Grid Mode: Arithmetic</li>
+          <li>Number of Grids: 5</li>
+          <li>Investment: 100.00 USDT</li>
+        </ul>
+
+        <p>Price Movements (Fluctuations) within Date Range:</p>
+        <ul>
+          <li>January 1, 2024: 4.00 USDT</li>
+          <li>February 1, 2024: 3.00 USDT</li>
+          <li>March 1, 2024: 4.00 USDT</li>
+          <li>April 1, 2024: 5.00 USDT</li>
+          <li>May 1, 2024: 6.00 USDT</li>
+          <li>May 31, 2024: 6.00 USDT (end of the defined period)</li>
+        </ul>
+
+        <p>On January 1, 2024, the price of BTC was 4.00 USDT — this is our Entry Price. <br>
+          On May 31, 2024, the price of BTC was 6.00 USDT — this is our Last Price.
+        </p>
+        
+        <p>Additional Parameters:</p>
+        <ul>
+          <li>All dates and times are in UTC, with price changes occurring at precisely 00:00:00 on the respective day.</li>
+          <li>Trading fee: 0.1% per transaction.</li>
+        </ul>
+
+        <h2>Detailed Explanation and Example Calculation</h2>
+
+        <section>
+          <h3>1. Spread & Grids Lower and Upper prices</h3>
+          <p>In Arithmetic Mode, the difference between the Upper and Lower prices of each grid is constant. This difference is called Spread and it is calculated using the formula:</p>
+          
+          <p class="math-container">
+            <math xmlns="http://www.w3.org/1998/Math/MathML" class="math" display="block">
+              <mrow>
+                <mi>Spread</mi>
+                <mo>=</mo>
+                <mfrac>
+                  <mrow>
+                    <mo>(</mo>
+                    <mi>Upper Price</mi>
+                    <mo>&#x2212;</mo>
+                    <mi>Lower Price</mi>
+                    <mo>)</mo>
+                  </mrow>
+                  <mi>Number&#xA0;of&#xA0;Grids</mi>
+                </mfrac>
+              </mrow>
+            </math>
+          </p>
+
+          <div class="example">
+            <p>In our example:</p>
+            <ul>
+              <li>Lower Price: 2.00 USDT</li>
+              <li>Upper Price: 7.00 USDT</li>
+              <li>Number of Grids: 5</li>
+            </ul>
+
+            <p class="math-container">
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic" display="block">
+                  <mi>Spread</mi>
+                  <mo>=</mo>
+                  <mfrac>
+                    <mrow>
+                      <mo>(</mo>
+                      <mn>7.00</mn>
+                      <mo>&#x2212;</mo>
+                      <mn>2.00</mn>
+                      <mo>)</mo>
+                    </mrow>
+                    <mn>5</mn>
+                  </mfrac>
+                  <mo>=</mo>
+                  <mn>1.00 USDT</mn>
+              </math>
+            </p>
+            <div class="table">
+              <table>
+                <caption class="caption">Table presents Lower and Upper prices with Spread for each grid:</caption>
+                <thead>
+                  <tr>
+                    <th class="btlr">Grid #</th>
+                    <th>Lower Price<br>USDT</th>
+                    <th>Upper Price<br>USDT</th>
+                    <th class="btrr">Spread<br>USDT</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>2.00</td>
+                    <td>3.00</td>
+                    <td>1.00</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>3.00</td>
+                    <td>4.00</td>
+                    <td>1.00</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>4.00</td>
+                    <td>5.00</td>
+                    <td>1.00</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>5.00</td>
+                    <td>6.00</td>
+                    <td>1.00</td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>6.00</td>
+                    <td>7.00</td>
+                    <td>1.00</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>      
+
+        <section>
+          <h3>2. Amount per Grid</h3>
+          <p>As it was mentioned in the <a href="/articles/definitions">Definitions</a>, in Arithmetic Mode Investment is distributed in such a way to allocate equal amounts of the Base Asset to each grid.</p>
+          <p>Let's consider that the goal is to allocate 1.00 BTC per grid. For our example with 5 grids this means a total of 5.00 BTC is needed.</p>
+          <p>The next step in determining the Amount per Grid is to calculate the total amount of the Quote Asset required to allocate 1.00 BTC to each grid. This calculation is based on the Lower Price of the grid.</p>
+
+          <p>The total Quote Asset required per grid is:</p>
+          <ul>
+            <li>2.00 USDT to buy 1.00 BTC for Grid[1];</li>
+            <li>3.00 USDT to buy 1.00 BTC for Grid[2];</li>
+            <li>4.00 USDT to buy 1.00 BTC for Grid[3];</li>
+            <li>5.00 USDT to buy 1.00 BTC for Grid[4];</li>
+            <li>6.00 USDT to buy 1.00 BTC for Grid[5].</li>
+          </ul>
+
+          <p>So to get 5.00 BTC and distribute 1.00 BTC per grid we need:</p>
+          <p class="math-container">
+            <math xmlns="http://www.w3.org/1998/Math/MathML" class="math" display="block">
+              <mn>2.00</mn>
+              <mo>+</mo>
+              <mn>3.00</mn>
+              <mo>+</mo>
+              <mn>4.00</mn>
+              <mo>+</mo>
+              <mn>5.00</mn>
+              <mo>+</mo>
+              <mn>6.00</mn>
+              <mo>=</mo>
+              <mn>20.00</mn>
+              <mi>&nbsp;USDT</mi>
+            </math>              
+          </p>
+
+          <p>Since our Investment is 100.00 USDT, Amount per Grid is:</p>
+          <p class="math-container">
+            <math xmlns="http://www.w3.org/1998/Math/MathML" class="math" display="block">
+              <mn>1.00</mn>
+              <mo>&#x202F;</mo>
+              <mi>BTC</mi>
+              <mo>&times;</mo>
+              <mfrac>
+              <mn>100.00</mn>
+              <mn>20.00</mn>
+              </mfrac>
+              <mo>=</mo>
+              <mn>5.00</mn>
+              <mi>&nbsp;BTC per grid</mi>
+            </math>                          
+          </p>
+
+          <p>The general formula to calculate Amount per Grid is:</p>
+          <p class="math-container">
+            <math xmlns="http://www.w3.org/1998/Math/MathML" class="math" display="block">
+                <mi>Amount per Grid</mi>
+                <mo>=</mo>
+                <mi>Investment</mi>
+                <mo>/</mo>
+                <mo>(</mo>
+                <mi>Lower Price Grid</mi>
+                <mo>[</mo>
+                <mn>1</mn>
+                <mo>]</mo>
+                <mo>+</mo>
+                <mi>Lower Price Grid</mi>
+                <mo>[</mo>
+                <mn>2</mn>
+                <mo>]</mo>
+                <mo>+</mo>
+                <mtext style="align-self: end;">&#x2026;</mtext>
+                <mo>+</mo>
+                <mi>Lower</mi>
+                <mi>Price</mi>
+                <mi>Grid</mi>
+                <mo>[</mo>
+                <mi>n</mi>
+                <mo>]</mo>
+                <mo>)</mo>
+            </math>    
+          </p>
+
+          <div class="example">
+            <p>In our example:</p>
+            <p>
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic" display="block">
+                <mi>Amount per Grid</mi>
+                <mo>=</mo>
+                <mfrac>
+                  <mrow>
+                    <mn>100.00</mn>
+                  </mrow>
+                  <mrow>
+                    <mo>(</mo>
+                    <mn>2.00</mn>
+                    <mo>+</mo>
+                    <mn>3.00</mn>
+                    <mo>+</mo>
+                    <mn>4.00</mn>
+                    <mo>+</mo>
+                    <mn>5.00</mn>
+                    <mo>+</mo>
+                    <mn>6.00</mn>
+                    <mo>)</mo>
+                  </mrow>
+                </mfrac>
+                <mo>=</mo>
+                <mn>5.00</mn>
+                <mi>&nbsp;BTC</mi>
+              </math>
+            </p>
+
+            <div class="table">
+              <table>
+                <thead>
+                  <tr>
+                    <th class="btlr">Grid #</th>
+                    <th>Lower Price<br>USDT</th>
+                    <th>Upper Price<br>USDT</th>
+                    <th class="btrr">Amount per Grid<br>BTC</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>2.00</td>
+                    <td>3.00</td>
+                    <td>5.00</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>3.00</td>
+                    <td>4.00</td>
+                    <td>5.00</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>4.00</td>
+                    <td>5.00</td>
+                    <td>5.00</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>5.00</td>
+                    <td>6.00</td>
+                    <td>5.00</td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>6.00</td>
+                    <td>7.00</td>
+                    <td>5.00</td>
+                  </tr>
+                </tbody>
+              </table> 
+            </div>    
+          </div>       
+        </section>
+
+        <section>
+          <h3>3. Investment per Grid</h3>
+          <p>Investment per Grid represents the portion of Investment allocated to purchase the specified Amount per Grid based on the Lower Price of each grid. It is expressed in the Quote Asset.</p>
+          <p>The formula to calculate Investment per Grid is:</p>
+          <p class="math-container">
+            <math xmlns="http://www.w3.org/1998/Math/MathML" class="math" display="block">
+              <mi>Investment per Grid</mi>
+              <mo>[</mo>
+              <mi>n</mi>
+              <mo>]</mo>
+              <mo>=</mo>
+              <mi>Amount per Grid</mi>
+              <mo>&times;</mo>
+              <mi>Lower Price Grid</mi>
+              <mo>[</mo>
+              <mi>n</mi>
+              <mo>]</mo>
+            </math>              
+          </p>
+
+          <div class="example">
+            <p >In our example:</p>
+            <p>Using the calculated Amount per Grid of 5.00 BTC, the investments for each grid are as follows:</p>
+            <p class="math-container">
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic" display="block">
+                <mi>Investment per Grid</mi>
+                <mo>[</mo>
+                <mn>1</mn>
+                <mo>]</mo>
+                <mo>=</mo>
+                <mn>5.00</mn>
+                <mo>&times;</mo>
+                <mn>2.00</mn>
+                <mo>=</mo>
+                <mn>10.00</mn>
+                <mi>&nbsp;USDT</mi>
+              </math>
+
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic" display="block">
+                <mi>Investment per Grid</mi>
+                <mo>[</mo>
+                <mn>2</mn>
+                <mo>]</mo>
+                <mo>=</mo>
+                <mn>5.00</mn>
+                <mo>&times;</mo>
+                <mn>3.00</mn>
+                <mo>=</mo>
+                <mn>15.00</mn>
+                <mi>&nbsp;USDT</mi>
+              </math>
+
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic" display="block">
+                <mi>Investment per Grid</mi>
+                <mo>[</mo>
+                <mn>3</mn>
+                <mo>]</mo>
+                <mo>=</mo>
+                <mn>5.00</mn>
+                <mo>&times;</mo>
+                <mn>4.00</mn>
+                <mo>=</mo>
+                <mn>20.00</mn>
+                <mi>&nbsp;USDT</mi>
+              </math>
+
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic" display="block">
+                <mi>Investment per Grid</mi>
+                <mo>[</mo>
+                <mn>4</mn>
+                <mo>]</mo>
+                <mo>=</mo>
+                <mn>5.00</mn>
+                <mo>&times;</mo>
+                <mn>5.00</mn>
+                <mo>=</mo>
+                <mn>25.00</mn>
+                <mi>&nbsp;USDT</mi>
+              </math>
+
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic" display="block">
+                <mi>Investment per Grid</mi>
+                <mo>[</mo>
+                <mn>5</mn>
+                <mo>]</mo>
+                <mo>=</mo>
+                <mn>5.00</mn>
+                <mo>&times;</mo>
+                <mn>6.00</mn>
+                <mo>=</mo>
+                <mn>30.00</mn>
+                <mi>&nbsp;USDT</mi>
+              </math>
+            </p>
+
+            <div class="table">
+              <table>
+                <thead>
+                  <tr>
+                    <th class="btlr">Grid #</th>
+                    <th>Lower Price<br>USDT</th>
+                    <th>Upper Price<br>USDT</th>
+                    <th>Amount per Grid<br>BTC</th>
+                    <th class="btrr">Investment<br>USDT</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>2.00</td>
+                    <td>3.00</td>
+                    <td>5.00</td>
+                    <td>10.00</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>3.00</td>
+                    <td>4.00</td>
+                    <td>5.00</td>
+                    <td>15.00</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>4.00</td>
+                    <td>5.00</td>
+                    <td>5.00</td>
+                    <td>20.00</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>5.00</td>
+                    <td>6.00</td>
+                    <td>5.00</td>
+                    <td>25.00</td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>6.00</td>
+                    <td>7.00</td>
+                    <td>5.00</td>
+                    <td>30.00</td>
+                  </tr>
+                </tbody>
+              </table>           
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h3>4. Initial Distribution</h3>
+          <p>The Initial Distribution represents the total allocation of the Quote Asset and Base Asset across all grids immediately after the Grid Trading is initialized and initially placed orders are executed.</p>
+          <p><math xmlns="http://www.w3.org/1998/Math/MathML" class="math" display="block">
+            <mi>Initial Distribution</mi>
+            <mo>=</mo>
+            <mo>(</mo>
+            <mi>Distribution of Quote Asset</mi>
+            <mo>)</mo>
+            <mo>&plus;</mo>
+            <mo>(</mo>
+            <mi>Distribution of Base Asset</mi>
+            <mo>)</mo>
+          </math>
+          </p>
+
+          <p>While Grid Trading Strategy is initializing, orders to buy the Amount per Grid for each grid are placing at the Lower Price of the corresponding grid or based on the Entry Price according to the following conditions:
+            <ul>
+              <li>if Lower Price Grid[n] >= Entry Price, the order is set and executed immediately at the Entry Price.</li>
+              <li>if Lower Price Grid[n] < Entry Price, the order remains open.</li>
+            </ul>
+          </p>
+
+          <p>For executed orders, trading fees reduce the final amount of the Base Asset allocated to the grid.<br />
+            Therefore, formula to calculate the Base Asset for each grid considering trading fees is:</p>
+          <p>
+            <math xmlns="http://www.w3.org/1998/Math/MathML" class="math" display="block">
+              <mi>Base Asset Grid</mi>
+              <mo>[</mo>
+              <mi>n</mi>
+              <mo>]</mo>
+              <mo>=</mo>
+              <mi>Amount per Grid</mi>
+              <mo>&times;</mo>
+              <mo>(</mo>
+              <mn>1</mn>
+              <mo>&minus;</mo>
+              <mi>fee</mi>
+              <mo>)</mo>
+            </math>              
+          </p>
+
+          <div class="example">
+            <p>In our example:</p>
+            <p>Entry Price is 4.00 USDT.</p>
+            <p>For Grid[1]: Lower price of this grid is lower than Entry Price, so the buy order remained open. Investment per Grid[1] 10.00 USDT was retained.</p>
+            <p class="math-container">
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic">
+                <mi>Quote Asset Grid</mi>
+                <mo>[</mo>
+                <mn>1</mn>
+                <mo>]</mo>
+                <mo>=</mo>
+                <mn>10.00</mn>
+                <mi>&nbsp;USDT</mi>
+              </math>
+
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic">
+                <mi>Base Asset Grid</mi>
+                <mo>[</mo>
+                <mn>1</mn>
+                <mo>]</mo>
+                <mo>=</mo>
+                <mn>0.00</mn>
+                <mi>&nbsp;BTC</mi>
+              </math>
+            </p>
+
+            <p>For Grid[2]: Lower price of this grid is lower than Entry Price, so the buy order remained open. Investment per Grid[2] 15.00 USDT was retained.</p>
+            <p class="math-container">
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic">
+                <mi>Quote Asset Grid</mi>
+                <mo>[</mo>
+                <mn>2</mn>
+                <mo>]</mo>
+                <mo>=</mo>
+                <mn>15.00</mn>
+                <mi>&nbsp;USDT</mi>
+              </math>
+
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic">
+                <mi>Base Asset Grid</mi>
+                <mo>[</mo>
+                <mn>2</mn>
+                <mo>]</mo>
+                <mo>=</mo>
+                <mn>0.00</mn>
+                <mi>&nbsp;BTC</mi>
+              </math>
+            </p>
+
+            <p>For Grid[3]: Lower price of this grid is equal to Entry Price, so the buy order was executed.</p>
+            <p class="math-container">
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic">
+                <mi>Quote Asset Grid</mi>
+                <mo>[</mo>
+                <mn>3</mn>
+                <mo>]</mo>
+                <mo>=</mo>
+                <mn>20.00</mn>
+                <mo>&minus;</mo>
+                <mn>5</mn>
+                <mo>&times;</mo>
+                <mn>4.00</mn>
+                <mo>=</mo>
+                <mn>0.00</mn>
+                <mi>&nbsp;USDT</mi>
+              </math>
+
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic">
+                <mi>Base&nbsp;Asset&nbsp;Grid</mi>
+                <mo>[</mo>
+                <mn>3</mn>
+                <mo>]</mo>
+                <mo>=</mo>
+                <mn>5.00</mn>
+                <mo>&times;</mo>
+                <mo>(</mo>
+                <mn>1</mn>
+                <mo>&minus;</mo>
+                <mn>0.001</mn>
+                <mo>)</mo>
+                <mo>=</mo>
+                <mn>4.995</mn>
+                <mi>&nbsp;BTC</mi>
+              </math>
+            </p>
+             
+            <p>For Grid[4]: Lower price of this grid is higher than Entry Price, so the buy order was executed. However, not all invested amount was required since the order was executed at the price of 4.00 USDT instead of 5.00 USDT. So we retained 5.00 USDT from Investment per Grid[4].</p>
+            <p class="math-container">
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic">
+                <mi>Quote Asset Grid</mi>
+                <mo>[</mo>
+                <mn>4</mn>
+                <mo>]</mo>
+                <mo>=</mo>
+                <mn>25.00</mn>
+                <mo>&minus;</mo>
+                <mn>5.00</mn>
+                <mo>&times;</mo>
+                <mn>4.00</mn>
+                <mo>=</mo>
+                <mn>5.00</mn>
+                <mi>&nbsp;USDT</mi>
+              </math>
+
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic">
+                <mi>Base Asset Grid</mi>
+                <mo>[</mo>
+                <mn>4</mn>
+                <mo>]</mo>
+                <mo>=</mo>
+                <mn>5.00</mn>
+                <mo>&times;</mo>
+                <mo>(</mo>
+                <mn>1</mn>
+                <mo>&minus;</mo>
+                <mn>0.001</mn>
+                <mo>)</mo>
+                <mo>=</mo>
+                <mn>4.995</mn>
+                <mi>&nbsp;BTC</mi>
+              </math>
+            </p>
+            
+              
+            <p>For Grid[5]: Lower price of this grid is higher than Entry Price, so the buy order was executed. Same as for Grid 4, not all invested amount was used, order was executed at the price of 4.00 USDT instead of 6.00 USDT. So we retained 10.00 USDT from Investment per Grid[5].</p>
+            <p class="math-container">
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic">
+                <mi>Quote Asset Grid</mi>
+                <mo>[</mo>
+                <mn>5</mn>
+                <mo>]</mo>
+                <mo>=</mo>
+                <mn>30.00</mn>
+                <mo>&minus;</mo>
+                <mn>5.00</mn>
+                <mo>&times;</mo>
+                <mn>4.00</mn>
+                <mo>=</mo>
+                <mn>10.00</mn>
+                <mi>&nbsp;USDT</mi>
+              </math>
+
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic">
+                <mi>Base Asset Grid</mi>
+                <mo>[</mo>
+                <mn>5</mn>
+                <mo>]</mo>
+                <mo>=</mo>
+                <mn>5.00</mn>
+                <mo>&times;</mo>
+                <mo>(</mo>
+                <mn>1</mn>
+                <mo>&minus;</mo>
+                <mn>0.001</mn>
+                <mo>)</mo>
+                <mo>=</mo>
+                <mn>4.995</mn>
+                <mi>&nbsp;BTC</mi>
+              </math>
+            </p>
+            
+              
+            <p>Therefore, </p>
+            <p class="math-container">
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic" display="block">
+                <mi>Initial Distribution</mi>
+                <mo>=</mo>
+                <mo>(</mo>
+                <mn>10.00</mn>
+                <mi>&nbsp;USDT</mi>
+                <mo>+</mo>
+                <mn>15.00</mn>
+                <mi>&nbsp;USDT</mi>
+                <mo>+</mo>
+                <mn>5.00</mn>
+                <mi>&nbsp;USDT</mi>
+                <mo>+</mo>
+                <mn>10.00</mn>
+                <mi>&nbsp;USDT</mi>
+                <mo>)</mo>
+                <mo>+</mo>
+                <mo>(</mo>
+                <mn>4.995</mn>
+                <mi>&nbsp;BTC</mi>
+                <mo>+</mo>
+                <mn>4.995</mn>
+                <mi>&nbsp;BTC</mi>
+                <mo>+</mo>
+                <mn>4.995</mn>
+                <mi>&nbsp;BTC</mi>
+                <mo>)</mo>
+                <mo>=</mo>
+                <mn>40.00</mn>
+                <mi>&nbsp;USDT</mi>
+                <mo>+</mo>
+                <mn>14.985</mn>
+                <mi>&nbsp;BTC</mi>
+              </math>
+            </p>
+              
+            <div class="table">
+              <table class="example">
+                <thead>
+                  <tr>
+                    <th class="btlr">Grid #</th>
+                    <th>Lower Price <br />USDT</th>
+                    <th>Upper Price <br />USDT</th>
+                    <th>Amount per Grid <br />BTC</th>
+                    <th>Investment <br />USDT</th>
+                    <th>USDT</th>
+                    <th class="btrr">BTC</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>2.00</td>
+                    <td>3.00</td>
+                    <td>5.00</td>
+                    <td>10.00</td>
+                    <td>10.00</td>
+                    <td>0.000</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>3.00</td>
+                    <td>4.00</td>
+                    <td>5.00</td>
+                    <td>15.00</td>
+                    <td>15.00</td>
+                    <td>0.000</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>4.00</td>
+                    <td>5.00</td>
+                    <td>5.00</td>
+                    <td>20.00</td>
+                    <td>0.00</td>
+                    <td>4.995</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>5.00</td>
+                    <td>6.00</td>
+                    <td>5.00</td>
+                    <td>25.00</td>
+                    <td>5.00</td>
+                    <td>4.995</td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>6.00</td>
+                    <td>7.00</td>
+                    <td>5.00</td>
+                    <td>30.00</td>
+                    <td>10.00</td>
+                    <td>4.995</td>
+                  </tr>
+                </tbody>
+              </table>              
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h3>5. Profit per Grid</h3>
+          <p>Profit is generated within a grid when both BUY and SELL (or SELL and BUY) orders are executed. The Profit per Grid represents the earnings from these trades within a specific grid.</p>
+          <p>The base formula for calculating the profit in a grid is:</p>
+          <p class="math-container">
+            <math xmlns="http://www.w3.org/1998/Math/MathML" class="math" display="block">
+              <mi>Profit per Grid</mi>
+              <mo>=</mo>
+              <mi>Amount per Grid</mi>
+              <mo>&times;</mo>
+              <mi>Upper Price</mi>
+              <mo>&minus;</mo>
+              <mi>Amount per Grid</mi>
+              <mo>&times;</mo>
+              <mi>Lower price</mi>
+            </math>
+          </p>
+
+          <p>However, trading fees impact the final profit. The accurate formula, taking fees into account, is:</p>
+          <p class="math-container">
+            <math xmlns="http://www.w3.org/1998/Math/MathML" class="math" display="block">
+              <mi>Profit per Grid</mi>
+              <mo>[</mo>
+              <mi>n</mi>
+              <mo>]</mo>
+              <mo>=</mo>
+              <mi>Amount per Grid</mi>
+              <mo>&times;</mo>
+              <mo>(</mo>
+              <mn>1</mn>
+              <mo>&minus;</mo>
+              <mi>Fee</mi>
+              <mo>)</mo>
+              <mo>&times;</mo>
+              <mi>Upper Price</mi>
+              <mo>[</mo>
+              <mi>n</mi>
+              <mo>]</mo>
+              <mo>&times</mo>
+              <mo>(</mo>
+              <mn>1</mn>
+              <mo>&minus;</mo>
+              <mi>Fee</mi>
+              <mo>)</mo>
+              <mo>&minus;</mo>
+              <mi>Amount per Grid</mi>
+              <mo>&times;</mo>
+              <mi>Lower Price</mi>
+              <mo>[</mo>
+              <mi>n</mi>
+              <mo>]</mo>
+            </math>
+          </p>
+
+          <p>The ratio of Profit per Grid to Investment per Grid can be calculated as:</p>
+          <p class="math-container">
+            <math xmlns="http://www.w3.org/1998/Math/MathML" class="math" display="block">
+              <mi>Profit per Grid</mi>
+              <mo>[</mo>
+              <mi>n</mi>
+              <mo>]</mo>
+              <mo>&comma;</mo>
+              <mo>%</mo>
+              <mo>=</mo>
+              <mfrac>
+                <mrow>
+                  <mi>Profit per Grid</mi>
+                  <mo>[</mo>
+                  <mi>n</mi>
+                  <mo>]</mo>
+                </mrow>
+                <mrow>
+                  <mi>Investment per Grid</mi>
+                  <mo>[</mo>
+                  <mi>n</mi>
+                  <mo>]</mo>
+                </mrow>
+              </mfrac>
+              <mo>&times;</mo>
+              <mn>100</mn>
+              <mo>%</mo>
+            </math>                        
+          </p>
+          
+          <div class="example">
+            <p>In our example:</p>
+            <p class="math-container">
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic" display="block">
+                <mi>Profit per Grid</mi>
+                <mo>[</mo>
+                <mn>1</mn>
+                <mo>]</mo>
+                <mo>=</mo>
+                <mn>5.00</mn>
+                <mo>&times;</mo>
+                <mo>(</mo>
+                <mn>1</mn>
+                <mo>&minus;</mo>
+                <mn>0.001</mn>
+                <mo>)</mo>
+                <mo>&times;</mo>
+                <mn>3.00</mn>
+                <mo>&times;</mo>
+                <mo>(</mo>
+                <mn>1</mn>
+                <mo>&minus;</mo>
+                <mn>0.001</mn>
+                <mo>)</mo>
+                <mo>&minus;</mo>
+                <mn>5.00</mn>
+                <mo>&times;</mo>
+                <mn>2.00</mn>
+                <mo>=</mo>
+                <mn>4.970015</mn>
+                <mi>&nbsp;USDT</mi>
+              </math>
+
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic" display="block">
+                <mi>Profit per Grid</mi>
+                <mo>[</mo>
+                <mn>2</mn>
+                <mo>]</mo>
+                <mo>=</mo>
+                <mn>5.00</mn>
+                <mo>&times;</mo>
+                <mo>(</mo>
+                <mn>1</mn>
+                <mo>&minus;</mo>
+                <mn>0.001</mn>
+                <mo>)</mo>
+                <mo>&times;</mo>
+                <mn>4.00</mn>
+                <mo>&times;</mo>
+                <mo>(</mo>
+                <mn>1</mn>
+                <mo>&minus;</mo>
+                <mn>0.001</mn>
+                <mo>)</mo>
+                <mo>&minus;</mo>
+                <mn>5.00</mn>
+                <mo>&times;</mo>
+                <mn>3.00</mn>
+                <mo>=</mo>
+                <mn>4.960020</mn>
+                <mi>&nbsp;USDT</mi>
+              </math>
+
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic" display="block">
+                <mi>Profit per Grid</mi>
+                <mo>[</mo>
+                <mn>3</mn>
+                <mo>]</mo>
+                <mo>=</mo>
+                <mn>5.00</mn>
+                <mo>&times;</mo>
+                <mo>(</mo>
+                <mn>1</mn>
+                <mo>&minus;</mo>
+                <mn>0.001</mn>
+                <mo>)</mo>
+                <mo>&times;</mo>
+                <mn>5.00</mn>
+                <mo>&times;</mo>
+                <mo>(</mo>
+                <mn>1</mn>
+                <mo>&minus;</mo>
+                <mn>0.001</mn>
+                <mo>)</mo>
+                <mo>&minus;</mo>
+                <mn>5.00</mn>
+                <mo>&times;</mo>
+                <mn>4.00</mn>
+                <mo>=</mo>
+                <mn>4.950025</mn>
+                <mi>&nbsp;USDT</mi>
+              </math>
+
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic" display="block">
+                <mi>Profit per Grid</mi>
+                <mo>[</mo>
+                <mn>4</mn>
+                <mo>]</mo>
+                <mo>=</mo>
+                <mn>5.00</mn>
+                <mo>&times;</mo>
+                <mo>(</mo>
+                <mn>1</mn>
+                <mo>&minus;</mo>
+                <mn>0.001</mn>
+                <mo>)</mo>
+                <mo>&times;</mo>
+                <mn>6.00</mn>
+                <mo>&times;</mo>
+                <mo>(</mo>
+                <mn>1</mn>
+                <mo>&minus;</mo>
+                <mn>0.001</mn>
+                <mo>)</mo>
+                <mo>&minus;</mo>
+                <mn>5.00</mn>
+                <mo>&times;</mo>
+                <mn>5.00</mn>
+                <mo>=</mo>
+                <mn>4.940030</mn>
+                <mi>&nbsp;USDT</mi>
+              </math>
+
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic" display="block">
+                <mi>Profit&nbsp;per&nbsp;Grid</mi>
+                <mo>[</mo>
+                <mn>5</mn>
+                <mo>]</mo>
+                <mo>=</mo>
+                <mn>5.00</mn>
+                <mo>&times;</mo>
+                <mo>(</mo>
+                <mn>1</mn>
+                <mo>&minus;</mo>
+                <mn>0.001</mn>
+                <mo>)</mo>
+                <mo>&times;</mo>
+                <mn>7.00</mn>
+                <mo>&times;</mo>
+                <mo>(</mo>
+                <mn>1</mn>
+                <mo>&minus;</mo>
+                <mn>0.001</mn>
+                <mo>)</mo>
+                <mo>&minus;</mo>
+                <mn>5.00</mn>
+                <mo>&times;</mo>
+                <mn>6.00</mn>
+                <mo>=</mo>
+                <mn>4.930035</mn>
+                <mi>&nbsp;USDT</mi>
+              </math>            
+            </p>
+            <p>Therefore, Profits per Grid,% are the following:</p>
+            <p class="math-container">
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic" display="block">
+                  <mi>Profit per Grid</mi>
+                  <mo>[</mo>
+                  <mn>1</mn>
+                  <mo>]</mo>
+                  <mo>,</mo>
+                  <mi>%</mi>
+                  <mo>=</mo>
+                  <mfrac>
+                  <mn>4.970015</mn>
+                  <mn>10.00</mn>
+                  </mfrac>
+                  <mo>&times;</mo>
+                  <mn>100</mn>
+                  <mi>%</mi>
+                  <mo>=</mo>
+                  <mn>49.7002</mn>
+                  <mi>%</mi>
+              </math>
+
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic" display="block">
+                <mi>Profit per Grid</mi>
+                <mo>[</mo>
+                <mn>2</mn>
+                <mo>]</mo>
+                <mo>,</mo>
+                <mi>%</mi>
+                <mo>=</mo>
+                <mfrac>
+                <mn>4.960020</mn>
+                <mn>15.00</mn>
+                </mfrac>
+                <mo>&times;</mo>
+                <mn>100</mn>
+                <mi>%</mi>
+                <mo>=</mo>
+                <mn>33.0668</mn>
+                <mi>%</mi>
+              </math>
+
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic" display="block">
+                <mi>Profit per Grid</mi>
+                <mo>[</mo>
+                <mn>3</mn>
+                <mo>]</mo>
+                <mo>,</mo>
+                <mi>%</mi>
+                <mo>=</mo>
+                <mfrac>
+                <mn>4.950025</mn>
+                <mn>20.00</mn>
+                </mfrac>
+                <mo>&times;</mo>
+                <mn>100</mn>
+                <mi>%</mi>
+                <mo>=</mo>
+                <mn>24.7501</mn>
+                <mi>%</mi>
+              </math>
+
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic" display="block">
+                <mi>Profit per Grid</mi>
+                <mo>[</mo>
+                <mn>4</mn>
+                <mo>]</mo>
+                <mo>,</mo>
+                <mi>%</mi>
+                <mo>=</mo>
+                <mfrac>
+                <mn>4.940030</mn>
+                <mn>25.00</mn>
+                </mfrac>
+                <mo>&times;</mo>
+                <mn>100</mn>
+                <mi>%</mi>
+                <mo>=</mo>
+                <mn>19.7601</mn>
+                <mi>%</mi>
+              </math>
+
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic" display="block">
+                <mi>Profit per Grid</mi>
+                <mo>[</mo>
+                <mn>5</mn>
+                <mo>]</mo>
+                <mo>,</mo>
+                <mi>%</mi>
+                <mo>=</mo>
+                <mfrac>
+                <mn>4.930035</mn>
+                <mn>30.00</mn>
+                </mfrac>
+                <mo>&times;</mo>
+                <mn>100</mn>
+                <mi>%</mi>
+                <mo>=</mo>
+                <mn>16.4335</mn>
+                <mi>%</mi>
+              </math>
+            </p>
+
+            <div class="table">
+              <table>
+                <thead>
+                  <tr>
+                    <th class="btlr">Grid #</th>
+                    <th>Lower Price<br>USDT</th>
+                    <th>Upper Price<br>USDT</th>
+                    <th>Investment<br>USDT</th>
+                    <th>Profit per Grid<br>USDT</th>
+                    <th class="btrr">Profit per Grid, %</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>2.00</td>
+                    <td>3.00</td>
+                    <td>10.00</td>
+                    <td>4.970015</td>
+                    <td>49.7002</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>3.00</td>
+                    <td>4.00</td>
+                    <td>15.00</td>
+                    <td>4.960020</td>
+                    <td>33.0668</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>4.00</td>
+                    <td>5.00</td>
+                    <td>20.00</td>
+                    <td>4.950025</td>
+                    <td>24.7501</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>5.00</td>
+                    <td>6.00</td>
+                    <td>25.00</td>
+                    <td>4.940030</td>
+                    <td>19.7601</td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>6.00</td>
+                    <td>7.00</td>
+                    <td>30.00</td>
+                    <td>4.930035</td>
+                    <td>16.4335</td>
+                  </tr>
+                </tbody>
+              </table>              
+            </div>
+          </div>
+        </section>
+        
+        <section>
+          <h3>6. Grid Trading Strategy algorithm execution</h3>
+          <p>At this stage, the Grid Trading Strategy has been initialized. Amount per Grid and Investment per Grid have been calculated. Additionally, we have defined our Initial Distribution across the grid, and the expected Profit per Grid has also been calculated based on our example.</p>
+
+          <div class="example">
+            <p>Then, according to the legend, the following events took place:</p>
+
+            <uL>
+              <li>February 1, 2024: BTC price dropped to 3.00 USDT per BTC, a buy order was executed for Grid[2] and 4.995 BTC was bought. A sell order for 4.995 BTC at a price of 4.00 USDT was opened.
+                <p class="math-container">
+                  <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic">
+                    <mi>Quote Asset Grid</mi>
+                    <mo>[</mo>
+                    <mn>2</mn>
+                    <mo>]</mo>
+                    <mo>=</mo>
+                    <mn>15.00</mn>
+                    <mo>&minus;</mo>
+                    <mn>5.00</mn>
+                    <mo>&times;</mo>
+                    <mn>3.00</mn>
+                    <mo>=</mo>
+                    <mn>0.00</mn>
+                    <mi>&nbsp;USDT</mi>
+                  </math>
+    
+                  <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic">
+                    <mi>Base Asset Grid</mi>
+                    <mo>[</mo>
+                    <mn>2</mn>
+                    <mo>]</mo>
+                    <mo>=</mo>
+                    <mn>5.00</mn>
+                    <mo>&times;</mo>
+                    <mo>(</mo>
+                    <mn>1</mn>
+                    <mo>&minus;</mo>
+                    <mn>0.001</mn>
+                    <mo>)</mo>
+                    <mo>=</mo>
+                    <mn>4.995</mn>
+                    <mi>&nbsp;BTC</mi>
+                  </math>
+                </p>
+              </li>
+
+              <li>March 1, 2024: BTC price rebounded to 4.00 USDT per BTC, a sell order was executed for Grid[2] and 4.995 BTC was sold. A buy order for 5.00 BTC at a price of 3.00 USDT was opened.
+                <p class="math-container">
+                  <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic">
+                    <mi>Base Asset Grid</mi>
+                    <mo>[</mo>
+                    <mn>2</mn>
+                    <mo>]</mo>
+                    <mo>=</mo>
+                    <mn>4.995</mn>
+                    <mo>&minus;</mo>
+                    <mn>4.995</mn>
+                    <mo>=</mo>
+                    <mn>0.00</mn>
+                    <mi>&nbsp;BTC</mi>
+                  </math>
+                  
+                  <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic">
+                    <mi>Quote Asset Grid</mi>
+                    <mo>[</mo>
+                    <mn>2</mn>
+                    <mo>]</mo>
+                    <mo>=</mo>
+                    <mn>4.995</mn>
+                    <mo>&times;</mo>
+                    <mn>4.00</mn>
+                    <mo>&times;</mo>
+                    <mo>(</mo>
+                    <mn>1</mn>
+                    <mo>&minus;</mo>
+                    <mn>0.001</mn>
+                    <mo>)</mo>
+                    <mo>=</mo>
+                    <mn>19.96</mn>
+                    <mi>&nbsp;USDT</mi>
+                  </math>
+                </p>
+              </li>
+
+              <li>April 1, 2024: BTC price increased to 5.00 USDT per BTC, a sell order was executed for Grid[3] and 4.995 BTC was sold. A buy order for 5.00 BTC at a price of 4.00 USDT was opened.
+                <p class="math-container">
+                  <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic">
+                    <mi>Base Asset Grid</mi>
+                    <mo>[</mo>
+                    <mn>3</mn>
+                    <mo>]</mo>
+                    <mo>=</mo>
+                    <mn>4.995</mn>
+                    <mo>&minus;</mo>
+                    <mn>4.995</mn>
+                    <mo>=</mo>
+                    <mn>0.00</mn>
+                    <mi>&nbsp;BTC</mi>
+                  </math>
+                  
+                  <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic">
+                    <mi>Quote Asset Grid</mi>
+                    <mo>[</mo>
+                    <mn>3</mn>
+                    <mo>]</mo>
+                    <mo>=</mo>
+                    <mn>4.995</mn>
+                    <mo>&times;</mo>
+                    <mn>5.00</mn>
+                    <mo>&times;</mo>
+                    <mo>(</mo>
+                    <mn>1</mn>
+                    <mo>&minus;</mo>
+                    <mn>0.001</mn>
+                    <mo>)</mo>
+                    <mo>=</mo>
+                    <mn>24.95</mn>
+                    <mi>&nbsp;USDT</mi>
+                  </math>                  
+                </p>
+              </li>
+
+              <li>May 1, 2024: BTC price increased further to 6.00 USDT per BTC, a sell order was executed for Grid[4] and 4.995 BTC was sold. Reserved 5.00 USDT that wasn’t used during trading operations was retained. A buy order for 5.00 BTC at a price of 5.00 USDT was opened.
+                <p class="math-container">
+                  <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic">
+                    <mi>Base Asset Grid</mi>
+                    <mo>[</mo>
+                    <mn>4</mn>
+                    <mo>]</mo>
+                    <mo>=</mo>
+                    <mn>4.995</mn>
+                    <mo>&minus;</mo>
+                    <mn>4.995</mn>
+                    <mo>=</mo>
+                    <mn>0.00</mn>
+                    <mi>&nbsp;BTC</mi>
+                  </math>
+                  
+                  <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic">
+                    <mi>Quote Asset Grid</mi>
+                    <mo>[</mo>
+                    <mn>4</mn>
+                    <mo>]</mo>
+                    <mo>=</mo>
+                    <mn>4.995</mn>
+                    <mo>&times;</mo>
+                    <mn>6.00</mn>
+                    <mo>&times;</mo>
+                    <mo>(</mo>
+                    <mn>1</mn>
+                    <mo>&minus;</mo>
+                    <mn>0.001</mn>
+                    <mo>)</mo>
+                    <mo>=</mo>
+                    <mn>29.94</mn>
+                    <mi>&nbsp;USDT</mi>
+                    <mo>+</mo>
+                    <mn>5.00</mn>
+                    <mi>&nbsp;USDT</mi>
+                  </math>                  
+                </p>
+              </li>
+
+              <li>May 31, 2024: BTC remained at 6.00 USDT per BTC, Grid Trading Strategy was finalized.</li>
+            </uL>
+          </div>
+
+          <p>Now, let’s get the results of our strategy and compute the final financial outcomes.
+          </p>
+        </section>
+
+        <section>
+          <h3>7. Final Distribution</h3>
+          <p>The Final Distribution represents the total allocation of the Quote Asset and Base Asset across all grids at the time when the Grid Trading Strategy is finalized. This is determined at the end date ("To"):</p>
+          <p class="math-container">
+            <math xmlns="http://www.w3.org/1998/Math/MathML" class="math" display="block">
+              <mi>Final Distribution</mi>
+              <mo>=</mo>
+              <mo>(</mo>
+              <mi>Distribution of Quote Asset</mi>
+              <mo>)</mo>
+              <mo>+</mo>
+              <mo>(</mo>
+              <mi>Distribution of Base Asset</mi>
+              <mo>)</mo>
+            </math>
+          </p>
+
+          <div class="example">
+          <p>In our example:</p>
+          <p class="math-container">
+            <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic" display="block">
+              <mi>Final Distribution</mi>
+              <mo>=</mo>
+              <mo>(</mo>
+              <mn>10.00</mn>
+              <mi>&nbsp;USDT</mi>
+              <mo>+</mo>
+              <mn>19.96</mn>
+              <mi>&nbsp;USDT</mi>
+              <mo>+</mo>
+              <mn>24.95</mn>
+              <mi>&nbsp;USDT</mi>
+              <mo>+</mo>
+              <mn>29.94</mn>
+              <mi>&nbsp;USDT</mi>
+              <mo>+</mo>
+              <mn>5.00</mn>
+              <mi>&nbsp;USDT</mi>
+              <mo>+</mo>
+              <mn>10.00</mn>
+              <mi>&nbsp;USDT</mi>
+              <mo>)</mo>
+              <mo>+</mo>
+              <mn>4.995</mn>
+              <mi>&nbsp;BTC</mi>
+              <mo>=</mo>
+              <mn>99.85</mn>
+              <mi>&nbsp;USDT</mi>
+              <mo>+</mo>
+              <mn>4.995</mn>
+              <mi>&nbsp;BTC</mi>
+            </math>            
+          </p>
+
+          <div class="table">
+            <table class="example">
+              <thead>
+                <tr>
+                  <th class="btlr">Grid #</th>
+                  <th>Lower Price<br/>USDT</th>
+                  <th>Upper Price<br/>USDT</th>
+                  <th>Amount per Grid<br/>BTC</th>
+                  <th>Investment<br/>USDT</th>
+                  <th>USDT</th>
+                  <th class="btrr">BTC</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>2.00</td>
+                  <td>3.00</td>
+                  <td>5.00</td>
+                  <td>10.00</td>
+                  <td>10.00</td>
+                  <td>0.00</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>3.00</td>
+                  <td>4.00</td>
+                  <td>5.00</td>
+                  <td>15.00</td>
+                  <td>19.96</td>
+                  <td>0.00</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>4.00</td>
+                  <td>5.00</td>
+                  <td>5.00</td>
+                  <td>20.00</td>
+                  <td>24.95</td>
+                  <td>0.00</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>5.00</td>
+                  <td>6.00</td>
+                  <td>5.00</td>
+                  <td>25.00</td>
+                  <td>29.94 + 5.00</td>
+                  <td>0.00</td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>6.00</td>
+                  <td>7.00</td>
+                  <td>5.00</td>
+                  <td>30.00</td>
+                  <td>0.00 + 10.00</td>
+                  <td>4.995</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        </section>
+
+        <section>
+          <h3>8. Balance</h3>
+          <p>The total value of all assets at the moment when the Grid Trading Strategy ends is Balance.
+            It is expressed in the Quote Asset.</p>
+          <p>Balance is calculated based on the Last Price of the Base Asset including trading fee deduction. The formula to calculate Balance is:</p>
+
+          <p class="math-container">
+            <math xmlns="http://www.w3.org/1998/Math/MathML" class="math" display="block">
+              <mi>Balance</mi>
+              <mo>=</mo>
+              <mo>&#x2211;</mo>
+              <mi>Quote Asset Grid</mi>
+              <mo>[</mo>
+              <mi>n</mi>
+              <mo>]</mo>
+              <mo>+</mo>
+              <mo>&#x2211;</mo>
+              <mi>Base Asset Grid</mi>
+              <mo>[</mo>
+              <mi>n</mi>
+              <mo>]</mo>
+              <mo>&times;</mo>
+              <mi>Last Price</mi>
+              <mo>&times;</mo>
+              <mo>(</mo>
+              <mn>1</mn>
+              <mo>-</mo>
+              <mi>fee</mi>
+              <mo>)</mo>
+            </math>
+          </p>  
+          
+          <div class="example">
+            <p>In our example:</p>
+            <p>Last Price is 6.00 USDT.</p>
+            <p class="math-container">
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic" display="block">
+                <mi>Balance</mi>
+                <mo>=</mo>
+                <mo>(</mo>
+                <mn>10.00</mn>
+                <mo>+</mo>
+                <mn>19.96</mn>
+                <mo>+</mo>
+                <mn>24.95</mn>
+                <mo>+</mo>
+                <mn>29.94</mn>
+                <mo>+</mo>
+                <mn>5.00</mn>
+                <mo>+</mo>
+                <mn>10.00</mn>
+                <mo>)</mo>
+                <mo>+</mo>
+                <mn>4.995</mn>
+                <mo>&times;</mo>
+                <mn>6.00</mn>
+                <mo>&times;</mo>
+                <mo>(</mo>
+                <mn>1</mn>
+                <mo>&minus;</mo>
+                <mn>0.001</mn>
+                <mo>)</mo>
+                <mo>=</mo>
+                <mn>129.79</mn>
+                <mi>&nbsp;USDT</mi>
+              </math>              
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h3>9. Total PnL</h3>
+          <p>Total Profit and Loss (Total PnL) represents the overall financial result of the Grid Trading within the Date Range.</p>
+          <p>It is calculated using the following formula:</p>
+          <p class="math-container">
+            <math xmlns="http://www.w3.org/1998/Math/MathML" class="math" display="block">
+              <mi>Total PnL</mi>
+              <mo>=</mo>
+              <mi>Balance</mi>
+              <mo>-</mo>
+              <mi>Investment</mi>
+            </math>          
+          </p>
+
+          <div class="example">
+            <p>In our example:</p>
+            <p>Investment is 100.00 USDT.</p>
+            <p class="math-container">
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic" display="block">
+                <mi>Total PnL</mi>
+                <mo>=</mo>
+                <mn>129.79</mn>
+                <mo>&minus;</mo>
+                <mn>100.00</mn>
+                <mo>=</mo>
+                <mn>29.79</mn>
+                <mi>&nbsp;USDT</mi>
+              </math>
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h3>10. Annualized Return</h3>
+          <p>Annualized Return is a metric used to understand the return on investment over the one year. It is useful for comparing performance when the Date Range spans less than or more than a full year.</p>
+          <p>This metric is expressed as a percentage and calculated using the following formula:</p>
+          <p class="math-container">
+            <math xmlns="http://www.w3.org/1998/Math/MathML" class="math" display="block">
+              <mi>Annualized Return</mi>
+              <mo>=</mo>
+              <mo>(</mo>
+              <mfrac>
+                <mi>Total PnL</mi>
+                <mi>Investment</mi>
+              </mfrac>
+              <mo>&times;</mo>
+              <mfrac>
+                <mn>365</mn>
+                <mi>Runtime</mi>
+              </mfrac>
+              <mo>)</mo>
+              <mo>&times;</mo>
+              <mn>100</mn>
+              <mo>%</mo>
+            </math>
+          </p>
+
+          <div class="example">
+            <p>In our example:</p>
+            <p>Date Range: <br />
+              From January 1, 2024 <br />
+              To May 31, 2024
+              </p>
+            <p>So, the Runtime = 151 days.</p>
+            <p class="math-container">
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic" display="block">
+                <mi>Annualized Return</mi>
+                <mo>=</mo>
+                <mo>(</mo>
+                <mrow>
+                  <mfrac>
+                    <mn>29.79</mn>
+                    <mn>100</mn>
+                  </mfrac>
+                  <mo>&times;</mo>
+                  <mfrac>
+                    <mn>365</mn>
+                    <mn>151</mn>
+                  </mfrac>
+                </mrow>
+                <mo>)</mo>
+                <mo>&times;</mo>
+                <mn>100</mn>
+                <mi>%</mi>
+                <mo>=</mo>
+                <mn>72.01</mn>
+                <mi>%</mi>
+              </math>
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h3>11. Grid Profit</h3>
+          <p>Grid Profit is the sum of Profit per Grid for each of the Matched Trades.</p>
+          <p class="math-container">
+            <math xmlns="http://www.w3.org/1998/Math/MathML" class="math" display="block">
+              <mi>Grid Profit</mi>
+              <mo>=</mo>
+              <mo>&#x2211;</mo>
+              <mi>Profit per Grid</mi>
+              <mo>&nbsp;(</mo>
+              <mi>of the Matched Trades</mi>
+              <mo>)</mo>
+            </math>
+          </p>
+
+          <div class="example">
+            <p>In our example:</p>
+            <p>Based on the legend, Profit per Grid was earned only in Grid[2], Grid[3] and Grid[4].</p>
+            <p class="math-container">
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic" display="block">
+                <mi>Grid Profit</mi>
+                <mo>=</mo>
+                <mi>Profit per Grid</mi>
+                <mo>[</mo>
+                <mn>2</mn>
+                <mo>]</mo>
+                <mo>+</mo>
+                <mi>Profit per Grid</mi>
+                <mo>[</mo>
+                <mn>3</mn>
+                <mo>]</mo>
+                <mo>+</mo>
+                <mi>Profit per Grid</mi>
+                <mo>[</mo>
+                <mn>4</mn>
+                <mo>]</mo>
+                <mo>=</mo>
+                <mn>4.960020</mn>
+                <mo>+</mo>
+                <mn>4.950025</mn>
+                <mo>+</mo>
+                <mn>4.940030</mn>
+                <mo>=</mo>
+                <mn>14.850075</mn>
+                <mi>&nbsp;USDT</mi>
+              </math>
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h3>12. Floating PnL</h3>
+          <p>Floating Profit and Loss (Floating PnL) represents the change in the Base Asset’s market price when Grid Trading was initialized and when it was closed, excluding Grid Profit.</p>
+          <p>This metric is expressed in the Quote Asset and is calculated using the following formula:</p>
+          <p class="math-container">
+            <math xmlns="http://www.w3.org/1998/Math/MathML" class="math" display="block">
+              <mi>Floating PnL</mi>
+              <mo>=</mo>
+              <mi>Total PnL</mi>
+              <mo>&minus;</mo>
+              <mi>Grid Profit</mi>
+            </math>           
+          </p>
+  
+          <div class="example">
+            <p>In our example:</p>
+            <p class="math-container">
+              <math xmlns="http://www.w3.org/1998/Math/MathML" class="math italic" display="block">
+                <mi>Floating PnL</mi>
+                <mo>=</mo>
+                <mn>29.79</mn>
+                <mo>&minus;</mo>
+                <mn>14.850075</mn>
+                <mo>=</mo>
+                <mn>14.939925</mn>
+                <mi>&nbsp;USDT</mi>
+              </math>
+            </p>
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <div class="footer">
+      <footer>
+        <hr/>
+        <ul>
+          <li><a href="/terms">Terms of Use</a></li>
+          <li><a href="/cookie-policy">Cookie Policy</a></li>
+          <li><a href="/privacy-policy">Privacy Policy</a></li>
+          <li><a href="mailto:grid.trading.strategy@gmail.com">Contact by Email</a></li>
+        </ul>
+      </footer>
+    </div>
+
+  </div>
+</body>
+</html>

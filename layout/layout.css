@@ -120,16 +120,37 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 2px;
+    padding: 8px;
   }
 
   .math-container {
-    padding-block: 24px;
+    padding-block: 16px;
+  }
+
+  .article-title {
+    text-align: center;
+  }
+
+  .italic {
+    font-style: italic;
   }
 
   @supports (hanging-punctuation: first) and (font: -apple-system-body) and (-webkit-appearance: none) {
+    /* styles are applied only in Safari */
     .math-container {
       overflow-x: auto; 
       white-space: nowrap; 
+    }
+
+    .math {
+      padding-inline: 0;
+    }
+  }
+
+  @-moz-document url-prefix() {
+    /* styles are applied only in Firefox */
+    .math {
+      display: block;
     }
   }
 

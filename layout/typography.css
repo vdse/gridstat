@@ -326,3 +326,7 @@ footer {
 .table::-webkit-scrollbar {
   display: none;  /* Safari and Chrome */
 }
+
+.example {
+  font-style: italic;
+}
